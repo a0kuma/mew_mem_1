@@ -276,6 +276,11 @@ def stop_memory_history_all_gpus():
 
 # ──────────────────────── Training Loop ────────────────────────
 def train():
+    # ── Start memory recording ──
+    start_memory_history_all_gpus()
+    # move up here
+    
+    
     print("\n" + "=" * 80)
     print("  GPT-2 Pipeline Parallel Training with Memory Profiling")
     print("=" * 80)
@@ -297,8 +302,7 @@ def train():
     # ── Loss function (on last GPU) ──
     last_device = torch.device(f"cuda:{NUM_GPUS - 1}")
 
-    # ── Start memory recording ──
-    start_memory_history_all_gpus()
+
 
     # ── Profiler setup ──
     profiler_schedule = torch.profiler.schedule(

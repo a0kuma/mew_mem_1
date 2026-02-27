@@ -1,0 +1,310 @@
+{
+  "timestamp": "2026-02-26T09:52:05.083233",
+  "num_gpus": 4,
+  "batch_size": 8,
+  "micro_batches": 4,
+  "seq_len": 256,
+  "num_steps": 10,
+  "model": "GPT-2 (12-layer, 768-hidden, 12-head)",
+  "pipeline_parallelism": true,
+  "activation_checkpointing": true,
+  "gpu_info": {
+    "gpu_0": {
+      "name": "NVIDIA GeForce RTX 3090",
+      "total_memory_GB": 23.56
+    },
+    "gpu_1": {
+      "name": "NVIDIA GeForce RTX 3090",
+      "total_memory_GB": 23.56
+    },
+    "gpu_2": {
+      "name": "NVIDIA GeForce RTX 3090",
+      "total_memory_GB": 23.56
+    },
+    "gpu_3": {
+      "name": "NVIDIA GeForce RTX 3090",
+      "total_memory_GB": 23.56
+    }
+  },
+  "final_memory": {
+    "gpu_0": {
+      "memory_allocated_MB": 947.1,
+      "max_memory_allocated_MB": 1179.84,
+      "max_memory_reserved_MB": 1346.0
+    },
+    "gpu_1": {
+      "memory_allocated_MB": 453.11,
+      "max_memory_allocated_MB": 641.52,
+      "max_memory_reserved_MB": 746.0
+    },
+    "gpu_2": {
+      "memory_allocated_MB": 342.71,
+      "max_memory_allocated_MB": 491.55,
+      "max_memory_reserved_MB": 586.0
+    },
+    "gpu_3": {
+      "memory_allocated_MB": 1610.95,
+      "max_memory_allocated_MB": 2586.83,
+      "max_memory_reserved_MB": 3482.0
+    }
+  },
+  "per_step_memory": [
+    {
+      "gpu_0": {
+        "memory_allocated_MB": 938.97,
+        "max_memory_allocated_MB": 1171.09,
+        "max_memory_reserved_MB": 1306.0
+      },
+      "gpu_1": {
+        "memory_allocated_MB": 443.86,
+        "max_memory_allocated_MB": 552.01,
+        "max_memory_reserved_MB": 726.0
+      },
+      "gpu_2": {
+        "memory_allocated_MB": 335.46,
+        "max_memory_allocated_MB": 416.57,
+        "max_memory_reserved_MB": 564.0
+      },
+      "gpu_3": {
+        "memory_allocated_MB": 1601.2,
+        "max_memory_allocated_MB": 2176.87,
+        "max_memory_reserved_MB": 3482.0
+      },
+      "step": 0,
+      "loss": 10.9897,
+      "time_s": 1.042
+    },
+    {
+      "gpu_0": {
+        "memory_allocated_MB": 947.1,
+        "max_memory_allocated_MB": 1179.84,
+        "max_memory_reserved_MB": 1346.0
+      },
+      "gpu_1": {
+        "memory_allocated_MB": 453.11,
+        "max_memory_allocated_MB": 641.52,
+        "max_memory_reserved_MB": 746.0
+      },
+      "gpu_2": {
+        "memory_allocated_MB": 342.71,
+        "max_memory_allocated_MB": 490.05,
+        "max_memory_reserved_MB": 586.0
+      },
+      "gpu_3": {
+        "memory_allocated_MB": 1610.95,
+        "max_memory_allocated_MB": 2586.83,
+        "max_memory_reserved_MB": 3482.0
+      },
+      "step": 1,
+      "loss": 10.9995,
+      "time_s": 0.273
+    },
+    {
+      "gpu_0": {
+        "memory_allocated_MB": 947.1,
+        "max_memory_allocated_MB": 1179.84,
+        "max_memory_reserved_MB": 1346.0
+      },
+      "gpu_1": {
+        "memory_allocated_MB": 453.11,
+        "max_memory_allocated_MB": 641.52,
+        "max_memory_reserved_MB": 746.0
+      },
+      "gpu_2": {
+        "memory_allocated_MB": 342.71,
+        "max_memory_allocated_MB": 490.05,
+        "max_memory_reserved_MB": 586.0
+      },
+      "gpu_3": {
+        "memory_allocated_MB": 1610.95,
+        "max_memory_allocated_MB": 2586.83,
+        "max_memory_reserved_MB": 3482.0
+      },
+      "step": 2,
+      "loss": 10.9798,
+      "time_s": 0.35
+    },
+    {
+      "gpu_0": {
+        "memory_allocated_MB": 947.1,
+        "max_memory_allocated_MB": 1179.84,
+        "max_memory_reserved_MB": 1346.0
+      },
+      "gpu_1": {
+        "memory_allocated_MB": 453.11,
+        "max_memory_allocated_MB": 641.52,
+        "max_memory_reserved_MB": 746.0
+      },
+      "gpu_2": {
+        "memory_allocated_MB": 342.71,
+        "max_memory_allocated_MB": 490.05,
+        "max_memory_reserved_MB": 586.0
+      },
+      "gpu_3": {
+        "memory_allocated_MB": 1610.95,
+        "max_memory_allocated_MB": 2586.83,
+        "max_memory_reserved_MB": 3482.0
+      },
+      "step": 3,
+      "loss": 11.0062,
+      "time_s": 0.335
+    },
+    {
+      "gpu_0": {
+        "memory_allocated_MB": 947.1,
+        "max_memory_allocated_MB": 1179.84,
+        "max_memory_reserved_MB": 1346.0
+      },
+      "gpu_1": {
+        "memory_allocated_MB": 453.11,
+        "max_memory_allocated_MB": 641.52,
+        "max_memory_reserved_MB": 746.0
+      },
+      "gpu_2": {
+        "memory_allocated_MB": 342.71,
+        "max_memory_allocated_MB": 490.05,
+        "max_memory_reserved_MB": 586.0
+      },
+      "gpu_3": {
+        "memory_allocated_MB": 1610.95,
+        "max_memory_allocated_MB": 2586.83,
+        "max_memory_reserved_MB": 3482.0
+      },
+      "step": 4,
+      "loss": 11.0078,
+      "time_s": 2.644
+    },
+    {
+      "gpu_0": {
+        "memory_allocated_MB": 947.1,
+        "max_memory_allocated_MB": 1179.84,
+        "max_memory_reserved_MB": 1346.0
+      },
+      "gpu_1": {
+        "memory_allocated_MB": 453.11,
+        "max_memory_allocated_MB": 641.52,
+        "max_memory_reserved_MB": 746.0
+      },
+      "gpu_2": {
+        "memory_allocated_MB": 342.71,
+        "max_memory_allocated_MB": 491.55,
+        "max_memory_reserved_MB": 586.0
+      },
+      "gpu_3": {
+        "memory_allocated_MB": 1610.95,
+        "max_memory_allocated_MB": 2586.83,
+        "max_memory_reserved_MB": 3482.0
+      },
+      "step": 5,
+      "loss": 11.018,
+      "time_s": 0.245
+    },
+    {
+      "gpu_0": {
+        "memory_allocated_MB": 947.1,
+        "max_memory_allocated_MB": 1179.84,
+        "max_memory_reserved_MB": 1346.0
+      },
+      "gpu_1": {
+        "memory_allocated_MB": 453.11,
+        "max_memory_allocated_MB": 641.52,
+        "max_memory_reserved_MB": 746.0
+      },
+      "gpu_2": {
+        "memory_allocated_MB": 342.71,
+        "max_memory_allocated_MB": 491.55,
+        "max_memory_reserved_MB": 586.0
+      },
+      "gpu_3": {
+        "memory_allocated_MB": 1610.95,
+        "max_memory_allocated_MB": 2586.83,
+        "max_memory_reserved_MB": 3482.0
+      },
+      "step": 6,
+      "loss": 11.0305,
+      "time_s": 0.237
+    },
+    {
+      "gpu_0": {
+        "memory_allocated_MB": 947.1,
+        "max_memory_allocated_MB": 1179.84,
+        "max_memory_reserved_MB": 1346.0
+      },
+      "gpu_1": {
+        "memory_allocated_MB": 453.11,
+        "max_memory_allocated_MB": 641.52,
+        "max_memory_reserved_MB": 746.0
+      },
+      "gpu_2": {
+        "memory_allocated_MB": 342.71,
+        "max_memory_allocated_MB": 491.55,
+        "max_memory_reserved_MB": 586.0
+      },
+      "gpu_3": {
+        "memory_allocated_MB": 1610.95,
+        "max_memory_allocated_MB": 2586.83,
+        "max_memory_reserved_MB": 3482.0
+      },
+      "step": 7,
+      "loss": 11.0084,
+      "time_s": 0.242
+    },
+    {
+      "gpu_0": {
+        "memory_allocated_MB": 947.1,
+        "max_memory_allocated_MB": 1179.84,
+        "max_memory_reserved_MB": 1346.0
+      },
+      "gpu_1": {
+        "memory_allocated_MB": 453.11,
+        "max_memory_allocated_MB": 641.52,
+        "max_memory_reserved_MB": 746.0
+      },
+      "gpu_2": {
+        "memory_allocated_MB": 342.71,
+        "max_memory_allocated_MB": 491.55,
+        "max_memory_reserved_MB": 586.0
+      },
+      "gpu_3": {
+        "memory_allocated_MB": 1610.95,
+        "max_memory_allocated_MB": 2586.83,
+        "max_memory_reserved_MB": 3482.0
+      },
+      "step": 8,
+      "loss": 11.0025,
+      "time_s": 0.262
+    },
+    {
+      "gpu_0": {
+        "memory_allocated_MB": 947.1,
+        "max_memory_allocated_MB": 1179.84,
+        "max_memory_reserved_MB": 1346.0
+      },
+      "gpu_1": {
+        "memory_allocated_MB": 453.11,
+        "max_memory_allocated_MB": 641.52,
+        "max_memory_reserved_MB": 746.0
+      },
+      "gpu_2": {
+        "memory_allocated_MB": 342.71,
+        "max_memory_allocated_MB": 491.55,
+        "max_memory_reserved_MB": 586.0
+      },
+      "gpu_3": {
+        "memory_allocated_MB": 1610.95,
+        "max_memory_allocated_MB": 2586.83,
+        "max_memory_reserved_MB": 3482.0
+      },
+      "step": 9,
+      "loss": 11.0201,
+      "time_s": 0.246
+    }
+  ],
+  "snapshot_files": [
+    "memory_reports/memory_snapshot_gpu0_final.pickle",
+    "memory_reports/memory_snapshot_gpu1_final.pickle",
+    "memory_reports/memory_snapshot_gpu2_final.pickle",
+    "memory_reports/memory_snapshot_gpu3_final.pickle"
+  ],
+  "profiler_trace_dir": "memory_reports/torch_profiler_trace"
+}
