@@ -18,8 +18,7 @@ from torchgpipe import GPipe
 from transformers import GPT2Config
 
 # ──────────────────────── Configuration ────────────────────────
-NUM_GPUS = torch.cuda.device_count()
-assert NUM_GPUS >= 2, f"Need at least 2 GPUs, found {NUM_GPUS}"
+NUM_GPUS = 4#FIXED aka torch.cuda.device_count()
 
 BATCH_SIZE = 8
 MICRO_BATCHES = NUM_GPUS       # chunks for pipeline parallelism
@@ -255,14 +254,8 @@ def train():
     # ── Loss function (on last GPU) ──
     last_device = torch.device(f"cuda:{NUM_GPUS - 1}")
 
-    os.makedirs(profile_dir, exist_ok=True)
-
-    all_step_reports = []
-
     print(f"\n[INFO] Starting training for {NUM_STEPS} steps...")
     print(f"[INFO] Batch size={BATCH_SIZE}, Seq len={SEQ_LEN}, Micro-batches={MICRO_BATCHES}")
-
-
 
     for step in range(NUM_STEPS):
         t0 = time.time()
@@ -290,27 +283,15 @@ def train():
         loss.backward()
         optimizer.step()
 
-        # Step profiler
-        prof.step()
-
         dt = time.time() - t0
 
         print(f"  Step {step:3d}  |  Loss: {loss.item():.4f}  |  Time: {dt:.3f}s")
-
-        # Collect per-step memory
-        step_report["step"] = step
-        step_report["loss"] = round(loss.item(), 4)
-        step_report["time_s"] = round(dt, 3)
-        all_step_reports.append(step_report)
-
-
 
     # ── Dump memory snapshots ──
     snapshot_paths = dump_memory_snapshot_all_gpus("final")
 
     # ── Stop memory history ──
     stop_memory_history_all_gpus()
-
 
     print("[INFO] To view memory snapshots, use:")
     print("  https://pytorch.org/memory_viz  (upload the .pickle files)")
