@@ -1,0 +1,46 @@
+\usepackage{lipsum}
+\usepackage{array}
+\usepackage[ruled,vlined]{algorithm2e}
+\def\sectionautorefname{Section}
+\def\subsectionautorefname{Section}
+\def\subsubsectionautorefname{Section}
+\def\algorithmautorefname{Algorithm}
+\def\enableplaceholder{0}
+
+\usepackage{caption}
+\captionsetup[table]{skip=5pt}
+
+\usepackage{stfloats}
+
+\if\enableplaceholder1
+\newcommand\shortplaceholder{\lipsum[4]}
+\newcommand\longplaceholder{\lipsum[1]}
+\else
+\newcommand\shortplaceholder{\vspace{10pt}}
+\newcommand\longplaceholder{\vspace{10pt}}
+\fi
+
+\newcommand\towrite[1]{\noindent \textcolor{red}{{\bf [#1]}}}
+\newcommand\frost[1]{\noindent[\textcolor{red}{frost: #1}]}
+
+\newcommand\hans[1]{\noindent[\textcolor{blue}{hans: #1}]}
+
+\newcommand{\cmtt}[1]{{\fontfamily{cmtt}\selectfont #1}}
+\newcommand{\torchgpipe}{\rm\cmtt{torchgpipe}}
+
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\eps}{\epsilon}
+\newcommand{\grad}{\nabla}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ot}{\leftarrow}
+\DeclareMathOperator{\E}{\mathbb{E}}
+
+% Prevent breaking in these words:
+\hyphenation{GPipe}
+\hyphenation{PyTorch}
+\hyphenation{Python}

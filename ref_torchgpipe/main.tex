@@ -1,0 +1,99 @@
+%\documentclass[11pt,letterpaper]{article}
+\documentclass[10pt,twocolumn,letterpaper]{article}
+\pdfoutput=1
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+
+% Include other packages here, before hyperref.
+
+% If you comment hyperref and then uncomment it, you should delete
+% egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
+% run, let it finish, and you should be clear).
+\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
+
+\cvprfinalcopy % *** Uncomment this line for the final submission
+
+% \def\cvprPaperID{10414} % *** Enter the CVPR Paper ID here
+% \def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+% Pages are numbered in submission mode, and unnumbered in camera-ready
+% \ifcvprfinal\pagestyle{empty}\fi
+
+% custom definitions
+\usepackage{aux/custom}
+% \usepackage{authblk}
+
+\makeatletter
+\newcommand{\printfnsymbol}[1]{%
+  \textsuperscript{\@fnsymbol{#1}}%
+}
+\makeatother
+
+\begin{document}
+
+%%%%%%%%% TITLE
+\title{torchgpipe: On-the-fly Pipeline Parallelism for Training Giant Models}
+
+% \author[1]{Chiheon Kim\thanks{}}
+% \author[1]{Heungsub Lee\printfnsymbol{1}}
+% \author[1]{Myungryong Jeong}
+% \author[1]{Woonhyuk Baek}
+% \author[1]{Boogeon Yoon}
+% \author[1]{Ildoo Kim}
+% \author[2]{Sungbin Lim}
+% \author[1]{Sungwoong Kim}
+
+% \affil[1]{Kakao Brain \authorcr {\tt\small \{chiheon.kim, heungsub.lee, myungryong.jeong, wbaek, eric.yoon, ildoo.kim, swkim\}@kakaobrain.com}\vspace{1.5ex}}
+% \affil[2]{UNIST \authorcr {\tt\small\{\}}}
+
+\author{Chiheon Kim\textsuperscript{1}\thanks{Contributed equally.} \qquad Heungsub Lee\textsuperscript{1}\footnotemark[1]
+\qquad Myungryong Jeong\textsuperscript{1} \qquad Woonhyuk Baek\textsuperscript{1} \\
+Boogeon Yoon\textsuperscript{1} \qquad Ildoo Kim\textsuperscript{1} \qquad Sungbin Lim\textsuperscript{2}\thanks{This work was done while Sungbin Lim was at Kakao Brain.} \qquad Sungwoong Kim\textsuperscript{1}\\
+\textsuperscript{1}Kakao Brain \qquad \textsuperscript{2}UNIST \\
+\textsuperscript{1}{\tt\small \{chiheon.kim,heungsub.lee,myungryong.jeong,wbaek,eric.yoon,ildoo.kim,swkim\}@kakaobrain.com} \and \textsuperscript{2}{\tt\small sungbin@unist.ac.kr}
+% For a paper whose authors are all at the same institution,
+% omit the following lines up until the closing ``}''.
+% Additional authors and addresses can be added with ``\and'',
+% just like the second author.
+% To save space, use either the email address or home page, not both
+% \and
+% Heungsub Lee\\
+% Kakao Brain\\
+% {\tt\small heungsub.lee@kakaobrain.com}
+% \and
+% Myungryong Jeong\\ Kakao Brain\\ {\tt\small myungryong.jeong@kakaobrain.com} \and
+% Woonhyuk Baek\\ Kakao Brain \\ {\tt\small wbaek@kakaobrain.com} \and
+% Boogeon Yoon\\ Kakao Brain\\ {\tt\small eric.yoon@kakaobrain.com} \and
+% Ildoo Kim\\ Kakao Brain\\ {\tt\small ildoo.kim@kakaobrain.com} \and
+% Sungbin Lim\\ UNIST\\ {\tt\small sungbin@korea.ac.kr} \and
+% Sungwoong Kim\\ Kakao Brain\\ {\tt\small swkim@kakaobrain.com}
+}
+
+\maketitle
+%\thispagestyle{empty}
+
+%%%%%%%%% ABSTRACT
+\begin{abstract}
+We design and implement a ready-to-use library in PyTorch for performing micro-batch pipeline parallelism with checkpointing proposed by GPipe \cite{huang2019gpipe}. In particular, we develop a set of design components to enable pipeline-parallel gradient computation in PyTorch's define-by-run and eager execution environment. We show that each component is necessary to fully benefit from pipeline parallelism in such environment, and demonstrate the efficiency of the library by applying it to various network architectures including AmoebaNet-D \cite{real2019regularized} and U-Net \cite{RonnebergerFB15}. Our library is available at \url{https://github.com/kakaobrain/torchgpipe}.
+\end{abstract}
+
+%%%%%%%%% BODY TEXT
+
+\input{sections/1_introduction.tex}
+\input{sections/2_pipeline-parallel.tex}
+\input{sections/3_torchgpipe.tex}
+\input{sections/4_experiments.tex}
+\input{sections/5_conclusion.tex}
+
+{\small
+\bibliographystyle{ieee_fullname}
+\bibliography{aux/references}
+}
+
+\end{document}

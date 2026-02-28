@@ -1,0 +1,28 @@
+
+%===================================================================================================
+%===================================================================================================
+\section{Conclusion}
+\label{sec:conclusion}
+%===================================================================================================
+%===================================================================================================
+
+In this paper, we introduced {\torchgpipe}, a ready-to-use library in PyTorch for micro-batch pipeline parallelism with checkpointing proposed by GPipe \cite{huang2019gpipe}. This library is designed and implemented in PyTorch's define-by-run and eager execution environment. Ablation study and performance benchmarks presented in \autoref{sec:experiments} demonstrate that all components of {\torchgpipe} are essential to endeavor the desired advantanges of pipeline parallelism with checkpointing in eager execution environment. We believe that general principles we established in the paper apply to any other frameworks with eager execution environment.
+
+We tried to avoid going too deep into technical details involved in {\torchgpipe}. Our code is available at \url{https://github.com/kakaobrain/torchgpipe} for those who are interested in further details, and those who want to apply pipeline parallelism to their model in PyTorch.
+
+% JIT graph
+% FlexFlow 같은거
+% optimizing pipeline parallelism with skip connection
+
+% 마이크로배치 트레이드오프:
+% 일반적으로 같은 미니배치에서 마이크로배치 수가 많으면(각 마이크로배치의 크기가 줄어듦) 버블의 폭이 줄어들어 학습속도가 빨라진다. 하지만 마이크로배치 당 GPU 연산이 너무 가벼워질 정도로 수가 많아지면, CPU 타임라인이 GPU 타임라인을 앞질러서 손해를 보게 된다.
+
+% Ideally, pipeline parallelism is more efficient with larger number of micro-batches. This is because that the size of ``bubble'' is inversely proportional to the number of micro-batches as pointed out in \cite{huang2019gpipe}. However, too large number of micro-batches can harm GPU utilization. Firstly, GPU is designed for computing batch of jobs in parallel, so it is better to have bigger batch per kernel. Also, if there are too many kernels to issue, then CPU may not be fast enough to issue them to make GPUs busy. 
+
+% 마이크로배치 별 스트림 메모리 파편화
+% PyTorch의 CUDA caching allocator는 스트림 별로 캐시풀을 격리한다. 전체 캐시풀에 재활용할 수 있는 메모리 공간이 있어도, allocation하는 시점의 스트림에 해당하는 캐시풀에 공간이 없으면 새 메모리를 할당한다. 이는 메모리 파편화를 야기한다.
+% 마이크로배치 복사 별로 다른 스트림을 써서 activations on boundary 만큼 쉽게 재활용할 수 없는 메모리 공간이 생기는 문제가 있다.
+
+% There are several issues not addressed in the paper. Firstly, there is a trade-off of using many CUDA streams in PyTorch. This may cause memory fragmentation due to the behavior of caching allocator of PyTorch isolating the cached memory blocks per stream. 
+
+% Pipeline-1은 이터레이션 여러번 돌고 한 번 optimize하는 것보다 나을 게 없다.

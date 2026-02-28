@@ -1,0 +1,309 @@
+% https://github.com/pytorch/pytorch/blob/master/CITATION
+@inproceedings{paszke2017automatic,
+  title     = {Automatic Differentiation in {PyTorch}},
+  author    = {Paszke, Adam and Gross, Sam and Chintala, Soumith and Chanan, Gregory and Yang, Edward 
+  and DeVito, Zachary and Lin, Zeming and Desmaison, Alban and Antiga, Luca and Lerer, Adam},
+  booktitle = {NIPS Autodiff Workshop},
+  year      = {2017}
+}
+
+%% data parallelism
+@inproceedings{krizhevsky2012imagenet,
+  title={Imagenet classification with deep convolutional neural networks},
+  author={Krizhevsky, Alex and Sutskever, Ilya and Hinton, Geoffrey E},
+  booktitle={Advances in neural information processing systems},
+  pages={1097--1105},
+  year={2012}
+}
+
+@article{goyal2017accurate,
+  title={Accurate, large minibatch sgd: Training imagenet in 1 hour},
+  author={Goyal, Priya and Doll{\'a}r, Piotr and Girshick, Ross and Noordhuis, Pieter and Wesolowski, Lukasz and Kyrola, Aapo and Tulloch, Andrew and Jia, Yangqing and He, Kaiming},
+  journal={arXiv preprint arXiv:1706.02677},
+  year={2017}
+}
+
+@article{shallue2018measuring,
+  title={Measuring the effects of data parallelism on neural network training},
+  author={Shallue, Christopher J and Lee, Jaehoon and Antognini, Joe and Sohl-Dickstein, Jascha and Frostig, Roy and Dahl, George E},
+  journal={arXiv preprint arXiv:1811.03600},
+  year={2018}
+}
+
+%% model parallelism
+@inproceedings{dean2012large,
+  title={Large scale distributed deep networks},
+  author={Dean, Jeffrey and Corrado, Greg and Monga, Rajat and Chen, Kai and Devin, Matthieu and Mao, Mark and Ranzato, Marc'aurelio and Senior, Andrew and Tucker, Paul and Yang, Ke and others},
+  booktitle={Advances in neural information processing systems},
+  pages={1223--1231},
+  year={2012}
+}
+
+%% hybrid, different parallelism
+
+@article{krizhevsky2014one,
+  title={One weird trick for parallelizing convolutional neural networks},
+  author={Krizhevsky, Alex},
+  journal={arXiv preprint arXiv:1404.5997},
+  year={2014}
+}
+
+@InProceedings{pmlr-v80-jia18a,
+  title = 	 {Exploring Hidden Dimensions in Accelerating Convolutional Neural Networks},
+  author = 	 {Jia, Zhihao and Lin, Sina and Qi, Charles R. and Aiken, Alex},
+  booktitle = 	 {Proceedings of the 35th International Conference on Machine Learning},
+  pages = 	 {2274--2283},
+  year = 	 {2018},
+  editor = 	 {Dy, Jennifer and Krause, Andreas},
+  volume = 	 {80},
+  series = 	 {Proceedings of Machine Learning Research},
+  address = 	 {Stockholmsmässan, Stockholm Sweden},
+  month = 	 {10--15 Jul},
+  publisher = 	 {PMLR},
+  pdf = 	 {http://proceedings.mlr.press/v80/jia18a/jia18a.pdf},
+  url = 	 {http://proceedings.mlr.press/v80/jia18a.html},
+  abstract = 	 {The past few years have witnessed growth in the computational requirements for training deep convolutional neural networks. Current approaches parallelize training onto multiple devices by applying a single parallelization strategy (e.g., data or model parallelism) to all layers in a network. Although easy to reason about, these approaches result in suboptimal runtime performance in large-scale distributed training, since different layers in a network may prefer different parallelization strategies. In this paper, we propose layer-wise parallelism that allows each layer in a network to use an individual parallelization strategy. We jointly optimize how each layer is parallelized by solving a graph search problem. Our evaluation shows that layer-wise parallelism outperforms state-of-the-art approaches by increasing training throughput, reducing communication costs, achieving better scalability to multiple GPUs, while maintaining original network accuracy.}
+}
+
+%% Parallelism optimization
+
+@inproceedings{jia2018beyond,
+  title={Beyond data and model parallelism for deep neural networks},
+  author={Jia, Zhihao and Zaharia, Matei and Aiken, Alex},
+  year={2019},
+  booktitle={The Conference on Systems and Machine Learning (SysML)},
+}
+
+@inproceedings{mirhoseini2017device,
+  title={Device placement optimization with reinforcement learning},
+  author={Mirhoseini, Azalia and Pham, Hieu and Le, Quoc V and Steiner, Benoit and Larsen, Rasmus and Zhou, Yuefeng and Kumar, Naveen and Norouzi, Mohammad and Bengio, Samy and Dean, Jeff},
+  booktitle={Proceedings of the 34th International Conference on Machine Learning-Volume 70},
+  pages={2430--2439},
+  year={2017},
+  organization={JMLR. org}
+}
+
+@inproceedings{
+    mirhoseini2018a,
+    title={A Hierarchical Model for Device Placement},
+    author={Azalia Mirhoseini and Anna Goldie and Hieu Pham and Benoit Steiner and Quoc V. Le and Jeff Dean},
+    booktitle={International Conference on Learning Representations},
+    year={2018},
+    url={https://openreview.net/forum?id=Hkc-TeZ0W},
+}
+
+@article{zhou2019gdp,
+  title={GDP: Generalized Device Placement for Dataflow Graphs},
+  author={Zhou, Yanqi and Roy, Sudip and Abdolrashidi, Amirali and Wong, Daniel and Ma, Peter C and Xu, Qiumin and Zhong, Ming and Liu, Hanxiao and Goldie, Anna and Mirhoseini, Azalia and others},
+  journal={arXiv preprint arXiv:1910.01578},
+  year={2019}
+}
+
+%% checkpointing
+@article{chen2016training,
+  title={Training deep nets with sublinear memory cost},
+  author={Chen, Tianqi and Xu, Bing and Zhang, Chiyuan and Guestrin, Carlos},
+  journal={arXiv preprint arXiv:1604.06174},
+  year={2016}
+}
+
+@article{sohoni2019low,
+  title={Low-Memory Neural Network Training: A Technical Report},
+  author={Sohoni, Nimit Sharad and Aberger, Christopher Richard and Leszczynski, Megan and Zhang, Jian and R{\'e}, Christopher},
+  journal={arXiv preprint arXiv:1904.10631},
+  year={2019}
+}
+
+%% combined parallelism schemes
+
+@article{harlap2018pipedream,
+  title={Pipedream: Fast and efficient pipeline parallel dnn training},
+  author={Harlap, Aaron and Narayanan, Deepak and Phanishayee, Amar and Seshadri, Vivek and Devanur, Nikhil and Ganger, Greg and Gibbons, Phil},
+  journal={arXiv preprint arXiv:1806.03377},
+  year={2018}
+}
+
+
+@inproceedings{shazeer2018mesh,
+  title={Mesh-tensorflow: Deep learning for supercomputers},
+  author={Shazeer, Noam and Cheng, Youlong and Parmar, Niki and Tran, Dustin and Vaswani, Ashish and Koanantakool, Penporn and Hawkins, Peter and Lee, HyoukJoong and Hong, Mingsheng and Young, Cliff and others},
+  booktitle={Advances in Neural Information Processing Systems},
+  pages={10414--10423},
+  year={2018}
+}
+
+%% pipeline parallelism
+
+% This might be updated to the NeurIPS 2019 paper
+@inproceedings{huang2019gpipe,
+  title={Gpipe: Efficient training of giant neural networks using pipeline parallelism},
+  author={Huang, Yanping and Cheng, Youlong and Bapna, Ankur and Firat, Orhan and Chen, Dehao and Chen, Mia and Lee, HyoukJoong and Ngiam, Jiquan and Le, Quoc V and Wu, Yonghui and others},
+  booktitle={Advances in Neural Information Processing Systems},
+  pages={103--112},
+  year={2019}
+}
+
+@article{guan2019xpipe,
+  title={XPipe: Efficient Pipeline Model Parallelism for Multi-GPU DNN Training},
+  author={Guan, Lei and Yin, Wotao and Li, Dongsheng and Lu, Xicheng},
+  journal={arXiv preprint arXiv:1911.04610},
+  year={2019}
+}
+
+@inproceedings{li2018pipe,
+  title={Pipe-sgd: A decentralized pipelined sgd framework for distributed deep net training},
+  author={Li, Youjie and Yu, Mingchao and Li, Songze and Avestimehr, Salman and Kim, Nam Sung and Schwing, Alexander},
+  booktitle={Advances in Neural Information Processing Systems},
+  pages={8045--8056},
+  year={2018}
+}
+
+@article{huo2018decoupled,
+  title={Decoupled parallel backpropagation with convergence guarantee},
+  author={Huo, Zhouyuan and Gu, Bin and Yang, Qian and Huang, Heng},
+  journal={arXiv preprint arXiv:1804.10574},
+  year={2018}
+}
+
+
+%% Models
+% ResNet-101
+@inproceedings{he2016deep,
+  title={Deep residual learning for image recognition},
+  author={He, Kaiming and Zhang, Xiangyu and Ren, Shaoqing and Sun, Jian},
+  booktitle={Proceedings of the IEEE conference on computer vision and pattern recognition},
+  pages={770--778},
+  year={2016}
+}
+
+% AmoebaNet-D
+@inproceedings{real2019regularized,
+  title={Regularized evolution for image classifier architecture search},
+  author={Real, Esteban and Aggarwal, Alok and Huang, Yanping and Le, Quoc V},
+  booktitle={Proceedings of the AAAI Conference on Artificial Intelligence},
+  volume={33},
+  pages={4780--4789},
+  year={2019}
+}
+
+% GPT-2
+@article{radford2019language,
+  title={Language models are unsupervised multitask learners},
+  author={Radford, Alec and Wu, Jeffrey and Child, Rewon and Luan, David and Amodei, Dario and Sutskever, Ilya}
+}
+% Transformer
+@inproceedings{vaswani2017attention,
+  title={Attention is all you need},
+  author={Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and Gomez, Aidan N and Kaiser, {\L}ukasz and Polosukhin, Illia},
+  booktitle={Advances in neural information processing systems},
+  pages={5998--6008},
+  year={2017}
+}
+
+% Segmentation models
+@article{RonnebergerFB15,
+  author    = {Olaf Ronneberger and
+               Philipp Fischer and
+               Thomas Brox},
+  title     = {U-Net: Convolutional Networks for Biomedical Image Segmentation},
+  journal   = {MICCAI, Springer, LNCS},
+  volume    = {9351},
+  pages     = {234-241},
+  year      = {2015}
+}
+
+@article{MilletariNA16,
+  author    = {Fausto Milletari and
+               Nassir Navab and
+               Seyed{-}Ahmad Ahmadi},
+  title     = {V-Net: Fully Convolutional Neural Networks for Volumetric Medical
+               Image Segmentation},
+  journal   = {CoRR},
+  volume    = {abs/1606.04797},
+  year      = {2016},
+  url       = {http://arxiv.org/abs/1606.04797},
+  archivePrefix = {arXiv},
+  eprint    = {1606.04797},
+  timestamp = {Mon, 13 Aug 2018 16:48:14 +0200},
+  biburl    = {https://dblp.org/rec/bib/journals/corr/MilletariNA16},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+%% Misc
+% Block partitions
+@article{barany2015block,
+  title={Block partitions of sequences},
+  author={B{\'a}r{\'a}ny, Imre and Grinberg, Victor S},
+  journal={Israel Journal of Mathematics},
+  volume={206},
+  number={1},
+  pages={155--164},
+  year={2015},
+  publisher={Springer}
+}
+
+% Model pruning
+@inproceedings{han2015learning,
+  title={Learning both weights and connections for efficient neural network},
+  author={Han, Song and Pool, Jeff and Tran, John and Dally, William},
+  booktitle={Advances in neural information processing systems},
+  pages={1135--1143},
+  year={2015}
+}
+@inproceedings{alvarez2016learning,
+  title={Learning the number of neurons in deep networks},
+  author={Alvarez, Jose M and Salzmann, Mathieu},
+  booktitle={Advances in Neural Information Processing Systems},
+  pages={2270--2278},
+  year={2016}
+}
+% better architecture
+@article{howard2017mobilenets,
+  title={Mobilenets: Efficient convolutional neural networks for mobile vision applications},
+  author={Howard, Andrew G and Zhu, Menglong and Chen, Bo and Kalenichenko, Dmitry and Wang, Weijun and Weyand, Tobias and Andreetto, Marco and Adam, Hartwig},
+  journal={arXiv preprint arXiv:1704.04861},
+  year={2017}
+}
+@inproceedings{tan2019efficientnet,
+  title={EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks},
+  author={Tan, Mingxing and Le, Quoc},
+  booktitle={International Conference on Machine Learning},
+  pages={6105--6114},
+  year={2019}
+}
+% NAS with constrained resources
+@inproceedings{
+    cai2018proxylessnas,
+    title={Proxyless{NAS}: Direct Neural Architecture Search on Target Task and Hardware},
+    author={Han Cai and Ligeng Zhu and Song Han},
+    booktitle={International Conference on Learning Representations},
+    year={2019},
+    url={https://openreview.net/forum?id=HylVB3AqYm},
+}
+
+% CUDA programming guide
+@misc{
+    nvidia2007cuda,
+    title={{NVIDIA} {CUDA} Programming Guide 1.1},
+    year={2007},
+    author={NVIDIA},
+    howpublished="\href{http://developer.download.nvidia.com/compute/cuda/1_1/NVIDIA_CUDA_Programming_Guide_1.1.pdf}{(link)}"
+}
+
+% Batch Norm
+@InProceedings{pmlr-v37-ioffe15,
+  title = 	 {Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift},
+  author = 	 {Sergey Ioffe and Christian Szegedy},
+  booktitle = 	 {Proceedings of the 32nd International Conference on Machine Learning},
+  pages = 	 {448--456},
+  year = 	 {2015},
+  editor = 	 {Francis Bach and David Blei},
+  volume = 	 {37},
+  series = 	 {Proceedings of Machine Learning Research},
+  address = 	 {Lille, France},
+  month = 	 {07--09 Jul},
+  publisher = 	 {PMLR},
+  pdf = 	 {http://proceedings.mlr.press/v37/ioffe15.pdf},
+  url = 	 {http://proceedings.mlr.press/v37/ioffe15.html},
+  abstract = 	 {Training Deep Neural Networks is complicated by the fact that the distribution of each layer’s inputs changes during training, as the parameters of the previous layers change. This slows down the training by requiring lower learning rates and careful parameter initialization, and makes it notoriously hard to train models with saturating nonlinearities. We refer to this phenomenon as internal covariate shift, and address the problem by normalizing layer inputs. Our method draws its strength from making normalization a part of the model architecture and performing the normalization for each training mini-batch. Batch Normalization allows us to use much higher learning rates and be less careful about initialization, and in some cases eliminates the need for Dropout. Applied to a stateof-the-art image classification model, Batch Normalization achieves the same accuracy with 14 times fewer training steps, and beats the original model by a significant margin. Using an ensemble of batch-normalized networks, we improve upon the best published result on ImageNet classification: reaching 4.82% top-5 test error, exceeding the accuracy of human raters.}
+}

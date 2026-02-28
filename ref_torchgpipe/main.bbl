@@ -1,0 +1,187 @@
+\begin{thebibliography}{10}\itemsep=-1pt
+
+\bibitem{alvarez2016learning}
+Jose~M Alvarez and Mathieu Salzmann.
+\newblock Learning the number of neurons in deep networks.
+\newblock In {\em Advances in Neural Information Processing Systems}, pages
+  2270--2278, 2016.
+
+\bibitem{barany2015block}
+Imre B{\'a}r{\'a}ny and Victor~S Grinberg.
+\newblock Block partitions of sequences.
+\newblock {\em Israel Journal of Mathematics}, 206(1):155--164, 2015.
+
+\bibitem{cai2018proxylessnas}
+Han Cai, Ligeng Zhu, and Song Han.
+\newblock Proxyless{NAS}: Direct neural architecture search on target task and
+  hardware.
+\newblock In {\em International Conference on Learning Representations}, 2019.
+
+\bibitem{chen2016training}
+Tianqi Chen, Bing Xu, Chiyuan Zhang, and Carlos Guestrin.
+\newblock Training deep nets with sublinear memory cost.
+\newblock {\em arXiv preprint arXiv:1604.06174}, 2016.
+
+\bibitem{dean2012large}
+Jeffrey Dean, Greg Corrado, Rajat Monga, Kai Chen, Matthieu Devin, Mark Mao,
+  Marc'aurelio Ranzato, Andrew Senior, Paul Tucker, Ke Yang, et~al.
+\newblock Large scale distributed deep networks.
+\newblock In {\em Advances in neural information processing systems}, pages
+  1223--1231, 2012.
+
+\bibitem{goyal2017accurate}
+Priya Goyal, Piotr Doll{\'a}r, Ross Girshick, Pieter Noordhuis, Lukasz
+  Wesolowski, Aapo Kyrola, Andrew Tulloch, Yangqing Jia, and Kaiming He.
+\newblock Accurate, large minibatch sgd: Training imagenet in 1 hour.
+\newblock {\em arXiv preprint arXiv:1706.02677}, 2017.
+
+\bibitem{guan2019xpipe}
+Lei Guan, Wotao Yin, Dongsheng Li, and Xicheng Lu.
+\newblock Xpipe: Efficient pipeline model parallelism for multi-gpu dnn
+  training.
+\newblock {\em arXiv preprint arXiv:1911.04610}, 2019.
+
+\bibitem{han2015learning}
+Song Han, Jeff Pool, John Tran, and William Dally.
+\newblock Learning both weights and connections for efficient neural network.
+\newblock In {\em Advances in neural information processing systems}, pages
+  1135--1143, 2015.
+
+\bibitem{harlap2018pipedream}
+Aaron Harlap, Deepak Narayanan, Amar Phanishayee, Vivek Seshadri, Nikhil
+  Devanur, Greg Ganger, and Phil Gibbons.
+\newblock Pipedream: Fast and efficient pipeline parallel dnn training.
+\newblock {\em arXiv preprint arXiv:1806.03377}, 2018.
+
+\bibitem{howard2017mobilenets}
+Andrew~G Howard, Menglong Zhu, Bo Chen, Dmitry Kalenichenko, Weijun Wang,
+  Tobias Weyand, Marco Andreetto, and Hartwig Adam.
+\newblock Mobilenets: Efficient convolutional neural networks for mobile vision
+  applications.
+\newblock {\em arXiv preprint arXiv:1704.04861}, 2017.
+
+\bibitem{huang2019gpipe}
+Yanping Huang, Youlong Cheng, Ankur Bapna, Orhan Firat, Dehao Chen, Mia Chen,
+  HyoukJoong Lee, Jiquan Ngiam, Quoc~V Le, Yonghui Wu, et~al.
+\newblock Gpipe: Efficient training of giant neural networks using pipeline
+  parallelism.
+\newblock In {\em Advances in Neural Information Processing Systems}, pages
+  103--112, 2019.
+
+\bibitem{huo2018decoupled}
+Zhouyuan Huo, Bin Gu, Qian Yang, and Heng Huang.
+\newblock Decoupled parallel backpropagation with convergence guarantee.
+\newblock {\em arXiv preprint arXiv:1804.10574}, 2018.
+
+\bibitem{pmlr-v37-ioffe15}
+Sergey Ioffe and Christian Szegedy.
+\newblock Batch normalization: Accelerating deep network training by reducing
+  internal covariate shift.
+\newblock In Francis Bach and David Blei, editors, {\em Proceedings of the 32nd
+  International Conference on Machine Learning}, volume~37 of {\em Proceedings
+  of Machine Learning Research}, pages 448--456, Lille, France, 07--09 Jul
+  2015. PMLR.
+
+\bibitem{pmlr-v80-jia18a}
+Zhihao Jia, Sina Lin, Charles~R. Qi, and Alex Aiken.
+\newblock Exploring hidden dimensions in accelerating convolutional neural
+  networks.
+\newblock In Jennifer Dy and Andreas Krause, editors, {\em Proceedings of the
+  35th International Conference on Machine Learning}, volume~80 of {\em
+  Proceedings of Machine Learning Research}, pages 2274--2283,
+  Stockholmsmässan, Stockholm Sweden, 10--15 Jul 2018. PMLR.
+
+\bibitem{jia2018beyond}
+Zhihao Jia, Matei Zaharia, and Alex Aiken.
+\newblock Beyond data and model parallelism for deep neural networks.
+\newblock In {\em The Conference on Systems and Machine Learning (SysML)},
+  2019.
+
+\bibitem{krizhevsky2014one}
+Alex Krizhevsky.
+\newblock One weird trick for parallelizing convolutional neural networks.
+\newblock {\em arXiv preprint arXiv:1404.5997}, 2014.
+
+\bibitem{krizhevsky2012imagenet}
+Alex Krizhevsky, Ilya Sutskever, and Geoffrey~E Hinton.
+\newblock Imagenet classification with deep convolutional neural networks.
+\newblock In {\em Advances in neural information processing systems}, pages
+  1097--1105, 2012.
+
+\bibitem{mirhoseini2018a}
+Azalia Mirhoseini, Anna Goldie, Hieu Pham, Benoit Steiner, Quoc~V. Le, and Jeff
+  Dean.
+\newblock A hierarchical model for device placement.
+\newblock In {\em International Conference on Learning Representations}, 2018.
+
+\bibitem{mirhoseini2017device}
+Azalia Mirhoseini, Hieu Pham, Quoc~V Le, Benoit Steiner, Rasmus Larsen, Yuefeng
+  Zhou, Naveen Kumar, Mohammad Norouzi, Samy Bengio, and Jeff Dean.
+\newblock Device placement optimization with reinforcement learning.
+\newblock In {\em Proceedings of the 34th International Conference on Machine
+  Learning-Volume 70}, pages 2430--2439. JMLR. org, 2017.
+
+\bibitem{nvidia2007cuda}
+NVIDIA.
+\newblock {NVIDIA} {CUDA} programming guide 1.1.
+\newblock
+  \href{http://developer.download.nvidia.com/compute/cuda/1_1/NVIDIA_CUDA_Programming_Guide_1.1.pdf}{(link)},
+  2007.
+
+\bibitem{paszke2017automatic}
+Adam Paszke, Sam Gross, Soumith Chintala, Gregory Chanan, Edward Yang, Zachary
+  DeVito, Zeming Lin, Alban Desmaison, Luca Antiga, and Adam Lerer.
+\newblock Automatic differentiation in {PyTorch}.
+\newblock In {\em NIPS Autodiff Workshop}, 2017.
+
+\bibitem{radford2019language}
+Alec Radford, Jeffrey Wu, Rewon Child, David Luan, Dario Amodei, and Ilya
+  Sutskever.
+\newblock Language models are unsupervised multitask learners.
+
+\bibitem{real2019regularized}
+Esteban Real, Alok Aggarwal, Yanping Huang, and Quoc~V Le.
+\newblock Regularized evolution for image classifier architecture search.
+\newblock In {\em Proceedings of the AAAI Conference on Artificial
+  Intelligence}, volume~33, pages 4780--4789, 2019.
+
+\bibitem{RonnebergerFB15}
+Olaf Ronneberger, Philipp Fischer, and Thomas Brox.
+\newblock U-net: Convolutional networks for biomedical image segmentation.
+\newblock {\em MICCAI, Springer, LNCS}, 9351:234--241, 2015.
+
+\bibitem{shallue2018measuring}
+Christopher~J Shallue, Jaehoon Lee, Joe Antognini, Jascha Sohl-Dickstein, Roy
+  Frostig, and George~E Dahl.
+\newblock Measuring the effects of data parallelism on neural network training.
+\newblock {\em arXiv preprint arXiv:1811.03600}, 2018.
+
+\bibitem{shazeer2018mesh}
+Noam Shazeer, Youlong Cheng, Niki Parmar, Dustin Tran, Ashish Vaswani, Penporn
+  Koanantakool, Peter Hawkins, HyoukJoong Lee, Mingsheng Hong, Cliff Young,
+  et~al.
+\newblock Mesh-tensorflow: Deep learning for supercomputers.
+\newblock In {\em Advances in Neural Information Processing Systems}, pages
+  10414--10423, 2018.
+
+\bibitem{tan2019efficientnet}
+Mingxing Tan and Quoc Le.
+\newblock Efficientnet: Rethinking model scaling for convolutional neural
+  networks.
+\newblock In {\em International Conference on Machine Learning}, pages
+  6105--6114, 2019.
+
+\bibitem{vaswani2017attention}
+Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones,
+  Aidan~N Gomez, {\L}ukasz Kaiser, and Illia Polosukhin.
+\newblock Attention is all you need.
+\newblock In {\em Advances in neural information processing systems}, pages
+  5998--6008, 2017.
+
+\bibitem{zhou2019gdp}
+Yanqi Zhou, Sudip Roy, Amirali Abdolrashidi, Daniel Wong, Peter~C Ma, Qiumin
+  Xu, Ming Zhong, Hanxiao Liu, Anna Goldie, Azalia Mirhoseini, et~al.
+\newblock Gdp: Generalized device placement for dataflow graphs.
+\newblock {\em arXiv preprint arXiv:1910.01578}, 2019.
+
+\end{thebibliography}
