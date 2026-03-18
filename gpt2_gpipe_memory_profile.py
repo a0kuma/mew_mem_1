@@ -12,10 +12,17 @@ import os
 import json
 import time
 import datetime
+import re
 import torch
 import torch.nn as nn
 from torchgpipe import GPipe
 from transformers import GPT2Config
+from rich.pretty import pprint
+from rich.console import Console
+from rich.pretty import Pretty
+from rich.text import Text
+from rich.cells import cell_len
+from rich.style import Style
 
 # ──────────────────────── Configuration ────────────────────────
 NUM_GPUS = 4#FIXED aka torch.cuda.device_count()
@@ -33,6 +40,55 @@ print(f"[INFO] Found {NUM_GPUS} GPUs")
 for i in range(NUM_GPUS):
     props = torch.cuda.get_device_properties(i)
     print(f"  GPU {i}: {props.name}  |  {props.total_memory / 1024**3:.1f} GB")
+
+
+console = Console()
+def my_pprint(obj, keyword, background_color="red"):
+    with console.capture() as capture:
+        console.print(Pretty(obj))
+    output = capture.get()
+
+    pattern = re.compile(re.escape(keyword))
+    term_width = console.size.width
+
+    for line in output.splitlines():
+        src = Text.from_ansi(line)
+
+        if pattern.search(src.plain):
+            new_text = Text()
+
+            # 逐字保留原本 style，只加上 background
+            for i, ch in enumerate(src.plain):
+                orig_style = src.get_style_at_offset(console, i)
+
+                merged_style = Style(
+                    color=orig_style.color,
+                    bgcolor=background_color,
+                    bold=orig_style.bold,
+                    dim=orig_style.dim,
+                    italic=orig_style.italic,
+                    underline=orig_style.underline,
+                    blink=orig_style.blink,
+                    blink2=orig_style.blink2,
+                    reverse=orig_style.reverse,
+                    conceal=orig_style.conceal,
+                    strike=orig_style.strike,
+                    underline2=orig_style.underline2,
+                    frame=orig_style.frame,
+                    encircle=orig_style.encircle,
+                    overline=orig_style.overline,
+                    link=orig_style.link,
+                )
+                new_text.append(ch, style=merged_style)
+
+            # 補到 terminal 寬度，整行背景填滿
+            pad = max(0, term_width - cell_len(src.plain))
+            if pad:
+                new_text.append(" " * pad, style=Style(bgcolor=background_color))
+
+            console.print(new_text, overflow="crop", no_wrap=True)
+        else:
+            console.print(src, overflow="crop", no_wrap=True)
 
 
 # ──────────────────────── GPT-2 Pipeline Layers ────────────────
@@ -154,6 +210,10 @@ def build_pipeline(num_gpus: int):
         layer_norm_epsilon=1e-5,
     )
 
+    print("*****************************************************************")
+    print(config)
+    print("*****************************************************************")
+
     # Build a flat nn.Sequential: Embedding, 12x TransformerBlock, LMHead
     # Total modules = 1 (emb) + 12 (transformer) + 1 (head) = 14
     layers = []
@@ -162,6 +222,10 @@ def build_pipeline(num_gpus: int):
         layers.append(TransformerBlock(config))
     layers.append(LMHead(config))                               # module 13
 
+    print("*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/")
+    #pprint(layers)
+    my_pprint(layers,"TransformerBlock(")
+    print("*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/")
     model = nn.Sequential(*layers)
 
     # Balance: distribute 14 modules across num_gpus
