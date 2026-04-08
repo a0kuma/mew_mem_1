@@ -42,54 +42,6 @@ for i in range(NUM_GPUS):
     print(f"  GPU {i}: {props.name}  |  {props.total_memory / 1024**3:.1f} GB")
 
 
-console = Console()
-def my_pprint(obj, keyword, background_color="red"):
-    with console.capture() as capture:
-        console.print(Pretty(obj))
-    output = capture.get()
-
-    pattern = re.compile(re.escape(keyword))
-    term_width = console.size.width
-
-    for line in output.splitlines():
-        src = Text.from_ansi(line)
-
-        if pattern.search(src.plain):
-            new_text = Text()
-
-            # 逐字保留原本 style，只加上 background
-            for i, ch in enumerate(src.plain):
-                orig_style = src.get_style_at_offset(console, i)
-
-                merged_style = Style(
-                    color=orig_style.color,
-                    bgcolor=background_color,
-                    bold=orig_style.bold,
-                    dim=orig_style.dim,
-                    italic=orig_style.italic,
-                    underline=orig_style.underline,
-                    blink=orig_style.blink,
-                    blink2=orig_style.blink2,
-                    reverse=orig_style.reverse,
-                    conceal=orig_style.conceal,
-                    strike=orig_style.strike,
-                    underline2=orig_style.underline2,
-                    frame=orig_style.frame,
-                    encircle=orig_style.encircle,
-                    overline=orig_style.overline,
-                    link=orig_style.link,
-                )
-                new_text.append(ch, style=merged_style)
-
-            # 補到 terminal 寬度，整行背景填滿
-            pad = max(0, term_width - cell_len(src.plain))
-            if pad:
-                new_text.append(" " * pad, style=Style(bgcolor=background_color))
-
-            console.print(new_text, overflow="crop", no_wrap=True)
-        else:
-            console.print(src, overflow="crop", no_wrap=True)
-
 
 # ──────────────────────── GPT-2 Pipeline Layers ────────────────
 class EmbeddingBlock(nn.Module):
@@ -223,8 +175,7 @@ def build_pipeline(num_gpus: int):
     layers.append(LMHead(config))                               # module 13
 
     print("*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/")
-    #pprint(layers)
-    my_pprint(layers,"TransformerBlock(")
+    pprint(layers)
     print("*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/")
     model = nn.Sequential(*layers)
 
