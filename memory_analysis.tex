@@ -471,7 +471,10 @@ and \texttt{exp\_avg\_sq}. The elementwise square root used in the update
   \theta \leftarrow \theta - \eta \cdot \frac{m_t}{\sqrt{v_t} + \epsilon}
 \end{equation}
 is computed on the fly during \texttt{optimizer.step()} and is not stored as an additional state tensor.
-Therefore, the persistent AdamW state cost is exactly $2 \times$ the parameter size.
+Therefore, the persistent AdamW state cost is exactly $2 \times$ the parameter size. \texttt{torch._foreach_sqrt}
+does create a temporary tensor during the step; if a snapshot is taken immediately after
+\texttt{optimizer.step()}, that temporary allocation can still appear as live due to asynchronous
+kernel execution or allocator caching. This is a transient buffer, not a persistent optimizer state.
 
 Let $|\theta|$ be the number of parameter elements and $\beta$ the bytes per element. The memory terms are
 \begin{align}
@@ -490,17 +493,27 @@ In \texttt{iiiandadam.py}, \texttt{nn.Linear(10000, 1000)} has $10{,}000{,}000$ 
 ($40{,}000{,}000$ bytes) plus a 1,000 element bias. The snapshot
 \texttt{gpu\_memory\_snapshot-adam.pickle} is taken after \texttt{optimizer.step()} without clearing gradients.
 Its active blocks include four allocations of size $40{,}000{,}000$ bytes, matching
-the weight, its gradient, \texttt{exp\_avg}, and \texttt{exp\_avg\_sq}. This matches the
-$3 \times$ extra-over-params expectation when gradients remain live, with no additional
-persistent buffer attributable to a stored square root.
+the weight, its gradient, \texttt{exp\_avg}, and \texttt{exp\_avg\_sq}. The trace also shows
+\texttt{\_foreach\_sqrt} in the call stack, indicating a temporary buffer allocation for the
+step, but there is no additional long-lived $40{,}000{,}000$-byte block beyond those four.
+This matches the $3 \times$ extra-over-params expectation when gradients remain live.
 
 \noindent\textbf{GPT-2 GPipe snapshot.}
 In \texttt{gpt2\_gpipe\_memory\_profile.py}, the optimizer is also AdamW. The peak-memory analysis in
 Sections~\ref{sec:optimizer} and~\ref{sec:gradients} shows optimizer state tensors at exactly
 $2 \times$ the parameter total and gradients at $1 \times$ the parameter total on GPU\,0, which is
 the same $3 \times$ extra-over-params pattern. The device trace in
-\texttt{memory\_snapshot\_all\_final.pickle} contains Adam-related allocation events but no distinct,
+\texttt{memory\_snapshot\_all\_final.pickle} contains Adam-related allocation events, which can
+include transient \texttt{\_foreach\_sqrt} buffers depending on snapshot timing, but no distinct,
 long-lived buffer corresponding to a stored square root.
+
+\noindent\textbf{Peak vs. end-of-run snapshot.}
+The file \texttt{memory\_snapshot\_all\_final.pickle} is a single snapshot taken at the end of the
+training loop, so it can reflect a state after \texttt{optimizer.step()} and \texttt{zero\_grad()} where
+gradients are no longer live. In that case, only parameters and AdamW state remain (about $2\times$
+extra over params). The true peak for GPT-2 is determined by replaying the full allocation history
+(Section~\ref{sec:peak_method}); it occurs earlier during backward recomputation when gradients and
+checkpoint activations overlap, which is why the peak total exceeds the end-of-run snapshot.
 
 %=============================================================================
 \section{Conclusion}
