@@ -1,10 +1,13 @@
 import torch
 import torch.nn as nn
 
+if not torch.cuda.is_available():
+	raise SystemExit("CUDA is required for this demo.")
+
 torch.cuda.memory._record_memory_history()
 
-# 確保在 GPU 上執行
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# 只使用 GPU 0
+device = torch.device("cuda:0")
 
 print(f"初始 GPU 記憶體: {torch.cuda.memory_allocated(device) / 1024**2:.2f} MB")
 
@@ -32,5 +35,13 @@ print(f"執行第一次 optimizer.step() 後 GPU 記憶體: {torch.cuda.memory_a
 # 👆 這裡記憶體會暴增！因為 Adam 分配了 exp_avg 和 exp_avg_sq (2倍的模型大小)
 
 snapshot_file = "gpu_memory_snapshot-adam.pickle"
+torch.cuda.synchronize()
 torch.cuda.memory._dump_snapshot(snapshot_file)
+
+# 5. 清除梯度 (set_to_none) 後再存一份
+optimizer.zero_grad(set_to_none=True)
+torch.cuda.synchronize()
+snapshot_file_set_to_none = "do_the_set_to_none.pickle"
+torch.cuda.memory._dump_snapshot(snapshot_file_set_to_none)
+
 torch.cuda.memory._record_memory_history(enabled=None)

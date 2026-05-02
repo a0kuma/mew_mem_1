@@ -33,6 +33,7 @@ SEQ_LEN = 256
 NUM_STEPS = 10
 LEARNING_RATE = 3e-4
 OUTPUT_DIR = "memory_reports"
+SNAPSHOT_LABEL = "do_the_set_to_none"
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
@@ -214,57 +215,122 @@ def build_pipeline(num_gpus: int):
 def start_memory_history_all_gpus():
     """Start recording memory history on ALL GPUs."""
     print("[INFO] Starting memory history recording on all GPUs...")
-    for i in range(NUM_GPUS):
-        with torch.cuda.device(i):
-            torch.cuda.memory._record_memory_history(
-                max_entries=1048576
-            )
+    torch.cuda.memory._record_memory_history(
+        max_entries=1048576,
+        device=None,
+    )
 
 
 def dump_memory_snapshot_all_gpus(label: str):
-    """Dump memory snapshots for ALL GPUs, properly separated per GPU."""
+    """Dump a single snapshot that contains traces for all GPUs."""
     import pickle
-    snapshot_paths = []
-    
-    # 1. Take a single global snapshot
     global_snapshot = torch.cuda.memory._snapshot()
-    
-    # 2. Iterate and save filtered snapshots for each GPU separately
-    for i in range(NUM_GPUS):
-        path = os.path.join(OUTPUT_DIR, f"memory_snapshot_gpu{i}_{label}.pickle")
-        
-        # Filter device_traces so that only the trace for GPU i has data, others are empty lists
-        gpu_snapshot = global_snapshot.copy()
-        if "device_traces" in gpu_snapshot:
-            filtered_traces = []
-            for idx, trace_list in enumerate(global_snapshot["device_traces"]):
-                if idx == i:
-                    filtered_traces.append(trace_list)
-                else:
-                    filtered_traces.append([])
-            gpu_snapshot["device_traces"] = filtered_traces
-            
-        with open(path, "wb") as f:
-            pickle.dump(gpu_snapshot, f)
-            
-        snapshot_paths.append(path)
-        print(f"[INFO] Memory snapshot GPU {i} saved: {path}")
-        
-    # Optional: also save all-in-one snapshot for comparison
     all_path = os.path.join(OUTPUT_DIR, f"memory_snapshot_all_{label}.pickle")
     with open(all_path, "wb") as f:
         pickle.dump(global_snapshot, f)
     print(f"[INFO] Combined memory snapshot saved: {all_path}")
-        
-    return snapshot_paths
+    
+    return [all_path], global_snapshot
 
 
 def stop_memory_history_all_gpus():
     """Stop recording memory history on ALL GPUs."""
-    for i in range(NUM_GPUS):
-        with torch.cuda.device(i):
-            torch.cuda.memory._record_memory_history(enabled=None)
+    torch.cuda.memory._record_memory_history(enabled=None, device=None)
     print("[INFO] Stopped memory history recording on all GPUs.")
+
+
+def _collect_peak_alloc_events(snapshot: dict, device: int):
+    """Replay alloc/free history to find peak live allocations for one GPU."""
+    elements = []
+    actions = []
+    addr_to_alloc = {}
+    initially_allocated = []
+
+    device_traces = snapshot.get("device_traces", [])
+    if device >= len(device_traces):
+        return [], 0, None
+
+    for e in device_traces[device]:
+        action = e.get("action")
+        if action == "alloc":
+            elements.append(e)
+            addr_to_alloc[e.get("addr")] = len(elements) - 1
+            actions.append(len(elements) - 1)
+        elif action in ("free", "free_completed"):
+            addr = e.get("addr")
+            if addr in addr_to_alloc:
+                actions.append(addr_to_alloc[addr])
+                del addr_to_alloc[addr]
+            else:
+                elements.append(e)
+                initially_allocated.append(len(elements) - 1)
+                actions.append(len(elements) - 1)
+
+    for seg in snapshot.get("segments", []):
+        if seg.get("device") != device:
+            continue
+        for b in seg.get("blocks", []):
+            if b.get("state") != "active_allocated":
+                continue
+            addr = b.get("addr")
+            if addr in addr_to_alloc:
+                continue
+            elements.append({
+                "action": "alloc",
+                "addr": addr,
+                "size": b.get("requested_size", b.get("size")),
+                "frames": b.get("frames", []),
+                "stream": seg.get("stream"),
+                "time_us": None,
+            })
+            initially_allocated.append(len(elements) - 1)
+
+    active = set(initially_allocated)
+    total_mem = sum(elements[i].get("size", 0) for i in active)
+    max_total = total_mem
+    peak_active = set(active)
+    peak_step = None
+
+    for step, elem in enumerate(actions):
+        size = elements[elem].get("size", 0)
+        if elem in active:
+            active.remove(elem)
+            total_mem -= size
+        else:
+            active.add(elem)
+            total_mem += size
+        if total_mem > max_total:
+            max_total = total_mem
+            peak_active = set(active)
+            peak_step = step
+
+    peak_events = [elements[i] for i in sorted(peak_active)]
+    return peak_events, max_total, peak_step
+
+
+def export_peak_alloc_events(snapshot: dict, device: int, label: str):
+    """Export the live allocations at peak memory as JSON."""
+    peak_events, peak_bytes, peak_step = _collect_peak_alloc_events(snapshot, device)
+    out_path = os.path.join(OUTPUT_DIR, f"peak_alloc_events_gpu{device}_{label}.json")
+
+    def sanitize_event(e):
+        return {
+            "action": e.get("action"),
+            "addr": int(e.get("addr")) if e.get("addr") is not None else None,
+            "size": int(e.get("size", 0)),
+            "stream": e.get("stream"),
+            "time_us": e.get("time_us"),
+            "frames": e.get("frames", []),
+        }
+
+    with open(out_path, "w", encoding="utf-8") as f:
+        json.dump([sanitize_event(e) for e in peak_events], f, indent=2)
+
+    print(
+        f"[INFO] Peak alloc events GPU {device} saved: {out_path} "
+        f"(blocks={len(peak_events)}, bytes={peak_bytes}, step={peak_step})"
+    )
+    return out_path
 
 
 # ──────────────────────── Training Loop ────────────────────────
@@ -329,7 +395,8 @@ def train():
         print(f"  Step {step:3d}  |  Loss: {loss.item():.4f}  |  Time: {dt:.3f}s")
 
     # ── Dump memory snapshots ──
-    snapshot_paths = dump_memory_snapshot_all_gpus("final")
+    snapshot_paths, global_snapshot = dump_memory_snapshot_all_gpus(SNAPSHOT_LABEL)
+    export_peak_alloc_events(global_snapshot, 0, SNAPSHOT_LABEL)
 
     # ── Stop memory history ──
     stop_memory_history_all_gpus()
