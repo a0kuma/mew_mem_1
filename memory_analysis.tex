@@ -460,6 +460,49 @@ where:
 \end{equation}
 
 %=============================================================================
+\section{AdamW sqrt and the 2x vs 3x multiplier}
+\label{sec:adam_sqrt}
+%=============================================================================
+
+Both \texttt{gpt2\_gpipe\_memory\_profile.py} and \texttt{why\_adam\_times\_3\_here/iiiandadam.py} construct
+\texttt{torch.optim.AdamW}. AdamW maintains two persistent state tensors per parameter: \texttt{exp\_avg}
+and \texttt{exp\_avg\_sq}. The elementwise square root used in the update
+\begin{equation}
+  \theta \leftarrow \theta - \eta \cdot \frac{m_t}{\sqrt{v_t} + \epsilon}
+\end{equation}
+is computed on the fly during \texttt{optimizer.step()} and is not stored as an additional state tensor.
+Therefore, the persistent AdamW state cost is exactly $2 \times$ the parameter size.
+
+Let $|\theta|$ be the number of parameter elements and $\beta$ the bytes per element. The memory terms are
+\begin{align}
+  M_{\text{params}} &= |\theta| \, \beta \\
+  M_{\text{state}}  &= 2 |\theta| \, \beta \\
+  M_{\text{grads}}  &= |\theta| \, \beta \quad \text{(when gradients are live)}
+\end{align}
+so:
+\begin{align}
+  M_{\text{params}} + M_{\text{state}} &= 3 |\theta| \, \beta \quad \text{(2x extra over params)} \\
+  M_{\text{params}} + M_{\text{state}} + M_{\text{grads}} &= 4 |\theta| \, \beta \quad \text{(3x extra over params)}
+\end{align}
+
+\noindent\textbf{Adam demo snapshot.}
+In \texttt{iiiandadam.py}, \texttt{nn.Linear(10000, 1000)} has $10{,}000{,}000$ weights
+($40{,}000{,}000$ bytes) plus a 1,000 element bias. The snapshot
+\texttt{gpu\_memory\_snapshot-adam.pickle} is taken after \texttt{optimizer.step()} without clearing gradients.
+Its active blocks include four allocations of size $40{,}000{,}000$ bytes, matching
+the weight, its gradient, \texttt{exp\_avg}, and \texttt{exp\_avg\_sq}. This matches the
+$3 \times$ extra-over-params expectation when gradients remain live, with no additional
+persistent buffer attributable to a stored square root.
+
+\noindent\textbf{GPT-2 GPipe snapshot.}
+In \texttt{gpt2\_gpipe\_memory\_profile.py}, the optimizer is also AdamW. The peak-memory analysis in
+Sections~\ref{sec:optimizer} and~\ref{sec:gradients} shows optimizer state tensors at exactly
+$2 \times$ the parameter total and gradients at $1 \times$ the parameter total on GPU\,0, which is
+the same $3 \times$ extra-over-params pattern. The device trace in
+\texttt{memory\_snapshot\_all\_final.pickle} contains Adam-related allocation events but no distinct,
+long-lived buffer corresponding to a stored square root.
+
+%=============================================================================
 \section{Conclusion}
 \label{sec:conclusion}
 %=============================================================================
