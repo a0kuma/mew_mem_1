@@ -12,10 +12,17 @@ import os
 import json
 import time
 import datetime
+import re
 import torch
 import torch.nn as nn
 from torchgpipe import GPipe
 from transformers import GPT2Config
+from rich.pretty import pprint
+from rich.console import Console
+from rich.pretty import Pretty
+from rich.text import Text
+from rich.cells import cell_len
+from rich.style import Style
 
 # ──────────────────────── Configuration ────────────────────────
 NUM_GPUS = 4#FIXED aka torch.cuda.device_count()
@@ -33,6 +40,7 @@ print(f"[INFO] Found {NUM_GPUS} GPUs")
 for i in range(NUM_GPUS):
     props = torch.cuda.get_device_properties(i)
     print(f"  GPU {i}: {props.name}  |  {props.total_memory / 1024**3:.1f} GB")
+
 
 
 # ──────────────────────── GPT-2 Pipeline Layers ────────────────
@@ -154,6 +162,10 @@ def build_pipeline(num_gpus: int):
         layer_norm_epsilon=1e-5,
     )
 
+    print("*****************************************************************")
+    print(config)
+    print("*****************************************************************")
+
     # Build a flat nn.Sequential: Embedding, 12x TransformerBlock, LMHead
     # Total modules = 1 (emb) + 12 (transformer) + 1 (head) = 14
     layers = []
@@ -162,6 +174,9 @@ def build_pipeline(num_gpus: int):
         layers.append(TransformerBlock(config))
     layers.append(LMHead(config))                               # module 13
 
+    print("*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/")
+    pprint(layers)
+    print("*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/")
     model = nn.Sequential(*layers)
 
     # Balance: distribute 14 modules across num_gpus
@@ -207,14 +222,40 @@ def start_memory_history_all_gpus():
 
 
 def dump_memory_snapshot_all_gpus(label: str):
-    """Dump memory snapshots for ALL GPUs."""
+    """Dump memory snapshots for ALL GPUs, properly separated per GPU."""
+    import pickle
     snapshot_paths = []
+    
+    # 1. Take a single global snapshot
+    global_snapshot = torch.cuda.memory._snapshot()
+    
+    # 2. Iterate and save filtered snapshots for each GPU separately
     for i in range(NUM_GPUS):
         path = os.path.join(OUTPUT_DIR, f"memory_snapshot_gpu{i}_{label}.pickle")
-        with torch.cuda.device(i):
-            torch.cuda.memory._dump_snapshot(path)
+        
+        # Filter device_traces so that only the trace for GPU i has data, others are empty lists
+        gpu_snapshot = global_snapshot.copy()
+        if "device_traces" in gpu_snapshot:
+            filtered_traces = []
+            for idx, trace_list in enumerate(global_snapshot["device_traces"]):
+                if idx == i:
+                    filtered_traces.append(trace_list)
+                else:
+                    filtered_traces.append([])
+            gpu_snapshot["device_traces"] = filtered_traces
+            
+        with open(path, "wb") as f:
+            pickle.dump(gpu_snapshot, f)
+            
         snapshot_paths.append(path)
         print(f"[INFO] Memory snapshot GPU {i} saved: {path}")
+        
+    # Optional: also save all-in-one snapshot for comparison
+    all_path = os.path.join(OUTPUT_DIR, f"memory_snapshot_all_{label}.pickle")
+    with open(all_path, "wb") as f:
+        pickle.dump(global_snapshot, f)
+    print(f"[INFO] Combined memory snapshot saved: {all_path}")
+        
     return snapshot_paths
 
 
