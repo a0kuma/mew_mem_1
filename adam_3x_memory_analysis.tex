@@ -1,0 +1,611 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{tikz}
+\usepackage{tcolorbox}
+
+\geometry{margin=1in}
+
+\definecolor{codeblue}{rgb}{0.1,0.2,0.6}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.97,0.97,0.97}
+\definecolor{alertred}{rgb}{0.8,0.0,0.0}
+\definecolor{okgreen}{rgb}{0.0,0.5,0.0}
+
+\lstset{
+  language=Python,
+  backgroundcolor=\color{backcolour},
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{codeblue}\bfseries,
+  commentstyle=\color{codegray}\itshape,
+  stringstyle=\color{codepurple},
+  breaklines=true,
+  frame=single,
+  numbers=left,
+  numberstyle=\tiny\color{codegray},
+  showstringspaces=false,
+}
+
+\tcbuselibrary{skins,breakable}
+\newtcolorbox{insight}{
+  colback=yellow!10!white,
+  colframe=orange!70!black,
+  title=Key Insight,
+  fonttitle=\bfseries,
+}
+\newtcolorbox{bugbox}{
+  colback=red!5!white,
+  colframe=alertred,
+  title=Code Bug,
+  fonttitle=\bfseries,
+}
+
+\title{AdamW Optimizer Memory Overhead: \\
+       The 2X vs.\ 3X Controversy \\[0.5em]
+       \large Focusing on Peak (Maximum) Memory Usage}
+\author{}
+\date{May 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+A recurring question in GPU memory analysis is whether the AdamW optimizer
+occupies \emph{two} extra copies of the model parameters (2X) or
+\emph{three} extra copies (3X) at peak.  The 2X figure counts the two
+persistent state tensors---\texttt{exp\_avg} and \texttt{exp\_avg\_sq}.
+The 3X figure arises because \texttt{optimizer.step()} internally computes
+$\sqrt{v_t}$ via a \emph{temporary} tensor that is live \emph{during} the
+step but freed immediately after.  Since our analysis focuses on
+\textbf{maximum (peak) memory usage}, and the temporary tensor does occupy
+GPU memory at peak, the correct number for peak analysis is \textbf{3X}.
+This document traces the evidence through the repository code and explains
+the peak-detection algorithm.
+\end{abstract}
+
+%=============================================================================
+\tableofcontents
+\newpage
+
+%=============================================================================
+\section{Location of AdamW in the Codebase}
+\label{sec:location}
+%=============================================================================
+
+The \texttt{torch.optim.AdamW} optimizer appears in two scripts:
+
+\begin{table}[h]
+\centering
+\caption{Scripts that instantiate AdamW.}
+\label{tab:scripts}
+\begin{tabular}{lll}
+\toprule
+\textbf{File} & \textbf{Purpose} & \textbf{Relevant Line} \\
+\midrule
+\texttt{why\_adam\_times\_3\_here/iiiandadam.py}
+  & Isolated micro-benchmark; proves the 3X peak
+  & \texttt{optimizer = torch.optim.AdamW(\ldots)} \\
+\texttt{gpt2\_gpipe\_memory\_profile.py}
+  & Full GPT-2 pipeline-parallel training profiler
+  & \texttt{optimizer = torch.optim.AdamW(\ldots)} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Both scripts use the same API (\texttt{torch.optim.AdamW}), so the memory
+behaviour is identical in both.
+
+%=============================================================================
+\section{Background: AdamW Update Formula}
+\label{sec:formula}
+%=============================================================================
+
+Given a parameter tensor $\theta \in \mathbb{R}^n$ with gradient $g_t$ at
+step $t$, AdamW performs:
+\begin{align}
+  m_t &= \beta_1 m_{t-1} + (1 - \beta_1)\, g_t
+        \quad\text{(first moment, \texttt{exp\_avg})} \label{eq:m} \\
+  v_t &= \beta_2 v_{t-1} + (1 - \beta_2)\, g_t^2
+        \quad\text{(second moment, \texttt{exp\_avg\_sq})} \label{eq:v} \\
+  \hat{m}_t &= m_t / (1 - \beta_1^t)
+        \quad\text{(bias-corrected first moment)} \label{eq:mhat} \\
+  \hat{v}_t &= v_t / (1 - \beta_2^t)
+        \quad\text{(bias-corrected second moment)} \label{eq:vhat} \\
+  \theta_t &\leftarrow \theta_{t-1}
+            - \alpha \left(\frac{\hat{m}_t}{\sqrt{\hat{v}_t} + \epsilon}
+            + \lambda\,\theta_{t-1}\right) \label{eq:update}
+\end{align}
+
+The bias-correction for the second moment is absorbed into the learning
+rate in PyTorch's implementation, but the critical operation is
+\begin{equation}
+  \mathtt{denom} = \sqrt{v_t} + \epsilon
+  \label{eq:denom}
+\end{equation}
+which is computed as a \textbf{new tensor} before $\theta$ is updated.
+
+%=============================================================================
+\section{Memory Terminology: 1X, 2X, 3X}
+\label{sec:terminology}
+%=============================================================================
+
+Throughout this document we use the following shorthand.
+
+\begin{table}[h]
+\centering
+\caption{Memory multiplier notation. $P$ denotes the total size (in bytes)
+of \emph{all model parameters} on one GPU, using FP32.}
+\label{tab:notation}
+\begin{tabular}{cll}
+\toprule
+\textbf{Notation} & \textbf{Meaning} & \textbf{Example (FP32)} \\
+\midrule
+$1\mathrm{X} = P$   & One full copy of model parameters & \\
+$k\mathrm{X}$        & $k$ copies of model parameter size
+                     & $2\mathrm{X} = 2P$ bytes \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent\textbf{Important:} ``extra beyond model parameters'' means we
+count $m_t$, $v_t$, $\sqrt{v_t}$, and gradients as multiples of $P$, but
+\emph{not} $P$ itself.
+
+%=============================================================================
+\section{The 2X Claim: Two Persistent Optimizer State Tensors}
+\label{sec:2x}
+%=============================================================================
+
+When \texttt{optimizer.step()} is called for the \emph{first} time, AdamW
+lazily allocates the state tensors:
+
+\begin{itemize}
+  \item \textbf{\texttt{exp\_avg}} ($m_t$): same shape and dtype as the
+    parameter $\theta$. Size $= |\theta|\cdot\beta = P$ per parameter.
+  \item \textbf{\texttt{exp\_avg\_sq}} ($v_t$): same shape and dtype.
+    Size $= P$ per parameter.
+\end{itemize}
+
+These two tensors persist for the entire training run.  Their combined size
+is:
+\begin{equation}
+  \text{Persistent AdamW states} = |\mathtt{exp\_avg}| + |\mathtt{exp\_avg\_sq}|
+  = P + P = 2P = 2\mathrm{X}
+  \label{eq:2x}
+\end{equation}
+
+\medskip
+\noindent Evidence from \texttt{iiiandadam.py} (see Section~\ref{sec:iiiandadam}):
+\begin{quote}
+\textit{``記憶體會暴增！因為 Adam 分配了 \texttt{exp\_avg} 和
+\texttt{exp\_avg\_sq} (2倍的模型大小)''}
+\end{quote}
+The script observes this with \texttt{torch.cuda.memory\_allocated()} after
+\texttt{step()} completes.  Because \texttt{memory\_allocated()} reports
+the \emph{currently allocated} (not the \emph{peak during step}) bytes, it
+correctly shows $+2P$ after step.
+
+%=============================================================================
+\section{The 3X Peak: The Temporary \texorpdfstring{$\sqrt{v_t}$}{sqrt(v)}
+         Buffer}
+\label{sec:3x}
+%=============================================================================
+
+\subsection{Where the Extra Allocation Comes From}
+
+PyTorch's AdamW implementation (both the Python loop path and the C++
+kernel) computes the denominator as:
+\begin{lstlisting}[language=Python, caption={Simplified AdamW step kernel (illustrative).}]
+# Inside torch.optim.AdamW.step()  (simplified)
+exp_avg.mul_(beta1).add_(grad, alpha=1 - beta1)        # in-place update of m
+exp_avg_sq.mul_(beta2).addcmul_(grad, grad, value=1-beta2)  # in-place update of v
+
+# KEY LINE: creates a NEW temporary tensor for sqrt(v)
+denom = (exp_avg_sq.sqrt() / math.sqrt(bias_correction2)).add_(eps)
+
+step_size = lr / bias_correction1
+param.addcdiv_(exp_avg, denom, value=-step_size)       # update theta in-place
+# denom goes out of scope and is freed here
+\end{lstlisting}
+
+The call \texttt{exp\_avg\_sq.sqrt()} returns a \textbf{new tensor}
+(it does \emph{not} modify \texttt{exp\_avg\_sq} in-place).  This new
+tensor --- let us call it \texttt{sqrt\_buf} --- has the same shape and
+dtype as $v_t$ and thus occupies $P$ bytes.
+
+\subsection{Memory Picture at Peak vs.\ After Step}
+
+\begin{table}[h]
+\centering
+\caption{Live tensors at two critical moments during \texttt{optimizer.step()}.
+$G = P$ because gradients have the same shape as parameters.}
+\label{tab:peak_vs_after}
+\begin{tabular}{llcc}
+\toprule
+\textbf{Tensor} & \textbf{Description}
+  & \textbf{Live during step} & \textbf{Live after step} \\
+\midrule
+$\theta$              & Model parameters          & \checkmark & \checkmark \\
+$g_t$                 & Gradients                 & \checkmark & \checkmark \\
+\texttt{exp\_avg}     & First moment $m_t$        & \checkmark & \checkmark \\
+\texttt{exp\_avg\_sq} & Second moment $v_t$       & \checkmark & \checkmark \\
+\texttt{sqrt\_buf}    & $\sqrt{v_t}$ (temporary)  & \checkmark & \\
+\midrule
+\textbf{Extra beyond $\theta$} (in units of $P$)
+  & & $\mathbf{4P}$
+  & $\mathbf{3P}$ \\
+\textbf{Adam-specific extra} (excluding grads)
+  & & $\mathbf{3P = 3\mathrm{X}}$
+  & $\mathbf{2P = 2\mathrm{X}}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{insight}
+Because our analysis focuses on \textbf{maximum (peak) memory}, the
+correct multiplier for AdamW's overhead is \textbf{3X}, not 2X.  The
+2X figure is the \emph{sustained} post-step cost; the 3X figure is the
+\emph{transient peak} cost that occurs while \texttt{step()} is executing.
+\end{insight}
+
+%=============================================================================
+\section{Code Analysis}
+\label{sec:code}
+%=============================================================================
+
+\subsection{Isolated Micro-Benchmark: \texttt{iiiandadam.py}}
+\label{sec:iiiandadam}
+
+The file \texttt{why\_adam\_times\_3\_here/iiiandadam.py} is a self-contained
+script designed to isolate and observe AdamW's memory behaviour step by
+step.
+
+\begin{lstlisting}[caption={\texttt{why\_adam\_times\_3\_here/iiiandadam.py} (full script).}]
+import torch
+import torch.nn as nn
+
+torch.cuda.memory._record_memory_history()   # start tracing ALL alloc/free events
+
+device = torch.device("cuda")
+
+# Step 1: load model  ->  allocates P bytes
+model = nn.Linear(10000, 1000).to(device)
+# weight: 10000*1000*4 = 40,000,000 B  (~38.15 MB)
+# bias:      1000*4   =      4,000 B  (  ~0.004 MB)
+# Total P ~ 38.15 MB
+
+# Step 2: declare optimizer  ->  no GPU memory yet (lazy state init)
+optimizer = torch.optim.AdamW(model.parameters(), lr=1e-3)
+
+# Step 3: forward + backward  ->  gradients allocated (another P)
+dummy_input = torch.randn(16, 10000).to(device)
+output = model(dummy_input)
+loss = output.sum()
+loss.backward()
+# Alive: theta (P) + grads (P) = 2P
+
+# Step 4: first optimizer.step()
+#   SUSTAINED after: theta (P) + grads (P) + exp_avg (P) + exp_avg_sq (P) = 4P
+#   PEAK DURING:     theta (P) + grads (P) + exp_avg (P) + exp_avg_sq (P)
+#                              + sqrt_buf (P) = 5P
+optimizer.step()
+# torch.cuda.memory_allocated() reports 4P here (sustained, sqrt_buf freed)
+
+snapshot_file = "gpu_memory_snapshot-adam.pickle"
+torch.cuda.memory._dump_snapshot(snapshot_file)   # captures full event trace
+torch.cuda.memory._record_memory_history(enabled=None)
+\end{lstlisting}
+
+\paragraph{What \texttt{memory\_allocated()} shows vs.\ what the snapshot reveals.}
+The \texttt{print} statement after \texttt{optimizer.step()} calls
+\texttt{torch.cuda.memory\_allocated()}, which reports the bytes
+\emph{currently allocated} at that moment.  By then, \texttt{sqrt\_buf}
+has already been freed, so the readout is $4P$ (not $5P$).
+
+To observe the true peak --- which includes \texttt{sqrt\_buf} --- one
+must replay the full event trace stored in the snapshot using the
+\texttt{ref\_find\_max/MemoryViz.js} algorithm
+(Section~\ref{sec:peak_detection}).
+
+\subsection{GPT-2 Pipeline Profiler: \texttt{gpt2\_gpipe\_memory\_profile.py}}
+\label{sec:gpt2}
+
+The full training script follows the same pattern:
+
+\begin{lstlisting}[caption={AdamW usage in \texttt{gpt2\_gpipe\_memory\_profile.py} (abridged).},firstnumber=296]
+# Optimizer -- same API as iiiandadam.py
+optimizer = torch.optim.AdamW(pipe_model.parameters(), lr=LEARNING_RATE)
+
+# Training loop
+for step in range(NUM_STEPS):
+    logits = pipe_model(input_ids)           # forward through pipeline
+    loss   = nn.functional.cross_entropy(...)
+
+    # Backward group
+    optimizer.zero_grad()                    # clear stale gradients
+    loss.backward()                          # create fresh gradients
+    optimizer.step()                         # <- peak here (includes sqrt_buf)
+\end{lstlisting}
+
+\paragraph{Why \texttt{zero\_grad()} does not affect the peak.}
+\texttt{optimizer.zero\_grad()} is called \emph{before} \texttt{loss.backward()},
+so it merely clears \emph{stale} gradients from the previous iteration.
+Fresh gradients of size $P$ are re-created by \texttt{loss.backward()}.
+The peak still occurs during \texttt{optimizer.step()} with fresh gradients
+live:
+\begin{equation}
+  M_{\text{peak at step}} = P_\theta + P_g + P_{m} + P_{v} + P_{\sqrt{v}}
+  = 5P
+  \label{eq:5p}
+\end{equation}
+where ``extra due to Adam'' $= P_m + P_v + P_{\sqrt{v}} = 3P = 3\mathrm{X}$.
+
+\paragraph{Memory accounting in the full GPT-2 run (GPU 0).}
+From the companion document \texttt{memory\_analysis.tex}, the 96
+optimizer-state blocks (category B) sum to $226{,}811{,}904$ bytes $= 2
+\times 113{,}405{,}952$ bytes $= 2 \times P_{\text{GPU0}}$.  This is the
+\emph{sustained} 2X cost after step completes.  The 3X peak cost includes
+the transient \texttt{sqrt\_buf} which is not present in the final snapshot
+(it is freed within \texttt{step()}).
+
+%=============================================================================
+\section{Peak Memory Detection Methodology}
+\label{sec:peak_detection}
+%=============================================================================
+
+\subsection{Recording and Exporting the Trace}
+
+\begin{enumerate}
+  \item \textbf{Start recording.} \\
+        \texttt{torch.cuda.memory.\_record\_memory\_history()} registers a
+        callback that fires on every \texttt{cudaMalloc} and \texttt{cudaFree}
+        call.  Every event (address, size, stack trace, timestamp) is stored
+        in a ring buffer.
+
+  \item \textbf{Export the trace.} \\
+        \texttt{torch.cuda.memory.\_dump\_snapshot(path)} serialises the
+        ring buffer to a \texttt{.pickle} file.  The exported data structure
+        contains a \texttt{device\_traces} list --- one ordered list of
+        allocation events per GPU.
+
+  \item \textbf{Replay and find peak.} \\
+        \texttt{ref\_find\_max/MemoryViz.js} (function
+        \texttt{process\_alloc\_data}) replays the event trace to
+        reconstruct the memory-over-time curve and locate the exact peak.
+\end{enumerate}
+
+\subsection{\texttt{MemoryViz.js} Peak-Finding Algorithm}
+\label{sec:memviz}
+
+The algorithm (from \texttt{ref\_find\_max/MemoryViz.js}) works as follows:
+
+\begin{lstlisting}[language=JavaScript, caption={Simplified peak-finding loop
+  from \texttt{MemoryViz.js}.}]
+let total_mem = 0;
+let max_size  = 0;
+let peak_elem = null;
+const max_at_time = [];
+
+for (const elem of actions) {              // replay alloc/free events in order
+  const size = elements[elem].size;
+  const idx  = current.findLastIndex(x => x === elem);
+
+  if (idx === -1) {
+    // first occurrence -> allocation
+    add_allocation(elem);                  // total_mem += size
+    advance(1);                            // max_at_time.push(total_mem)
+  } else {
+    // second occurrence -> free
+    advance(1);
+    remove_allocation(elem);              // total_mem -= size
+  }
+
+  if (total_mem > max_size) {
+    max_size  = total_mem;
+    peak_elem = elem;                      // record which event caused the peak
+  }
+}
+
+// Identify peak timestep
+let peak_timestep = max_at_time.indexOf(Math.max(...max_at_time));
+
+// Collect all blocks alive at peak_timestep
+const peak_allocs = data.filter(d =>
+  d.timesteps[0] <= peak_timestep &&
+  peak_timestep  <= d.timesteps[d.timesteps.length - 1]
+);
+\end{lstlisting}
+
+\paragraph{Key property.}
+Because the trace records every \texttt{alloc} and \texttt{free}---including
+the transient \texttt{sqrt\_buf} allocation that appears and disappears
+\emph{inside} \texttt{optimizer.step()}---the algorithm correctly captures
+that the peak occurred while \texttt{sqrt\_buf} was live, even though
+\texttt{sqrt\_buf} does not appear in the final snapshot.
+
+The output (\texttt{peak\_alloc\_events\_GPU0.json}) lists every tensor
+alive at the peak timestep.  For the full GPT-2 run this comprises
+\textbf{282 blocks totalling 625.77\,MB} on GPU\,0.
+
+%=============================================================================
+\section{Code Bug: Unnecessary Per-GPU Loop in Memory Recording}
+\label{sec:bug}
+%=============================================================================
+
+\begin{bugbox}
+\texttt{gpt2\_gpipe\_memory\_profile.py} contains two helper functions that
+iterate over GPUs before calling the memory-recording API.  This loop is
+\textbf{unnecessary} in modern PyTorch and should be removed.
+\end{bugbox}
+
+\subsection{Current (Buggy) Code}
+
+\begin{lstlisting}[caption={Current implementation in
+  \texttt{gpt2\_gpipe\_memory\_profile.py} (lines 248--266).}]
+def start_memory_history_all_gpus():
+    """Start recording memory history on ALL GPUs."""
+    print("[INFO] Starting memory history recording on all GPUs...")
+    for i in range(NUM_GPUS):              # <-- loop is unnecessary
+        with torch.cuda.device(i):         # <-- context has no effect on API
+            torch.cuda.memory._record_memory_history(
+                max_entries=1048576
+            )
+
+def stop_memory_history_all_gpus():
+    """Stop recording memory history on ALL GPUs."""
+    for i in range(NUM_GPUS):              # <-- loop is unnecessary
+        with torch.cuda.device(i):
+            torch.cuda.memory._record_memory_history(enabled=None)
+    print("[INFO] Stopped memory history recording on all GPUs.")
+\end{lstlisting}
+
+\subsection{Why the Loop is Wrong}
+
+\texttt{torch.cuda.memory.\_record\_memory\_history()} is a \textbf{global
+process-level} call in modern PyTorch.  It enables memory event recording
+for \emph{all} CUDA devices at once.  The \texttt{with torch.cuda.device(i)}
+context manager sets the default device for operations such as tensor
+creation, but it does \textbf{not} scope the memory recording API to a
+single GPU.
+
+Consequently, the loop calls the same global function $\mathtt{NUM\_GPUS}$
+times.  Each call overwrites the previous setting, so only the behaviour
+of the \emph{last} iteration actually takes effect.  This is not harmful
+in practice (the last call enables recording on all GPUs as desired), but
+it is misleading and wasteful.
+
+\subsection{Corrected Code}
+
+\begin{lstlisting}[caption={Corrected implementation.}]
+def start_memory_history_all_gpus():
+    """Start recording memory history (global, covers all GPUs)."""
+    print("[INFO] Starting memory history recording on all GPUs...")
+    torch.cuda.memory._record_memory_history(max_entries=1048576)
+
+def stop_memory_history_all_gpus():
+    """Stop recording memory history."""
+    torch.cuda.memory._record_memory_history(enabled=None)
+    print("[INFO] Stopped memory history recording on all GPUs.")
+\end{lstlisting}
+
+Note that \texttt{dump\_memory\_snapshot\_all\_gpus()} is \emph{correctly}
+implemented: it calls \texttt{torch.cuda.memory.\_snapshot()} \emph{once}
+to obtain the global snapshot and then filters it per GPU.
+
+%=============================================================================
+\section{Summary: 2X vs.\ 3X}
+\label{sec:summary}
+%=============================================================================
+
+\begin{table}[h]
+\centering
+\caption{AdamW memory overhead summary.  ``Extra'' is relative to model
+parameters $P$.}
+\label{tab:summary}
+\begin{tabular}{lccl}
+\toprule
+\textbf{Scenario} & \textbf{Extra (AdamW only)} & \textbf{Total on GPU} & \textbf{When} \\
+\midrule
+Declared, not yet stepped & $0$   & $P$          & after \texttt{AdamW(\ldots)} \\
+After \texttt{backward()}  & $0$   & $2P$         & grads live, no states yet \\
+\textbf{Sustained post-step} & $\mathbf{2P}$ & $4P$ & \texttt{exp\_avg} + \texttt{exp\_avg\_sq} \\
+\textbf{Peak during step}    & $\mathbf{3P}$ & $5P$ & $+$ transient \texttt{sqrt\_buf} \\
+\midrule
+\multicolumn{4}{l}{\textbf{Correct answer for peak analysis: 3X}} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{equation}
+\boxed{
+  M_{\text{peak}}^{\text{AdamW}} = P + \underbrace{P}_{\text{grads}}
+  + \underbrace{P + P}_{\text{exp\_avg} + \text{exp\_avg\_sq}}
+  + \underbrace{P}_{\sqrt{v_t}\text{ (temp)}}
+  = 5P
+}
+\label{eq:peak_total}
+\end{equation}
+
+\noindent where the \emph{AdamW-specific} extra (beyond $\theta$ and $g$) is
+$3P = 3\mathrm{X}$.
+
+\medskip
+\noindent\textbf{Why \texttt{zero\_grad()} is irrelevant to the peak.}
+\texttt{optimizer.zero\_grad()} cannot reduce $M_\text{peak}$ because the
+peak happens \emph{inside} \texttt{optimizer.step()}, by which time
+\texttt{loss.backward()} has already created fresh gradients.  Whether
+\texttt{zero\_grad()} was called before or after the backward pass does not
+change what is live at the step-internal peak.
+
+%=============================================================================
+\section{Connection to the Full GPT-2 Analysis}
+\label{sec:connection}
+%=============================================================================
+
+The companion document \texttt{memory\_analysis.tex} analyses the peak
+GPU\,0 memory of the full GPT-2 GPipe training run.  The 282 blocks are
+split into:
+
+\begin{itemize}
+  \item \textbf{(A) Parameters}: $4 \times P_\text{block} = 113{,}405{,}952$\,B
+  \item \textbf{(B) AdamW states}: $2 \times 4 \times P_\text{block} = 226{,}811{,}904$\,B
+        (the \emph{sustained} 2X cost)
+  \item \textbf{(F) Gradients}: $4 \times P_\text{block} = 113{,}405{,}952$\,B
+\end{itemize}
+
+The transient \texttt{sqrt\_buf} (3rd extra $P$) is \emph{not} present in
+the final snapshot used for that analysis, because the snapshot was taken
+\emph{after} the training loop completed.  However, during any training
+step, the true peak was $5P$ per partition, consistent with the 3X
+conclusion above.
+
+%=============================================================================
+\section{Conclusion}
+\label{sec:conclusion}
+%=============================================================================
+
+\begin{enumerate}
+  \item AdamW is instantiated in \textbf{two places}: the isolated
+        test script \texttt{why\_adam\_times\_3\_here/iiiandadam.py} and
+        the full GPT-2 profiler \texttt{gpt2\_gpipe\_memory\_profile.py},
+        both using \texttt{torch.optim.AdamW}.
+
+  \item The two \emph{persistent} optimizer states (\texttt{exp\_avg},
+        \texttt{exp\_avg\_sq}) cost \textbf{2X} of the model size after
+        \texttt{step()} completes.
+
+  \item The Adam update formula requires $\sqrt{v_t}$, which is computed
+        as a \emph{new tensor} (not in-place).  This temporary buffer adds
+        another \textbf{1X} during the step, bringing the \textbf{peak
+        AdamW overhead to 3X}.
+
+  \item Because this analysis focuses on \textbf{maximum (peak) memory},
+        the correct figure is \textbf{3X}.  Post-step persistence,
+        \texttt{zero\_grad()}, and whether a tensor is ``kept'' after the
+        step are all irrelevant to the peak.
+
+  \item The \textbf{peak-detection algorithm} in
+        \texttt{ref\_find\_max/MemoryViz.js} replays the alloc/free event
+        trace and identifies the timestep of maximum total allocation,
+        correctly capturing transient tensors.
+
+  \item A \textbf{code bug} exists in \texttt{gpt2\_gpipe\_memory\_profile.py}:
+        the per-GPU loop in \texttt{start\_memory\_history\_all\_gpus()} and
+        \texttt{stop\_memory\_history\_all\_gpus()} is unnecessary because
+        \texttt{torch.cuda.memory.\_record\_memory\_history()} is a single
+        global call in modern PyTorch.
+\end{enumerate}
+
+\end{document}
