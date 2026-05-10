@@ -25,8 +25,7 @@ from rich.cells import cell_len
 from rich.style import Style
 
 # ──────────────────────── Configuration ────────────────────────
-NUM_GPUS = 4#FIXED aka torch.cuda.device_count()
-
+NUM_GPUS = 4
 BATCH_SIZE = 8
 MICRO_BATCHES = NUM_GPUS       # chunks for pipeline parallelism
 SEQ_LEN = 256
