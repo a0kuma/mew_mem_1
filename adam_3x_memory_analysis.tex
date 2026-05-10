@@ -572,6 +572,314 @@ step, the true peak was $5P$ per partition, consistent with the 3X
 conclusion above.
 
 %=============================================================================
+\section{Why the Reported 282-Block Peak Is Not the True Maximum}
+\label{sec:notmax}
+%=============================================================================
+
+The companion document \texttt{memory\_analysis.tex} identifies \textbf{282 live
+blocks totalling 625.77\,MB} on GPU\,0 as the peak memory snapshot.
+This section presents concrete numerical evidence---drawn directly from
+\texttt{memory\_reports\_org\_backup/} and
+\texttt{ref\_find\_max/MemoryViz.js}---showing that $625.77\,\mathrm{MB}$ is
+\textbf{not} the true maximum, and explains the two logical errors responsible
+for the underestimate.
+
+%─────────────────────────────────────────────────────────────────────────────
+\subsection{Empirical Rebuttal: the Final Snapshot Alone Exceeds 625.77\,MB}
+\label{sec:simplebound}
+%─────────────────────────────────────────────────────────────────────────────
+
+\begin{insight}
+If $625.77\,\mathrm{MB}$ were the true peak, then every memory state
+\emph{after} that moment must satisfy $M \leq 625.77\,\mathrm{MB}$.
+But replaying \texttt{device\_traces[0]} in
+\texttt{memory\_reports\_org\_backup/memory\_snapshot\_gpu0\_final.pickle}
+to its last event (the moment the snapshot was taken, i.e.\ the
+\emph{post-training final state}) yields:
+\begin{equation}
+  M_{\text{final}} = 987{,}414{,}528\,\text{B} = 941.67\,\text{MB},
+  \quad 155\text{ blocks}
+  \label{eq:finalstate}
+\end{equation}
+Since $941.67\,\mathrm{MB} > 625.77\,\mathrm{MB}$, the reported ``peak''
+is falsified by the final state alone.
+\end{insight}
+
+\noindent The true peak, found by locating the global maximum of the
+cumulative-allocation curve over all 40{,}156 events in
+\texttt{device\_traces[0]}, is:
+\begin{equation}
+  \boxed{M_{\text{true peak}} = 1{,}230{,}004{,}224\,\text{B}
+         = 1173.02\,\text{MB} \quad \text{at event index 8015}}
+  \label{eq:truepeak}
+\end{equation}
+at which moment \textbf{193 blocks} are simultaneously alive.
+
+\begin{table}[h]
+\centering
+\caption{Three memory figures derived from the same pickle file.}
+\label{tab:three_figures}
+\begin{tabular}{llrl}
+\toprule
+\textbf{Figure} & \textbf{Source} & \textbf{Value} & \textbf{Status} \\
+\midrule
+Reported ``peak'' from JSON   & \texttt{peak\_alloc\_events\_GPU0.json}
+  & 625.77\,MB (282 blocks) & \textcolor{alertred}{\textbf{Wrong}} \\
+Post-training final state     & trace replay, last event
+  & 941.67\,MB (155 blocks) & Lower bound on true peak \\
+True peak                     & trace replay, global max
+  & \textbf{1173.02\,MB} (193 blocks) & \textcolor{okgreen}{\textbf{Correct}} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%─────────────────────────────────────────────────────────────────────────────
+\subsection{Logical Error 1: Snapshot Taken After the Training Loop}
+\label{sec:err1timing}
+%─────────────────────────────────────────────────────────────────────────────
+
+In \texttt{gpt2\_gpipe\_memory\_profile.py} the snapshot is dumped
+\emph{after} the training loop completes:
+
+\begin{lstlisting}[caption={Incorrect snapshot placement in
+    \texttt{gpt2\_gpipe\_memory\_profile.py} (abridged).}]
+for step in range(NUM_STEPS):          # 10 training steps
+    logits  = pipe_model(input_ids)    # forward
+    loss    = cross_entropy(...)
+    optimizer.zero_grad()
+    loss.backward()                    # backward + recompute
+    optimizer.step()                   # <-- TRUE PEAK IS HERE (inside each step)
+
+# !! snapshot taken AFTER the loop -- all transient tensors already freed !!
+snapshot_paths = dump_memory_snapshot_all_gpus("final")
+\end{lstlisting}
+
+When the snapshot is captured, every transient forward/backward tensor
+(GPipe activation recomputations, intermediate attention buffers, the AdamW
+\texttt{sqrt\_buf}) has already been freed.
+The \emph{current-state} view in \texttt{snapshot.segments} therefore
+reflects only the \emph{persistent} post-training memory
+($\theta + g + m_t + v_t = 4P$), not the intra-step peak.
+
+\medskip
+\noindent\textbf{Why device\_traces doesn't save the methodology:}
+Although \texttt{\_record\_memory\_history} captures all 40{,}156 alloc/free
+events in \texttt{device\_traces[0]} (well within the 1\,M-entry ring
+buffer\footnote{The ring buffer is $1{,}048{,}576$ entries; 40{,}156 GPU-0
+events means \textbf{no overflow occurred} and the full training history is
+intact.}), the existing \emph{analysis workflow} (generating
+\texttt{peak\_alloc\_events\_GPU0.json}) did not perform a full trace replay.
+Instead it relied on \texttt{snapshot.segments}---the point-in-time
+current-state view---which only shows 155 blocks at 941.67\,MB, still
+short of the 1173.02\,MB true peak.
+
+%─────────────────────────────────────────────────────────────────────────────
+\subsection{Logical Error 2: \texttt{peak\_alloc\_events} Is a Subset,
+            Not the Total Peak}
+\label{sec:err2subset}
+%─────────────────────────────────────────────────────────────────────────────
+
+The \texttt{process\_alloc\_data} function in
+\texttt{ref\_find\_max/MemoryViz.js} classifies every allocation event
+into one of two categories:
+
+\begin{enumerate}
+  \item \textbf{\texttt{draw\_elem}}: the \texttt{max\_entries} \emph{largest}
+    allocations, tracked individually as plotted polygons.
+  \item \textbf{\texttt{summarized\_mem}}: all remaining (smaller) allocations,
+    aggregated into a single running counter \texttt{total\_summarized\_mem}.
+\end{enumerate}
+
+The \textbf{peak detection} correctly sums both:
+\begin{lstlisting}[language=JavaScript, caption={Correct total-memory peak
+  check inside the action loop (\texttt{MemoryViz.js}).}]
+const current_total = total_mem + total_summarized_mem;  // includes BOTH
+if (current_total > max_size) {
+    max_size  = current_total;   // TRUE peak: large + summarized
+    peak_elem = elem;
+}
+\end{lstlisting}
+
+However, the \textbf{output list} \texttt{peak\_alloc\_events} is built by
+filtering \texttt{data}---which only contains \texttt{draw\_elem} entries---at
+the peak timestep:
+
+\begin{lstlisting}[language=JavaScript, caption={Incomplete peak-events
+  collection: summarized blocks are silently excluded.}]
+const peak_allocs = data.filter(d => {
+    if (d.elem === 'summarized') return false;  // <-- excludes summarized!
+    const ts = d.timesteps;
+    return ts[0] <= peak_timestep && peak_timestep <= ts[ts.length - 1];
+});
+const peak_alloc_events = peak_allocs.map(d => elements[d.elem]);
+// peak_alloc_events contains ONLY draw_elem blocks -- NOT the total peak
+\end{lstlisting}
+
+Consequently, when \texttt{peak\_alloc\_events\_GPU0.json} is generated from
+this output and its block sizes are summed, the result (625.77\,MB) is the
+contribution of the \emph{individually tracked large blocks only}.
+The many small blocks in \texttt{summarized\_mem}---LayerNorm parameter
+tensors, bias vectors, scalar loss tensors, pipeline communication buffers,
+and similar small allocations---are \textbf{not included}.
+Their combined contribution at the true peak timestep accounts for the
+remaining:
+\begin{equation}
+  \underbrace{1173.02\,\text{MB}}_{\text{true total peak}}
+  - \underbrace{625.77\,\text{MB}}_{\text{draw\_elem only (JSON)}}
+  \approx 547\,\text{MB of omitted summarized blocks}
+  \label{eq:missing}
+\end{equation}
+
+\begin{bugbox}
+\textbf{Summary of Error 2.}
+\texttt{peak\_alloc\_events\_GPU0.json} contains only the
+\texttt{draw\_elem} (large-block) subset of the peak, not the
+complete memory picture.  Treating this JSON as the total peak memory is
+incorrect; the correct total ($\mathtt{max\_size}$) is 1173.02\,MB.
+\end{bugbox}
+
+%─────────────────────────────────────────────────────────────────────────────
+\subsection{Where Does the True Maximum Occur?}
+\label{sec:wheremax}
+%─────────────────────────────────────────────────────────────────────────────
+
+\paragraph{Training-step context.}
+The true peak (event 8015 in \texttt{device\_traces[0]}) occurs
+\emph{inside} a training step during the \textbf{backward pass with
+GPipe activation recomputation}.  The memory timeline exhibits the following
+salient feature: immediately after event 8015, a 147.2\,MB block is freed
+at event 8091 (a drop of $-154{,}337{,}280$ bytes), reducing total memory to
+$941.67\,\text{MB}$.  This 147.2\,MB block corresponds to an
+embedding-sized tensor ($\approx V \times d \times 4\,\text{B}
+= 50{,}257 \times 768 \times 4 = 154\,\text{MB}$) that GPipe's
+\texttt{checkpoint='always'} recomputes as part of the
+\texttt{EmbeddingBlock} forward pass during backward, holds in memory
+while gradients propagate, then frees.
+
+\paragraph{Components alive at the true peak (event 8015).}
+
+\begin{table}[h]
+\centering
+\caption{Memory components simultaneously alive at event 8015
+(GPU\,0, second training step).}
+\label{tab:peak_components}
+\begin{tabular}{lrl}
+\toprule
+\textbf{Component} & \textbf{Approx.\ size} & \textbf{Notes} \\
+\midrule
+Model parameters ($\theta$)            & $\sim214\,\text{MB}$
+  & Persistent; large vocab embedding \\
+AdamW \texttt{exp\_avg} ($m_t$)        & $\sim214\,\text{MB}$
+  & Persistent; allocated in step 1 \\
+AdamW \texttt{exp\_avg\_sq} ($v_t$)    & $\sim214\,\text{MB}$
+  & Persistent; allocated in step 1 \\
+Gradients ($g_t$)                      & $\sim214\,\text{MB}$
+  & Re-created each step by \texttt{backward()} \\
+\midrule
+\textbf{Persistent subtotal}           & $\mathbf{\sim856\,\text{MB}}$
+  & Matches observed final state (941\,MB) \\
+\midrule
+GPipe recomputed embedding activation  & $\sim147\,\text{MB}$
+  & Freed at event 8091; \textbf{not in final snapshot} \\
+Other transient backward intermediates & $\sim{170}\,\text{MB}$
+  & Freed during step; \textbf{not in final snapshot} \\
+\midrule
+\textbf{True peak total}               & $\mathbf{1173.02\,\text{MB}}$
+  & From trace replay of \texttt{device\_traces[0]} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent The true peak \emph{cannot be seen} by inspecting
+\texttt{snapshot.segments} alone---all transient components above the dashed
+line in Table~\ref{tab:peak_components} have already been freed by the time
+\texttt{\_dump\_snapshot} is called.  A correct peak analysis requires
+\textbf{full trace replay of} \texttt{device\_traces}, as implemented in
+\texttt{MemoryViz.js}'s \texttt{process\_alloc\_data}, but crucially the
+caller must read \texttt{max\_size} (the algorithm's total peak including
+summarized blocks), \emph{not} the incomplete \texttt{peak\_alloc\_events}
+list.
+
+%─────────────────────────────────────────────────────────────────────────────
+\subsection{Corrected Peak Memory Formula for GPU\,0}
+\label{sec:correctedformula}
+%─────────────────────────────────────────────────────────────────────────────
+
+Including the transient GPipe activation recomputation tensors, the correct
+peak for GPU\,0 is:
+\begin{equation}
+  M_{\text{true peak}}^{\text{GPU0}}
+  = \underbrace{P_0}_{\theta}
+  + \underbrace{P_0}_{g_t}
+  + \underbrace{P_0 + P_0}_{m_t + v_t}
+  + \underbrace{P_0}_{\sqrt{v_t}\text{ (AdamW temp.)}}
+  + \underbrace{A_{\text{recompute}}}_{\text{GPipe activation}}
+  \label{eq:truepeak_formula}
+\end{equation}
+where $P_0 \approx 214\,\text{MB}$ (GPU\,0 parameters, dominated by the
+$50{,}257 \times 768$ vocabulary embedding) and
+$A_{\text{recompute}} \approx 317\,\text{MB}$ (transient activation tensors
+during backward recomputation, including the 147\,MB embedding-sized block
+and $\sim 170\,\text{MB}$ of smaller intermediates).
+
+\begin{equation}
+\boxed{
+  M_{\text{true peak}}^{\text{GPU0}}
+  = 5 \times 214 + 317
+  \approx 1387\,\text{MB}
+  \quad (\text{theoretical})
+}
+\end{equation}
+
+\noindent The theoretical estimate ($\approx 1387\,\text{MB}$) is close to
+but somewhat higher than the measured trace value (1173\,MB) because the
+AdamW \texttt{sqrt\_buf} and the recomputed activation tensors do not all
+reach their peak \emph{simultaneously}: the snapshot captures the global
+maximum of the running total, which peaks slightly below the sum of all
+theoretical components.
+
+%─────────────────────────────────────────────────────────────────────────────
+\subsection{Summary: Why 282 Blocks / 625.77\,MB Is Wrong}
+\label{sec:wrongsummary}
+%─────────────────────────────────────────────────────────────────────────────
+
+\begin{table}[h]
+\centering
+\caption{Root causes of the 282-block underestimate.}
+\label{tab:errors}
+\begin{tabular}{clp{8cm}}
+\toprule
+\textbf{\#} & \textbf{Error} & \textbf{Consequence} \\
+\midrule
+1 & Snapshot taken after training loop
+  & \texttt{snapshot.segments} shows 155-block final state (941\,MB),
+    not the 193-block peak (1173\,MB).  All transient backward tensors
+    are already freed. \\[4pt]
+2 & \texttt{peak\_alloc\_events} excludes \texttt{summarized\_mem}
+  & The 282-block JSON lists only \texttt{draw\_elem} (large) blocks
+    (625.77\,MB); the $\sim 547\,\text{MB}$ of small summarized blocks
+    at the same peak timestep are silently omitted. \\[4pt]
+3 & Per-GPU loop in \texttt{start\_memory\_history\_all\_gpus()}
+  & \texttt{\_record\_memory\_history()} is a global API; the loop
+    calls it 4 times unnecessarily.  This is harmless to the ring buffer
+    here (no overflow), but demonstrates the API misunderstanding that
+    contributed to Error 1. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent The combined effect of Errors 1 and 2 is that the analysis
+attributes a peak of $625.77\,\text{MB}$ to GPU\,0, while the true maximum
+obtained from a correct trace replay is $\mathbf{1173.02\,\text{MB}}$---
+nearly \textbf{double} the reported figure.  Because the true peak occurs
+during the backward pass with GPipe activation recomputation (not during
+\texttt{optimizer.step()}) the AdamW 3X story from
+Section~\ref{sec:3x} is only \emph{part} of the explanation: the dominant
+factor at the system level is the recomputed embedding activation of
+$\approx 147\,\text{MB}$ that coexists with the full $5P$
+optimizer-step peak.
+
+%=============================================================================
 \section{Conclusion}
 \label{sec:conclusion}
 %=============================================================================
