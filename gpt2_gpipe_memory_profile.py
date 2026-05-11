@@ -23,6 +23,10 @@ from rich.pretty import Pretty
 from rich.text import Text
 from rich.cells import cell_len
 from rich.style import Style
+import pyfiglet
+import pickle
+
+console = Console()
 
 # ──────────────────────── Configuration ────────────────────────
 NUM_GPUS = 4
@@ -31,15 +35,9 @@ MICRO_BATCHES = NUM_GPUS       # chunks for pipeline parallelism
 SEQ_LEN = 256
 NUM_STEPS = 10
 LEARNING_RATE = 3e-4
-OUTPUT_DIR = "memory_reports"
+OUTPUT_DIR = f"memory_reports_{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}"
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
-
-print(f"[INFO] Found {NUM_GPUS} GPUs")
-for i in range(NUM_GPUS):
-    props = torch.cuda.get_device_properties(i)
-    print(f"  GPU {i}: {props.name}  |  {props.total_memory / 1024**3:.1f} GB")
-
 
 
 # ──────────────────────── GPT-2 Pipeline Layers ────────────────
@@ -209,78 +207,12 @@ def build_pipeline(num_gpus: int):
     return pipe_model, config
 
 
-# ──────────────────────── Memory Helpers ───────────────────────
-def start_memory_history_all_gpus():
-    """Start recording memory history on ALL GPUs."""
-    print("[INFO] Starting memory history recording on all GPUs...")
-    for i in range(NUM_GPUS):
-        with torch.cuda.device(i):
-            torch.cuda.memory._record_memory_history(
-                max_entries=1048576
-            )
-
-
-def dump_memory_snapshot_all_gpus(label: str):
-    """Dump memory snapshots for ALL GPUs, properly separated per GPU."""
-    import pickle
-    snapshot_paths = []
-    
-    # 1. Take a single global snapshot
-    global_snapshot = torch.cuda.memory._snapshot()
-    
-    # 2. Iterate and save filtered snapshots for each GPU separately
-    for i in range(NUM_GPUS):
-        path = os.path.join(OUTPUT_DIR, f"memory_snapshot_gpu{i}_{label}.pickle")
-        
-        # Filter device_traces so that only the trace for GPU i has data, others are empty lists
-        gpu_snapshot = global_snapshot.copy()
-        if "device_traces" in gpu_snapshot:
-            filtered_traces = []
-            for idx, trace_list in enumerate(global_snapshot["device_traces"]):
-                if idx == i:
-                    filtered_traces.append(trace_list)
-                else:
-                    filtered_traces.append([])
-            gpu_snapshot["device_traces"] = filtered_traces
-            
-        with open(path, "wb") as f:
-            pickle.dump(gpu_snapshot, f)
-            
-        snapshot_paths.append(path)
-        print(f"[INFO] Memory snapshot GPU {i} saved: {path}")
-        
-    # Optional: also save all-in-one snapshot for comparison
-    all_path = os.path.join(OUTPUT_DIR, f"memory_snapshot_all_{label}.pickle")
-    with open(all_path, "wb") as f:
-        pickle.dump(global_snapshot, f)
-    print(f"[INFO] Combined memory snapshot saved: {all_path}")
-        
-    return snapshot_paths
-
-
-def stop_memory_history_all_gpus():
-    """Stop recording memory history on ALL GPUs."""
-    for i in range(NUM_GPUS):
-        with torch.cuda.device(i):
-            torch.cuda.memory._record_memory_history(enabled=None)
-    print("[INFO] Stopped memory history recording on all GPUs.")
-
 
 # ──────────────────────── Training Loop ────────────────────────
 def train():
-    # ── Start memory recording ──
-    start_memory_history_all_gpus()
-    # move up here
-    
-    
-    print("\n" + "=" * 80)
-    print("  GPT-2 Pipeline Parallel Training with Memory Profiling")
-    print("=" * 80)
 
-    # ── Reset memory stats ──
-    for i in range(NUM_GPUS):
-        torch.cuda.reset_peak_memory_stats(i)
-        torch.cuda.empty_cache()
+    console.print(Text(pyfiglet.figlet_format("start-train", font="slant"), style="bold cyan"))
+
 
     # ── Build model ──
     pipe_model, config = build_pipeline(NUM_GPUS)
@@ -327,11 +259,6 @@ def train():
 
         print(f"  Step {step:3d}  |  Loss: {loss.item():.4f}  |  Time: {dt:.3f}s")
 
-    # ── Dump memory snapshots ──
-    snapshot_paths = dump_memory_snapshot_all_gpus("final")
-
-    # ── Stop memory history ──
-    stop_memory_history_all_gpus()
 
     print("[INFO] To view memory snapshots, use:")
     print("  https://pytorch.org/memory_viz  (upload the .pickle files)")
@@ -339,4 +266,7 @@ def train():
 
 
 if __name__ == "__main__":
+    console.print(Text(pyfiglet.figlet_format("start-main", font="slant"), style="bold cyan"))
+    torch.cuda.memory._record_memory_history()
     train()
+    torch.cuda.memory._dump_snapshot("my_snapshot.pickle")
