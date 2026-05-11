@@ -35,10 +35,7 @@ MICRO_BATCHES = NUM_GPUS       # chunks for pipeline parallelism
 SEQ_LEN = 256
 NUM_STEPS = 10
 LEARNING_RATE = 3e-4
-OUTPUT_DIR = f"memory_reports_{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}"
-
-os.makedirs(OUTPUT_DIR, exist_ok=True)
-
+OUTPUT_FILE = f"memory_reports_{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}.pickle"
 
 # ──────────────────────── GPT-2 Pipeline Layers ────────────────
 class EmbeddingBlock(nn.Module):
@@ -210,10 +207,6 @@ def build_pipeline(num_gpus: int):
 
 # ──────────────────────── Training Loop ────────────────────────
 def train():
-
-    console.print(Text(pyfiglet.figlet_format("start-train", font="slant"), style="bold cyan"))
-
-
     # ── Build model ──
     pipe_model, config = build_pipeline(NUM_GPUS)
     pipe_model.train()
@@ -269,4 +262,4 @@ if __name__ == "__main__":
     console.print(Text(pyfiglet.figlet_format("start-main", font="slant"), style="bold cyan"))
     torch.cuda.memory._record_memory_history()
     train()
-    torch.cuda.memory._dump_snapshot("my_snapshot.pickle")
+    torch.cuda.memory._dump_snapshot(OUTPUT_FILE)
