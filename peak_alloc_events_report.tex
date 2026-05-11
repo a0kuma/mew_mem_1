@@ -1,0 +1,315 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{array}
+\begin{document}
+\section*{Peak Allocation Events}
+\small
+\begin{tabular}{ll}
+A & Model Parameters \
+B & Optimizer States (AdamW) \
+C & cuBLAS Workspace \
+D & Pipeline Boundary Copies \
+E & Gradient Boundary Copies \
+F & Parameter Gradients \
+G & Recomputed Activations \
+H & Final Backward Tensors \
+I & OTHERS \
+\end{tabular}
+\vspace{0.5em}
+\begin{longtable}{r l r p{6.5cm} r p{7.0cm}}
+\hline
+Idx & Cat & Size(B) & File & Line & Code \
+\hline
+\endfirsthead
+\hline
+Idx & Cat & Size(B) & File & Line & Code \
+\hline
+\endhead
+\hline
+\endfoot
+1 & A & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+2 & A & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+3 & A & 7077888 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+4 & A & 9216 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+5 & A & 2359296 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+6 & A & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+7 & A & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+8 & A & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+9 & A & 9437184 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+10 & A & 12288 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+11 & A & 9437184 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+12 & A & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+13 & A & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+14 & A & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+15 & A & 7077888 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+16 & A & 9216 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+17 & A & 2359296 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+18 & A & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+19 & A & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+20 & A & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+21 & A & 9437184 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+22 & A & 12288 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+23 & A & 9437184 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+24 & A & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+25 & A & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+26 & A & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+27 & A & 7077888 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+28 & A & 9216 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+29 & A & 2359296 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+30 & A & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+31 & A & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+32 & A & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+33 & A & 9437184 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+34 & A & 12288 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+35 & A & 9437184 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+36 & A & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+37 & A & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+38 & A & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+39 & A & 7077888 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+40 & A & 9216 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+41 & A & 2359296 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+42 & A & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+43 & A & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+44 & A & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+45 & A & 9437184 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+46 & A & 12288 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+47 & A & 9437184 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+48 & A & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 193 & \\texttt{    pipe\\_model = GPipe(} \
+49 & G & 8519680 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 90 & \\texttt{        qkv = self.c\\_attn(x)} \
+50 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+51 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+52 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+53 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+54 & B & 7077888 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+55 & B & 7077888 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+56 & B & 9216 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+57 & B & 9216 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+58 & B & 2359296 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+59 & B & 2359296 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+60 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+61 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+62 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+63 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+64 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+65 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+66 & B & 9437184 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+67 & B & 9437184 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+68 & B & 12288 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+69 & B & 12288 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+70 & B & 9437184 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+71 & B & 9437184 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+72 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+73 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+74 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+75 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+76 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+77 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+78 & B & 7077888 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+79 & B & 7077888 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+80 & B & 9216 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+81 & B & 9216 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+82 & B & 2359296 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+83 & B & 2359296 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+84 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+85 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+86 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+87 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+88 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+89 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+90 & B & 9437184 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+91 & B & 9437184 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+92 & B & 12288 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+93 & B & 12288 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+94 & B & 9437184 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+95 & B & 9437184 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+96 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+97 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+98 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+99 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+100 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+101 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+102 & B & 7077888 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+103 & B & 7077888 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+104 & B & 9216 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+105 & B & 9216 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+106 & B & 2359296 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+107 & B & 2359296 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+108 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+109 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+110 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+111 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+112 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+113 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+114 & B & 9437184 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+115 & B & 9437184 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+116 & B & 12288 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+117 & B & 12288 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+118 & B & 9437184 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+119 & B & 9437184 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+120 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+121 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+122 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+123 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+124 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+125 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+126 & B & 7077888 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+127 & B & 7077888 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+128 & B & 9216 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+129 & B & 9216 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+130 & B & 2359296 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+131 & B & 2359296 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+132 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+133 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+134 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+135 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+136 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+137 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+138 & B & 9437184 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+139 & B & 9437184 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+140 & B & 12288 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+141 & B & 12288 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+142 & B & 9437184 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+143 & B & 9437184 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+144 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+145 & B & 3072 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 249 & \\texttt{        optimizer.step()} \
+146 & D & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 236 & \\texttt{        logits = pipe\\_model(input\\_ids)} \
+147 & G & 8519680 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 90 & \\texttt{        qkv = self.c\\_attn(x)} \
+148 & D & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 236 & \\texttt{        logits = pipe\\_model(input\\_ids)} \
+149 & D & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 236 & \\texttt{        logits = pipe\\_model(input\\_ids)} \
+150 & G & 9437184 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+151 & G & 3072 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+152 & G & 9437184 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+153 & G & 12288 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+154 & G & 3072 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+155 & G & 3072 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+156 & G & 2359296 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+157 & G & 3072 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+158 & E & 1572864 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/copy.py} & 64 & \\texttt{                y = x.to(get\\_device(prev\\_stream))} \
+159 & G & 7077888 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+160 & G & 9216 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+161 & G & 3072 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+162 & G & 3072 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+163 & G & 9437184 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+164 & G & 3072 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+165 & G & 9437184 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+166 & G & 12288 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+167 & G & 3072 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+168 & G & 3072 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+169 & G & 2359296 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+170 & G & 3072 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+171 & G & 7077888 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+172 & G & 9216 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+173 & G & 3072 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+174 & G & 3072 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+175 & G & 9437184 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+176 & G & 3072 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+177 & G & 9437184 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+178 & G & 12288 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+179 & G & 3072 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+180 & G & 3072 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+181 & G & 2359296 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+182 & G & 3072 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+183 & G & 7077888 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+184 & G & 9216 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+185 & G & 3072 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+186 & G & 3072 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+187 & G & 9437184 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+188 & G & 3072 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+189 & G & 9437184 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+190 & G & 12288 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+191 & G & 3072 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+192 & G & 3072 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+193 & G & 2359296 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+194 & G & 3072 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+195 & G & 7077888 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+196 & G & 9216 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+197 & G & 3072 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+198 & G & 3072 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+199 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 70 & \\texttt{        x = x + self.attn(self.ln\\_1(x))} \
+200 & G & 2048 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 70 & \\texttt{        x = x + self.attn(self.ln\\_1(x))} \
+201 & G & 2048 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 70 & \\texttt{        x = x + self.attn(self.ln\\_1(x))} \
+202 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 97 & \\texttt{        attn = (q @ k.transpose(-2, -1)) * self.scale} \
+203 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 97 & \\texttt{        attn = (q @ k.transpose(-2, -1)) * self.scale} \
+204 & G & 65536 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 98 & \\texttt{        causal\\_mask = torch.triu(torch.ones(T, T, device=x.device, dtype=torch.bool), diagonal=1)} \
+205 & G & 6291456 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 100 & \\texttt{        attn = torch.softmax(attn, dim=-1)} \
+206 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 101 & \\texttt{        attn = self.attn\\_dropout(attn)} \
+207 & G & 6291456 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 101 & \\texttt{        attn = self.attn\\_dropout(attn)} \
+208 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 103 & \\texttt{        out = (attn @ v).transpose(1, 2).contiguous().view(B, T, C)} \
+209 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 103 & \\texttt{        out = (attn @ v).transpose(1, 2).contiguous().view(B, T, C)} \
+210 & G & 393216 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 104 & \\texttt{        out = self.resid\\_dropout(self.c\\_proj(out))} \
+211 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 70 & \\texttt{        x = x + self.attn(self.ln\\_1(x))} \
+212 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 71 & \\texttt{        x = x + self.mlp(self.ln\\_2(x))} \
+213 & G & 2048 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 71 & \\texttt{        x = x + self.mlp(self.ln\\_2(x))} \
+214 & G & 2048 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 71 & \\texttt{        x = x + self.mlp(self.ln\\_2(x))} \
+215 & G & 6291456 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 119 & \\texttt{        x = self.c\\_fc(x)} \
+216 & G & 6291456 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 120 & \\texttt{        x = self.act(x)} \
+217 & G & 393216 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 122 & \\texttt{        x = self.dropout(x)} \
+218 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 71 & \\texttt{        x = x + self.mlp(self.ln\\_2(x))} \
+219 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 70 & \\texttt{        x = x + self.attn(self.ln\\_1(x))} \
+220 & G & 2048 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 70 & \\texttt{        x = x + self.attn(self.ln\\_1(x))} \
+221 & G & 2048 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 70 & \\texttt{        x = x + self.attn(self.ln\\_1(x))} \
+222 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 97 & \\texttt{        attn = (q @ k.transpose(-2, -1)) * self.scale} \
+223 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 97 & \\texttt{        attn = (q @ k.transpose(-2, -1)) * self.scale} \
+224 & G & 65536 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 98 & \\texttt{        causal\\_mask = torch.triu(torch.ones(T, T, device=x.device, dtype=torch.bool), diagonal=1)} \
+225 & G & 6291456 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 100 & \\texttt{        attn = torch.softmax(attn, dim=-1)} \
+226 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 101 & \\texttt{        attn = self.attn\\_dropout(attn)} \
+227 & G & 6291456 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 101 & \\texttt{        attn = self.attn\\_dropout(attn)} \
+228 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 103 & \\texttt{        out = (attn @ v).transpose(1, 2).contiguous().view(B, T, C)} \
+229 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 103 & \\texttt{        out = (attn @ v).transpose(1, 2).contiguous().view(B, T, C)} \
+230 & G & 393216 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 104 & \\texttt{        out = self.resid\\_dropout(self.c\\_proj(out))} \
+231 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 70 & \\texttt{        x = x + self.attn(self.ln\\_1(x))} \
+232 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 71 & \\texttt{        x = x + self.mlp(self.ln\\_2(x))} \
+233 & G & 2048 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 71 & \\texttt{        x = x + self.mlp(self.ln\\_2(x))} \
+234 & G & 2048 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 71 & \\texttt{        x = x + self.mlp(self.ln\\_2(x))} \
+235 & G & 6291456 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 119 & \\texttt{        x = self.c\\_fc(x)} \
+236 & G & 6291456 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 120 & \\texttt{        x = self.act(x)} \
+237 & G & 393216 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 122 & \\texttt{        x = self.dropout(x)} \
+238 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 71 & \\texttt{        x = x + self.mlp(self.ln\\_2(x))} \
+239 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 70 & \\texttt{        x = x + self.attn(self.ln\\_1(x))} \
+240 & G & 2048 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 70 & \\texttt{        x = x + self.attn(self.ln\\_1(x))} \
+241 & G & 2048 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 70 & \\texttt{        x = x + self.attn(self.ln\\_1(x))} \
+242 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 97 & \\texttt{        attn = (q @ k.transpose(-2, -1)) * self.scale} \
+243 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 97 & \\texttt{        attn = (q @ k.transpose(-2, -1)) * self.scale} \
+244 & G & 65536 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 98 & \\texttt{        causal\\_mask = torch.triu(torch.ones(T, T, device=x.device, dtype=torch.bool), diagonal=1)} \
+245 & G & 6291456 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 100 & \\texttt{        attn = torch.softmax(attn, dim=-1)} \
+246 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 101 & \\texttt{        attn = self.attn\\_dropout(attn)} \
+247 & G & 6291456 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 101 & \\texttt{        attn = self.attn\\_dropout(attn)} \
+248 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 103 & \\texttt{        out = (attn @ v).transpose(1, 2).contiguous().view(B, T, C)} \
+249 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 103 & \\texttt{        out = (attn @ v).transpose(1, 2).contiguous().view(B, T, C)} \
+250 & G & 393216 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 104 & \\texttt{        out = self.resid\\_dropout(self.c\\_proj(out))} \
+251 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 70 & \\texttt{        x = x + self.attn(self.ln\\_1(x))} \
+252 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 71 & \\texttt{        x = x + self.mlp(self.ln\\_2(x))} \
+253 & G & 2048 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 71 & \\texttt{        x = x + self.mlp(self.ln\\_2(x))} \
+254 & G & 2048 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 71 & \\texttt{        x = x + self.mlp(self.ln\\_2(x))} \
+255 & G & 6291456 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 119 & \\texttt{        x = self.c\\_fc(x)} \
+256 & G & 6291456 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 120 & \\texttt{        x = self.act(x)} \
+257 & G & 393216 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 122 & \\texttt{        x = self.dropout(x)} \
+258 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 71 & \\texttt{        x = x + self.mlp(self.ln\\_2(x))} \
+259 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 70 & \\texttt{        x = x + self.attn(self.ln\\_1(x))} \
+260 & G & 2048 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 70 & \\texttt{        x = x + self.attn(self.ln\\_1(x))} \
+261 & G & 2048 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 70 & \\texttt{        x = x + self.attn(self.ln\\_1(x))} \
+262 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 97 & \\texttt{        attn = (q @ k.transpose(-2, -1)) * self.scale} \
+263 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 97 & \\texttt{        attn = (q @ k.transpose(-2, -1)) * self.scale} \
+264 & G & 65536 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 98 & \\texttt{        causal\\_mask = torch.triu(torch.ones(T, T, device=x.device, dtype=torch.bool), diagonal=1)} \
+265 & G & 6291456 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 100 & \\texttt{        attn = torch.softmax(attn, dim=-1)} \
+266 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 101 & \\texttt{        attn = self.attn\\_dropout(attn)} \
+267 & G & 6291456 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 101 & \\texttt{        attn = self.attn\\_dropout(attn)} \
+268 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 103 & \\texttt{        out = (attn @ v).transpose(1, 2).contiguous().view(B, T, C)} \
+269 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 103 & \\texttt{        out = (attn @ v).transpose(1, 2).contiguous().view(B, T, C)} \
+270 & G & 393216 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 104 & \\texttt{        out = self.resid\\_dropout(self.c\\_proj(out))} \
+271 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 70 & \\texttt{        x = x + self.attn(self.ln\\_1(x))} \
+272 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 71 & \\texttt{        x = x + self.mlp(self.ln\\_2(x))} \
+273 & G & 2048 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 71 & \\texttt{        x = x + self.mlp(self.ln\\_2(x))} \
+274 & G & 2048 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 71 & \\texttt{        x = x + self.mlp(self.ln\\_2(x))} \
+275 & G & 6291456 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 119 & \\texttt{        x = self.c\\_fc(x)} \
+276 & G & 6291456 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 120 & \\texttt{        x = self.act(x)} \
+277 & G & 1572864 & \\texttt{/home/r13922a13/mew\\_mem\\_1/gpt2\\_gpipe\\_memory\\_profile.py} & 71 & \\texttt{        x = x + self.mlp(self.ln\\_2(x))} \
+278 & G & 1572864 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+279 & G & 6291456 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+280 & G & 9437184 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+281 & G & 3072 & \\texttt{/home/r13922a13/anaconda3/envs/gpt2\\_gpipe\\_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py} & 269 & \\texttt{            torch.autograd.backward(tensors, grad\\_output)} \
+\end{longtable}
+\end{document}
