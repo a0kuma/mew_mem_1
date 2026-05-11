@@ -137,6 +137,14 @@ def classify_event(
     def has_name_lower(substr: str) -> bool:
         return any(substr in n.lower() for n in names)
 
+    checkpoint_lines = [
+        int(f.get("line") or 0)
+        for f in frames
+        if "torchgpipe/checkpoint.py" in (f.get("filename") or "")
+    ]
+    has_checkpoint_backward = any(258 <= ln <= 273 for ln in checkpoint_lines)
+    has_checkpoint_recompute = any(295 <= ln <= 308 for ln in checkpoint_lines)
+
     if has_name_lower("cublas") or any("cublas" in f.lower() for f in files) or any("cudnn" in f.lower() for f in files):
         return "C"
 
@@ -145,6 +153,12 @@ def classify_event(
             if "torchgpipe/copy.py" in (f.get("filename") or "") and "backward" in (f.get("name") or ""):
                 return "E"
         return "D"
+
+    if has_checkpoint_backward:
+        return "H"
+
+    if has_checkpoint_recompute:
+        return "G"
 
     if has_file("torchgpipe/checkpoint.py") or "checkpoint" in code_low or "recompute" in code_low:
         return "G"
@@ -166,13 +180,18 @@ def classify_event(
         or ("torchgpipe/gpipe.py" in selected_file and "split_module" in selected_name)
         or (selected_file.startswith(workspace_root) and 140 <= selected_line <= 210)
     ):
-        console.print(Text(pyfiglet.figlet_format("456", font="slant"), style="bold cyan"))
         return "A"
 
     if ".grad" in code_low or "param_grad" in code_low or "grad_applied" in code_low:
         return "F"
 
-    if has_file("/torch/autograd/graph.py") or has_file("/torch/autograd/__init__.py") or has_name("backward"):
+    if (
+        has_file("/torch/autograd/graph.py")
+        or has_file("/torch/autograd/__init__.py")
+        or has_name("backward")
+        or any("backward" in n.lower() for n in names)
+        or any("Backward" in n for n in names)
+    ):
         return "H"
 
     return "I"
