@@ -1,0 +1,36 @@
+diff --git a/gpt2_gpipe_memory_profile.py b/gpt2_gpipe_memory_profile.py
+index c013d65..e46e685 100644
+--- a/gpt2_gpipe_memory_profile.py
++++ b/gpt2_gpipe_memory_profile.py
+@@ -9,6 +9,7 @@ CUBLAS_WORKSPACE_CONFIG=:0:0
+ 
+ """
+ 
++from importlib.resources import path
+ import os
+ import json
+ import time
+@@ -26,6 +27,8 @@ from rich.cells import cell_len
+ from rich.style import Style
+ import pyfiglet
+ import pickle
++import wandb
++
+ 
+ console = Console()
+ 
+@@ -260,7 +263,13 @@ def train():
+ 
+ 
+ if __name__ == "__main__":
++    
+     console.print(Text(pyfiglet.figlet_format("start-main", font="slant"), style="bold cyan"))
+     torch.cuda.memory._record_memory_history()
+     train()
+     torch.cuda.memory._dump_snapshot(OUTPUT_FILE)
++
++    with wandb.init(project="my-project", save_code=True) as run:
++        artifact = wandb.Artifact("my-string-array", type="dataset")
++        artifact.add_file(OUTPUT_FILE)
++        run.log_artifact(artifact)
+\ No newline at end of file

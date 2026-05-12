@@ -1,0 +1,24 @@
+2026-05-13 03:04:21,590 INFO    MainThread:1717558 [wandb_setup.py:_flush():81] Current SDK version is 0.26.1
+2026-05-13 03:04:21,590 INFO    MainThread:1717558 [wandb_setup.py:_flush():81] Configure stats pid to 1717558
+2026-05-13 03:04:21,590 INFO    MainThread:1717558 [wandb_setup.py:_flush():81] Loading settings from environment variables
+2026-05-13 03:04:21,590 INFO    MainThread:1717558 [wandb_init.py:setup_run_log_directory():723] Logging user logs to /home/r13922a13/mew_mem_1/wandb/run-20260513_030421-f3owvnt7/logs/debug.log
+2026-05-13 03:04:21,590 INFO    MainThread:1717558 [wandb_init.py:setup_run_log_directory():724] Logging internal logs to /home/r13922a13/mew_mem_1/wandb/run-20260513_030421-f3owvnt7/logs/debug-internal.log
+2026-05-13 03:04:21,591 INFO    MainThread:1717558 [wandb_init.py:init():850] calling init triggers
+2026-05-13 03:04:21,591 INFO    MainThread:1717558 [wandb_init.py:init():855] wandb.init called with sweep_config: {}
+config: {'_wandb': {'code_path': 'code/gpt2_gpipe_memory_profile.py'}}
+2026-05-13 03:04:21,591 INFO    MainThread:1717558 [wandb_init.py:init():898] starting backend
+2026-05-13 03:04:21,819 INFO    MainThread:1717558 [wandb_init.py:init():913] sending inform_init request
+2026-05-13 03:04:22,621 INFO    MainThread:1717558 [wandb_init.py:init():918] backend started and connected
+2026-05-13 03:04:22,623 INFO    MainThread:1717558 [wandb_init.py:init():988] updated telemetry
+2026-05-13 03:04:22,633 INFO    MainThread:1717558 [wandb_init.py:init():1011] communicating run to backend with 90.0 second timeout
+2026-05-13 03:04:23,412 INFO    MainThread:1717558 [wandb_init.py:init():1056] starting run threads in backend
+2026-05-13 03:04:23,538 INFO    MainThread:1717558 [wandb_run.py:_console_start():2554] atexit reg
+2026-05-13 03:04:23,539 INFO    MainThread:1717558 [wandb_run.py:_redirect():2403] redirect: wrap_raw
+2026-05-13 03:04:23,539 INFO    MainThread:1717558 [wandb_run.py:_redirect():2472] Wrapping output streams.
+2026-05-13 03:04:23,539 INFO    MainThread:1717558 [wandb_run.py:_redirect():2495] Redirects installed.
+2026-05-13 03:04:23,545 INFO    MainThread:1717558 [wandb_init.py:init():1094] run started, returning control to user process
+2026-05-13 03:04:23,545 INFO    MainThread:1717558 [wandb_run.py:_finish():2321] finishing run r13922a13-national-taiwan-university/my-project/f3owvnt7
+2026-05-13 03:04:23,546 INFO    MainThread:1717558 [wandb_run.py:_atexit_cleanup():2520] got exitcode: 0
+2026-05-13 03:04:23,546 INFO    MainThread:1717558 [wandb_run.py:_restore():2502] restore
+2026-05-13 03:04:23,546 INFO    MainThread:1717558 [wandb_run.py:_restore():2508] restore done
+2026-05-13 03:04:24,996 INFO    MainThread:1717558 [wandb_run.py:_footer_sync_info():3889] logging synced files

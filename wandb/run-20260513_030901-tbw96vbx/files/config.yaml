@@ -1,0 +1,70 @@
+_wandb:
+    value:
+        cli_version: 0.26.1
+        code_path: code/gpt2_gpipe_memory_profile.py
+        e:
+            e2vxkfx8mw1hcfnpqeiuqnc6b6sah5zp:
+                codePath: gpt2_gpipe_memory_profile.py
+                codePathLocal: gpt2_gpipe_memory_profile.py
+                cpu_count: 32
+                cpu_count_logical: 64
+                cudaVersion: "12.9"
+                disk:
+                    /:
+                        total: "1966772330496"
+                        used: "1810239332352"
+                email: r13922a13@ntu.edu.tw
+                executable: /home/r13922a13/anaconda3/envs/gpt2_gpipe_mem/bin/python
+                git:
+                    commit: 0b2d56f97a94585d47e4c35a04dda9187b4e72c2
+                    remote: git@github.com:a0kuma/mew_mem_1.git
+                gpu: NVIDIA GeForce RTX 3090
+                gpu_count: 4
+                gpu_nvidia:
+                    - architecture: Ampere
+                      cudaCores: 10496
+                      memoryTotal: "25769803776"
+                      name: NVIDIA GeForce RTX 3090
+                      uuid: GPU-4ee01947-3a2c-ad5b-d26e-4922a13f9989
+                    - architecture: Ampere
+                      cudaCores: 10496
+                      memoryTotal: "25769803776"
+                      name: NVIDIA GeForce RTX 3090
+                      uuid: GPU-3965fe5d-0320-3d40-2566-0b01ab34f987
+                    - architecture: Ampere
+                      cudaCores: 10496
+                      memoryTotal: "25769803776"
+                      name: NVIDIA GeForce RTX 3090
+                      uuid: GPU-fbabadef-9f8d-e638-8a12-28773bbc3074
+                    - architecture: Ampere
+                      cudaCores: 10496
+                      memoryTotal: "25769803776"
+                      name: NVIDIA GeForce RTX 3090
+                      uuid: GPU-7d8191fd-caf0-c68d-ff44-28ba49767dd2
+                host: puipui
+                memory:
+                    total: "201370292224"
+                os: Linux-6.8.0-1035-oracle-x86_64-with-glibc2.35
+                program: /home/r13922a13/mew_mem_1/gpt2_gpipe_memory_profile.py
+                python: CPython 3.10.19
+                root: /home/r13922a13/mew_mem_1
+                startedAt: "2026-05-12T19:09:01.656841Z"
+                writerId: e2vxkfx8mw1hcfnpqeiuqnc6b6sah5zp
+        m: []
+        python_version: 3.10.19
+        t:
+            "1":
+                - 1
+                - 11
+                - 49
+            "2":
+                - 1
+                - 11
+                - 49
+            "3":
+                - 2
+            "4": 3.10.19
+            "5": 0.26.1
+            "6": 5.2.0
+            "12": 0.26.1
+            "13": linux-x86_64
