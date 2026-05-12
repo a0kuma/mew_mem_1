@@ -38,7 +38,7 @@ NUM_GPUS = 4
 BATCH_SIZE = 8
 MICRO_BATCHES = NUM_GPUS       # chunks for pipeline parallelism
 SEQ_LEN = 256
-NUM_STEPS = 10
+NUM_STEPS = 5
 LEARNING_RATE = 3e-4
 OUTPUT_FILE_PICKLE = f"memory_reports_{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}.pickle"
 
@@ -329,7 +329,7 @@ if __name__ == "__main__":
         #^^^===========================前置動作===========================^^^
 
 
-        final_pickle_path = os.path.abspath(OUTPUT_FILE)
+        final_pickle_path = os.path.abspath(OUTPUT_FILE_PICKLE)
         final_max_json_path = os.path.abspath(OUTPUT_FILE_JSON)
         result = subprocess.run(
             ["node", "pickle_to_json.mjs", "--input", final_pickle_path, "--output", final_max_json_path],
@@ -338,7 +338,10 @@ if __name__ == "__main__":
             capture_output=True,
             check=True,
         )
+        print(result)
         log_payload = {
+            "CUBLAS_WORKSPACE_CONFIG":os.getenv("CUBLAS_WORKSPACE_CONFIG"),
+            "PYTORCH_NO_CUDA_MEMORY_CACHING":os.getenv("PYTORCH_NO_CUDA_MEMORY_CACHING"),
             "pickle_to_json_returncode": result.returncode,
             "pickle_to_json_stdout": result.stdout,
             "pickle_to_json_stderr": result.stderr,
