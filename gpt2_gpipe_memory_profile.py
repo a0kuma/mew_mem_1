@@ -16,6 +16,10 @@ import time
 import datetime
 import re
 import torch
+import pyfiglet
+import pickle
+import wandb
+import subprocess
 import torch.nn as nn
 from torchgpipe import GPipe
 from transformers import GPT2Config
@@ -25,9 +29,6 @@ from rich.pretty import Pretty
 from rich.text import Text
 from rich.cells import cell_len
 from rich.style import Style
-import pyfiglet
-import pickle
-import wandb
 
 
 console = Console()
@@ -270,6 +271,14 @@ if __name__ == "__main__":
     torch.cuda.memory._dump_snapshot(OUTPUT_FILE)
 
     with wandb.init(project="my-project", save_code=True) as run:
+        result = subprocess.run(
+            ["node", "script.js"],
+            input=json.dumps(data),
+            text=True,
+            capture_output=True,
+            check=True,
+        )
+
         artifact = wandb.Artifact("my-string-array", type="dataset")
         artifact.add_file(OUTPUT_FILE)
         run.log_artifact(artifact)
