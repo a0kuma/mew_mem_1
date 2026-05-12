@@ -271,15 +271,23 @@ if __name__ == "__main__":
     train()
     torch.cuda.memory._dump_snapshot(OUTPUT_FILE)
 
-    with wandb.init(project="my-project", save_code=True) as run:
+    with wandb.init(project="pytorch-memory", save_code=True) as run:
+        final_pickle_path = os.path.abspath(OUTPUT_FILE)
+        final_max_json_path = os.path.abspath(OUTPUT_FILE_JSON)
         result = subprocess.run(
-            ["node", "pickle_to_json.mjs","--input",OUTPUT_FILE,"--output",OUTPUT_FILE_JSON],
-            cwd="pytorchMemoryVizAuto/autoScript",   
+            ["node", "pickle_to_json.mjs", "--input", final_pickle_path, "--output", final_max_json_path],
+            cwd="pytorchMemoryVizAuto/autoScript",
             text=True,
             capture_output=True,
             check=True,
         )
-        run.log(result)
-        artifact = wandb.Artifact("my-string-array", type="dataset")
-        artifact.add_file(OUTPUT_FILE)
+
+        run.log({
+            "pickle_to_json_returncode": result.returncode,
+            "pickle_to_json_stdout": result.stdout.strip() if result.stdout else "",
+            "pickle_to_json_stderr": result.stderr.strip() if result.stderr else "",
+        })
+        artifact = wandb.Artifact("final_pickle_and_max_json", type="dataset")
+        artifact.add_file(final_pickle_path)
+        artifact.add_file(final_max_json_path)
         run.log_artifact(artifact)
