@@ -40,8 +40,8 @@ MICRO_BATCHES = NUM_GPUS       # chunks for pipeline parallelism
 SEQ_LEN = 256
 NUM_STEPS = 10
 LEARNING_RATE = 3e-4
-OUTPUT_FILE = f"memory_reports_{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}.pickle"
-OUTPUT_FILE_JSON = f"memory_reports_{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}.json"
+OUTPUT_FILE_PICKLE = f"memory_reports_{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}.pickle"
+
 
 # ──────────────────────── GPT-2 Pipeline Layers ────────────────
 class EmbeddingBlock(nn.Module):
@@ -269,9 +269,66 @@ if __name__ == "__main__":
     console.print(Text(pyfiglet.figlet_format("start-main", font="slant"), style="bold cyan"))
     torch.cuda.memory._record_memory_history()
     train()
-    torch.cuda.memory._dump_snapshot(OUTPUT_FILE)
+    torch.cuda.memory._dump_snapshot(OUTPUT_FILE_PICKLE)
+
+    #===========================以下的東東與主邏輯無關===========================
 
     with wandb.init(project="pytorch-memory", save_code=True) as run:
+
+        #===========================前置動作===========================
+
+        OUTPUT_FILE_JSON = f"memory_reports_{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}.json"
+
+        PEAK_ACTIVE_RE = re.compile(
+            r"Peak active memory:\s+([0-9.]+[A-Za-z]+B)\s+\((\d+)\s+bytes\)"
+            r"(?:\s+at\s+([0-9T:\.\-Z]+)\s+\(([^)]+)\))?",
+        )
+        BLOCKS_AT_PEAK_RE = re.compile(r"Blocks at peak memory.*?:\s*(\d+)")
+
+
+        def parse_peak_metrics(stdout_text: str):
+            if not stdout_text:
+                return {}
+
+            peak_entries = []
+            blocks_entries = []
+            for line in stdout_text.splitlines():
+                peak_match = PEAK_ACTIVE_RE.search(line)
+                if peak_match:
+                    peak_entries.append({
+                        "human": peak_match.group(1).strip(),
+                        "bytes": int(peak_match.group(2)),
+                        "iso": peak_match.group(3),
+                        "local": peak_match.group(4),
+                    })
+
+                blocks_match = BLOCKS_AT_PEAK_RE.search(line)
+                if blocks_match:
+                    blocks_entries.append(int(blocks_match.group(1)))
+
+            metrics = {}
+            if peak_entries:
+                last_peak = peak_entries[-1]
+                metrics["peak_active_memory_human"] = last_peak["human"]
+                metrics["peak_active_memory_bytes"] = last_peak["bytes"]
+                if last_peak["iso"]:
+                    metrics["peak_active_memory_time_iso"] = last_peak["iso"]
+                if last_peak["local"]:
+                    metrics["peak_active_memory_time_local"] = last_peak["local"]
+
+            if blocks_entries:
+                metrics["blocks_at_peak_memory"] = blocks_entries[-1]
+
+            if len(peak_entries) > 1 or len(blocks_entries) > 1:
+                print(
+                    f"[WARN] Multiple peak logs found: peaks={len(peak_entries)}, "
+                    f"blocks={len(blocks_entries)}. Using last values."
+                )
+
+            return metrics
+        #^^^===========================前置動作===========================^^^
+
+
         final_pickle_path = os.path.abspath(OUTPUT_FILE)
         final_max_json_path = os.path.abspath(OUTPUT_FILE_JSON)
         result = subprocess.run(
@@ -281,13 +338,16 @@ if __name__ == "__main__":
             capture_output=True,
             check=True,
         )
-
-        run.log({
+        log_payload = {
             "pickle_to_json_returncode": result.returncode,
-            "pickle_to_json_stdout": result.stdout.strip() if result.stdout else "",
-            "pickle_to_json_stderr": result.stderr.strip() if result.stderr else "",
-        })
+            "pickle_to_json_stdout": result.stdout,
+            "pickle_to_json_stderr": result.stderr,
+        }
+        log_payload.update(parse_peak_metrics(result.stdout))
+        run.log(log_payload)
         artifact = wandb.Artifact("final_pickle_and_max_json", type="dataset")
         artifact.add_file(final_pickle_path)
         artifact.add_file(final_max_json_path)
         run.log_artifact(artifact)
+        os.remove(OUTPUT_FILE_JSON)
+        os.remove(OUTPUT_FILE_PICKLE)
