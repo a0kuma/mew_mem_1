@@ -37,9 +37,24 @@ LATEX_SPECIALS = {
     "^": r"\\textasciicircum{}",
 }
 
+LST_INLINE_DELIMS = ["|", "!", "+", ";", ":", "?", "=", "@", "~"]
+
 
 def latex_escape(text: str) -> str:
     return "".join(LATEX_SPECIALS.get(ch, ch) for ch in text)
+
+
+def latex_code_inline(text: str) -> str:
+    if text is None:
+        text = ""
+    if text == "":
+        return ""
+    if "\n" in text:
+        text = text.replace("\n", " ")
+    for delim in LST_INLINE_DELIMS:
+        if delim not in text:
+            return f"\\lstinline{delim}{text}{delim}"
+    return r"\\texttt{" + latex_escape(text) + "}"
 
 
 def load_json(path: str) -> List[dict]:
@@ -200,6 +215,7 @@ def classify_event(
 def render_latex(events: List[dict], workspace_root: str) -> str:
     cache: Dict[str, Optional[List[str]]] = {}
     rows = []
+    home_prefix = os.path.expanduser("~")
 
     for idx, event in enumerate(events, start=1):
         frames = event.get("frames") or []
@@ -210,7 +226,10 @@ def render_latex(events: List[dict], workspace_root: str) -> str:
         category = classify_event(frames, selected, code_line, workspace_root)
 
         code_out = code_line if code_line else "(source not available)"
-        file_out = filename if filename else "(unknown)"
+        if filename and home_prefix and filename.startswith(home_prefix):
+            file_out = "~" + filename[len(home_prefix):]
+        else:
+            file_out = filename if filename else "(unknown)"
         size = event.get("size", "")
 
         rows.append(
@@ -228,35 +247,37 @@ def render_latex(events: List[dict], workspace_root: str) -> str:
     lines.append("\\documentclass{article}")
     lines.append("\\usepackage[margin=1in]{geometry}")
     lines.append("\\usepackage{longtable}")
+    lines.append("\\usepackage{listings}")
     lines.append("\\usepackage[T1]{fontenc}")
     lines.append("\\usepackage{textcomp}")
     lines.append("\\usepackage{array}")
+    lines.append("\\lstset{basicstyle=\\ttfamily\\footnotesize,breaklines=true,breakatwhitespace=true}")
     lines.append("\\begin{document}")
     lines.append("\\section*{Peak Allocation Events}")
     lines.append("\\small")
     lines.append("\\begin{tabular}{ll}")
     for key in ["A", "B", "C", "D", "E", "F", "G", "H", "I"]:
-        lines.append(f"{key} & {latex_escape(CATEGORY_NAMES[key])} \\")
+        lines.append(f"{key} & {latex_escape(CATEGORY_NAMES[key])} \\\\")
     lines.append("\\end{tabular}")
     lines.append("\\vspace{0.5em}")
     lines.append("\\begin{longtable}{r l r p{6.5cm} r p{7.0cm}}")
     lines.append("\\hline")
-    lines.append("Idx & Cat & Size(B) & File & Line & Code \\")
+    lines.append("Idx & Cat & Size(B) & File & Line & Code \\\\")
     lines.append("\\hline")
     lines.append("\\endfirsthead")
     lines.append("\\hline")
-    lines.append("Idx & Cat & Size(B) & File & Line & Code \\")
+    lines.append("Idx & Cat & Size(B) & File & Line & Code \\\\")
     lines.append("\\hline")
     lines.append("\\endhead")
     lines.append("\\hline")
     lines.append("\\endfoot")
 
     for idx, category, size, file_out, line_no, code_out in rows:
-        file_tex = r"\\texttt{" + latex_escape(str(file_out)) + "}"
-        code_tex = r"\\texttt{" + latex_escape(str(code_out)) + "}"
+        file_tex = latex_code_inline(str(file_out))
+        code_tex = latex_code_inline(str(code_out))
         size_tex = latex_escape(str(size))
         line_tex = latex_escape(str(line_no))
-        lines.append(f"{idx} & {category} & {size_tex} & {file_tex} & {line_tex} & {code_tex} \\")
+        lines.append(f"{idx} & {category} & {size_tex} & {file_tex} & {line_tex} & {code_tex} \\\\")
 
     lines.append("\\end{longtable}")
     lines.append("\\end{document}")
