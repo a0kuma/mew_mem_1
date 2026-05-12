@@ -41,13 +41,21 @@ LATEX_SPECIALS = {
 LST_INLINE_DELIMS = ["|", "!", "+", ";", ":", "?", "=", "@", "~"]
 
 
+def ascii_sanitize(text: str) -> str:
+    if text is None:
+        return ""
+    if not isinstance(text, str):
+        text = str(text)
+    return text.encode("ascii", errors="replace").decode("ascii")
+
+
 def latex_escape(text: str) -> str:
+    text = ascii_sanitize(text)
     return "".join(LATEX_SPECIALS.get(ch, ch) for ch in text)
 
 
 def latex_code_inline(text: str) -> str:
-    if text is None:
-        text = ""
+    text = ascii_sanitize(text)
     if text == "":
         return ""
     if "\n" in text:

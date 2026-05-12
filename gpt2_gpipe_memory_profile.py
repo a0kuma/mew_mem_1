@@ -15,6 +15,7 @@ import json
 import time
 import datetime
 import re
+import sys
 import torch
 import pyfiglet
 import pickle
@@ -351,6 +352,41 @@ if __name__ == "__main__":
         artifact = wandb.Artifact("final_pickle_and_max_json", type="dataset")
         artifact.add_file(final_pickle_path)
         artifact.add_file(final_max_json_path)
+        #===========================pdf===========================
+        latex_report_path = os.path.abspath(
+            os.path.join(
+                os.path.dirname(final_max_json_path),
+                f"{os.path.splitext(os.path.basename(final_max_json_path))[0]}_peak_alloc_events_report.tex",
+            )
+        )
+        latex_script_path = os.path.join(
+            os.path.dirname(os.path.abspath(__file__)),
+            "generate_peak_alloc_latex.py",
+        )
+        latex_result = subprocess.run(
+            [
+                sys.executable,
+                latex_script_path,
+                "--input",
+                final_max_json_path,
+                "--output",
+                latex_report_path,
+            ],
+            text=True,
+            capture_output=True,
+            check=True,
+        )
+        print(latex_result.stdout)
+        print(latex_result.stderr)
+        #^^^===========================pdf===========================^^^
+        run.log({
+            "generate_peak_alloc_latex_returncode": latex_result.returncode,
+            "generate_peak_alloc_latex_stdout": latex_result.stdout,
+            "generate_peak_alloc_latex_stderr": latex_result.stderr,
+            "peak_alloc_latex_path": latex_report_path,
+        })
+        artifact.add_file(latex_report_path)
         run.log_artifact(artifact)
+
         os.remove(OUTPUT_FILE_JSON)
         os.remove(OUTPUT_FILE_PICKLE)
