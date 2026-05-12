@@ -41,6 +41,7 @@ SEQ_LEN = 256
 NUM_STEPS = 10
 LEARNING_RATE = 3e-4
 OUTPUT_FILE = f"memory_reports_{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}.pickle"
+OUTPUT_FILE_JSON = f"memory_reports_{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}.json"
 
 # ──────────────────────── GPT-2 Pipeline Layers ────────────────
 class EmbeddingBlock(nn.Module):
@@ -272,13 +273,13 @@ if __name__ == "__main__":
 
     with wandb.init(project="my-project", save_code=True) as run:
         result = subprocess.run(
-            ["node", "script.js"],
-            input=json.dumps(data),
+            ["node", "pickle_to_json.mjs","--input",OUTPUT_FILE,"--output",OUTPUT_FILE_JSON],
+            cwd="pytorchMemoryVizAuto/autoScript",   
             text=True,
             capture_output=True,
             check=True,
         )
-
+        run.log(result)
         artifact = wandb.Artifact("my-string-array", type="dataset")
         artifact.add_file(OUTPUT_FILE)
         run.log_artifact(artifact)
