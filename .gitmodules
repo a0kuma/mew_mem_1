@@ -1,3 +1,6 @@
 [submodule "findmax"]
 	path = findmax
 	url = https://github.com/a0kuma/pytorchMemoryViz
+[submodule "pytorchMemoryVizAuto"]
+	path = pytorchMemoryVizAuto
+	url = https://github.com/a0kuma/pytorchMemoryViz
