@@ -16,13 +16,11 @@ console = Console()
 CATEGORY_NAMES = {
     "A": "Model Parameters",
     "B": "Optimizer States (AdamW)",
-    "C": "cuBLAS Workspace",
     "D": "Pipeline Boundary Copies",
     "E": "Gradient Boundary Copies",
     "F": "Parameter Gradients",
     "G": "Recomputed Activations",
     "H": "Final Backward Tensors",
-    "I": "OTHERS",
 }
 
 LATEX_SPECIALS = {
@@ -142,11 +140,36 @@ def select_frame(frames: List[dict], workspace_root: str) -> Optional[dict]:
     return None
 
 
-def classify_event(
+def is_model_param_event(
     frames: List[dict],
     selected: Optional[dict],
     code_line: str,
     workspace_root: str,
+) -> bool:
+    code_low = (code_line or "").lower()
+    selected_file = (selected or {}).get("filename") or ""
+    selected_name = (selected or {}).get("name") or ""
+    selected_line = int((selected or {}).get("line") or 0)
+
+    return (
+        "partition.to" in code_low
+        or "gpipe(" in code_low
+        or "nn.sequential" in code_low
+        or "nn.linear" in code_low
+        or "nn.embedding" in code_low
+        or "nn.layernorm" in code_low
+        or ("torchgpipe/gpipe.py" in selected_file and "split_module" in selected_name)
+        or (selected_file.startswith(workspace_root) and 140 <= selected_line <= 210)
+    )
+
+
+def classify_event(
+    frames: List[dict],
+    selected: Optional[dict],
+    code_line: str,
+    size: Optional[int],
+    workspace_root: str,
+    param_sizes: Optional[set],
 ) -> str:
     files = [f.get("filename") or "" for f in frames]
     names = [f.get("name") or "" for f in frames]
@@ -158,9 +181,6 @@ def classify_event(
     def has_name(substr: str) -> bool:
         return any(substr in n for n in names)
 
-    def has_name_lower(substr: str) -> bool:
-        return any(substr in n.lower() for n in names)
-
     checkpoint_lines = [
         int(f.get("line") or 0)
         for f in frames
@@ -169,24 +189,20 @@ def classify_event(
     has_checkpoint_backward = any(258 <= ln <= 273 for ln in checkpoint_lines)
     has_checkpoint_recompute = any(295 <= ln <= 308 for ln in checkpoint_lines)
 
-    has_cublas_handle = any(
-        "getcurrentcudablashandle" in n.lower() or "cublashandle" in n.lower()
-        for n in names
+    is_backward = (
+        has_checkpoint_backward
+        or has_file("/torch/autograd/graph.py")
+        or has_file("/torch/autograd/__init__.py")
+        or has_name("backward")
+        or any("backward" in n.lower() for n in names)
+        or any("Backward" in n for n in names)
     )
-    has_allocator_malloc = any("cudacachingallocator" in n.lower() and "malloc" in n.lower() for n in names)
-    if has_cublas_handle and has_allocator_malloc:
-        print("debug-c")
-        print(names)
-        return "C"
 
     if has_file("torchgpipe/copy.py"):
         for f in frames:
             if "torchgpipe/copy.py" in (f.get("filename") or "") and "backward" in (f.get("name") or ""):
                 return "E"
         return "D"
-
-    if has_checkpoint_backward:
-        return "H"
 
     if has_checkpoint_recompute:
         return "G"
@@ -197,45 +213,35 @@ def classify_event(
     if has_file("/torch/optim/adam.py") or has_file("/torch/optim/optimizer.py"):
         return "B"
 
-    selected_file = (selected or {}).get("filename") or ""
-    selected_name = (selected or {}).get("name") or ""
-    selected_line = int((selected or {}).get("line") or 0)
-
-    if (
-        "partition.to" in code_low
-        or "gpipe(" in code_low
-        or "nn.sequential" in code_low
-        or "nn.linear" in code_low
-        or "nn.embedding" in code_low
-        or "nn.layernorm" in code_low
-        or ("torchgpipe/gpipe.py" in selected_file and "split_module" in selected_name)
-        or (selected_file.startswith(workspace_root) and 140 <= selected_line <= 210)
-    ):
+    if is_model_param_event(frames, selected, code_line, workspace_root):
         return "A"
 
-    if ".grad" in code_low or "param_grad" in code_low or "grad_applied" in code_low:
+    if is_backward and param_sizes and size is not None and size in param_sizes:
         return "F"
 
-    if (
-        has_file("/torch/autograd/graph.py")
-        or has_file("/torch/autograd/__init__.py")
-        or has_name("backward")
-        or any("backward" in n.lower() for n in names)
-        or any("Backward" in n for n in names)
-    ):
+    if is_backward:
         return "H"
 
-    return "I"
+    return "H"
 
 
 def render_latex(events: List[dict], workspace_root: str) -> str:
-
-    print("debug num")
-    print(len(events))
-
     cache: Dict[str, Optional[List[str]]] = {}
     rows = []
     home_prefix = os.path.expanduser("~")
+    param_sizes: set = set()
+    summary = {key: {"count": 0, "bytes": 0} for key in ["A", "B", "D", "E", "F", "G", "H"]}
+
+    for event in events:
+        frames = event.get("frames") or []
+        selected = select_frame(frames, workspace_root)
+        filename = (selected or {}).get("filename") or ""
+        line_no = int((selected or {}).get("line") or 0)
+        code_line = get_code_line(filename, line_no, cache)
+        if is_model_param_event(frames, selected, code_line, workspace_root):
+            size = event.get("size")
+            if isinstance(size, int):
+                param_sizes.add(size)
 
     for idx, event in enumerate(events, start=1):
         frames = event.get("frames") or []
@@ -243,7 +249,9 @@ def render_latex(events: List[dict], workspace_root: str) -> str:
         filename = (selected or {}).get("filename") or ""
         line_no = int((selected or {}).get("line") or 0)
         code_line = get_code_line(filename, line_no, cache)
-        category = classify_event(frames, selected, code_line, workspace_root)
+        size = event.get("size")
+        size_value = size if isinstance(size, int) else None
+        category = classify_event(frames, selected, code_line, size_value, workspace_root, param_sizes)
 
         code_out = code_line if code_line else "(source not available)"
         if filename and home_prefix and filename.startswith(home_prefix):
@@ -251,6 +259,10 @@ def render_latex(events: List[dict], workspace_root: str) -> str:
         else:
             file_out = filename if filename else "(unknown)"
         size = event.get("size", "")
+        if category in summary:
+            summary[category]["count"] += 1
+            if isinstance(size, int):
+                summary[category]["bytes"] += size
 
         rows.append(
             (
@@ -276,8 +288,18 @@ def render_latex(events: List[dict], workspace_root: str) -> str:
     lines.append("\\section*{Peak Allocation Events}")
     lines.append("\\small")
     lines.append("\\begin{tabular}{ll}")
-    for key in ["A", "B", "C", "D", "E", "F", "G", "H", "I"]:
+    for key in ["A", "B", "D", "E", "F", "G", "H"]:
         lines.append(f"{key} & {latex_escape(CATEGORY_NAMES[key])} \\\\")
+    lines.append("\\end{tabular}")
+    lines.append("\\vspace{0.5em}")
+    lines.append("\\section*{Category Summary}")
+    lines.append("\\begin{tabular}{l r r}")
+    lines.append("Category & Count & Total(B) \\")
+    lines.append("\\hline")
+    for key in ["A", "B", "D", "E", "F", "G", "H"]:
+        count = summary[key]["count"]
+        total_bytes = summary[key]["bytes"]
+        lines.append(f"{key} & {count} & {total_bytes} \\")
     lines.append("\\end{tabular}")
     lines.append("\\vspace{0.5em}")
     lines.append("\\begin{longtable}{r l r p{6.5cm} r p{7.0cm}}")
