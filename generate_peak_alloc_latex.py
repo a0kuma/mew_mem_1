@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+#python generate_peak_alloc_latex.py --input peak_alloc_events.json --output peak_alloc_events_report.tex
 import argparse
 import json
 import os
@@ -160,7 +161,14 @@ def classify_event(
     has_checkpoint_backward = any(258 <= ln <= 273 for ln in checkpoint_lines)
     has_checkpoint_recompute = any(295 <= ln <= 308 for ln in checkpoint_lines)
 
-    if has_name_lower("cublas") or any("cublas" in f.lower() for f in files) or any("cudnn" in f.lower() for f in files):
+    has_cublas_handle = any(
+        "getcurrentcudablashandle" in n.lower() or "cublashandle" in n.lower()
+        for n in names
+    )
+    has_allocator_malloc = any("cudacachingallocator" in n.lower() and "malloc" in n.lower() for n in names)
+    if has_cublas_handle and has_allocator_malloc:
+        print("debug-c")
+        print(names)
         return "C"
 
     if has_file("torchgpipe/copy.py"):
@@ -213,6 +221,10 @@ def classify_event(
 
 
 def render_latex(events: List[dict], workspace_root: str) -> str:
+
+    print("debug num")
+    print(len(events))
+
     cache: Dict[str, Optional[List[str]]] = {}
     rows = []
     home_prefix = os.path.expanduser("~")

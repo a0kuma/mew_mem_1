@@ -1,0 +1,316 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable}
+\usepackage{listings}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{array}
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=true,breakatwhitespace=true}
+\begin{document}
+\section*{Peak Allocation Events}
+\small
+\begin{tabular}{ll}
+A & Model Parameters \\
+B & Optimizer States (AdamW) \\
+C & cuBLAS Workspace \\
+D & Pipeline Boundary Copies \\
+E & Gradient Boundary Copies \\
+F & Parameter Gradients \\
+G & Recomputed Activations \\
+H & Final Backward Tensors \\
+I & OTHERS \\
+\end{tabular}
+\vspace{0.5em}
+\begin{longtable}{r l r p{6.5cm} r p{7.0cm}}
+\hline
+Idx & Cat & Size(B) & File & Line & Code \\
+\hline
+\endfirsthead
+\hline
+Idx & Cat & Size(B) & File & Line & Code \\
+\hline
+\endhead
+\hline
+\endfoot
+1 & A & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+2 & A & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+3 & A & 7077888 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+4 & A & 9216 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+5 & A & 2359296 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+6 & A & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+7 & A & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+8 & A & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+9 & A & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+10 & A & 12288 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+11 & A & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+12 & A & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+13 & A & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+14 & A & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+15 & A & 7077888 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+16 & A & 9216 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+17 & A & 2359296 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+18 & A & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+19 & A & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+20 & A & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+21 & A & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+22 & A & 12288 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+23 & A & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+24 & A & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+25 & A & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+26 & A & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+27 & A & 7077888 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+28 & A & 9216 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+29 & A & 2359296 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+30 & A & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+31 & A & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+32 & A & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+33 & A & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+34 & A & 12288 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+35 & A & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+36 & A & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+37 & A & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+38 & A & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+39 & A & 7077888 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+40 & A & 9216 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+41 & A & 2359296 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+42 & A & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+43 & A & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+44 & A & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+45 & A & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+46 & A & 12288 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+47 & A & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+48 & A & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+49 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+50 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+51 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+52 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+53 & B & 7077888 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+54 & B & 7077888 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+55 & B & 9216 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+56 & B & 9216 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+57 & B & 2359296 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+58 & B & 2359296 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+59 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+60 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+61 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+62 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+63 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+64 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+65 & B & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+66 & B & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+67 & B & 12288 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+68 & B & 12288 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+69 & B & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+70 & B & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+71 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+72 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+73 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+74 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+75 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+76 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+77 & B & 7077888 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+78 & B & 7077888 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+79 & B & 9216 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+80 & B & 9216 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+81 & B & 2359296 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+82 & B & 2359296 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+83 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+84 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+85 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+86 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+87 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+88 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+89 & B & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+90 & B & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+91 & B & 12288 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+92 & B & 12288 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+93 & B & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+94 & B & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+95 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+96 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+97 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+98 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+99 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+100 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+101 & B & 7077888 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+102 & B & 7077888 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+103 & B & 9216 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+104 & B & 9216 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+105 & B & 2359296 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+106 & B & 2359296 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+107 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+108 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+109 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+110 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+111 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+112 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+113 & B & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+114 & B & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+115 & B & 12288 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+116 & B & 12288 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+117 & B & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+118 & B & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+119 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+120 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+121 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+122 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+123 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+124 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+125 & B & 7077888 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+126 & B & 7077888 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+127 & B & 9216 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+128 & B & 9216 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+129 & B & 2359296 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+130 & B & 2359296 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+131 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+132 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+133 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+134 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+135 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+136 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+137 & B & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+138 & B & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+139 & B & 12288 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+140 & B & 12288 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+141 & B & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+142 & B & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+143 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 176 & \lstinline|                    state["exp_avg"] = torch.zeros_like(| \\
+144 & B & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torch/optim/adam.py| & 180 & \lstinline|                    state["exp_avg_sq"] = torch.zeros_like(| \\
+145 & D & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/copy.py| & 41 & \lstinline|                y = x.to(get_device(next_stream))| \\
+146 & D & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/copy.py| & 41 & \lstinline|                y = x.to(get_device(next_stream))| \\
+147 & D & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/copy.py| & 41 & \lstinline|                y = x.to(get_device(next_stream))| \\
+148 & E & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/copy.py| & 64 & \lstinline|                y = x.to(get_device(prev_stream))| \\
+149 & H & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+150 & H & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+151 & H & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+152 & H & 12288 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+153 & H & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+154 & H & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+155 & H & 2359296 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+156 & H & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+157 & H & 7077888 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+158 & H & 9216 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+159 & H & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+160 & H & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+161 & H & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+162 & H & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+163 & H & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+164 & H & 12288 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+165 & H & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+166 & H & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+167 & H & 2359296 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+168 & H & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+169 & H & 7077888 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+170 & H & 9216 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+171 & H & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+172 & H & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+173 & H & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+174 & H & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+175 & H & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+176 & H & 12288 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+177 & H & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+178 & H & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+179 & H & 2359296 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+180 & H & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+181 & H & 7077888 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+182 & H & 9216 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+183 & H & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+184 & H & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+185 & H & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+186 & H & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+187 & H & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+188 & H & 12288 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+189 & H & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+190 & H & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+191 & H & 2359296 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+192 & H & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+193 & E & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/copy.py| & 64 & \lstinline|                y = x.to(get_device(prev_stream))| \\
+194 & H & 7077888 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+195 & H & 9216 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+196 & H & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+197 & H & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+198 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+199 & G & 2048 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+200 & G & 2048 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+201 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+202 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+203 & G & 65536 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+204 & G & 6291456 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+205 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+206 & G & 6291456 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+207 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+208 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+209 & G & 393216 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+210 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+211 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+212 & G & 2048 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+213 & G & 2048 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+214 & G & 6291456 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+215 & G & 6291456 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+216 & G & 393216 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+217 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+218 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+219 & G & 2048 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+220 & G & 2048 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+221 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+222 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+223 & G & 65536 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+224 & G & 6291456 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+225 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+226 & G & 6291456 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+227 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+228 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+229 & G & 393216 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+230 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+231 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+232 & G & 2048 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+233 & G & 2048 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+234 & G & 6291456 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+235 & G & 6291456 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+236 & G & 393216 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+237 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+238 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+239 & G & 2048 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+240 & G & 2048 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+241 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+242 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+243 & G & 65536 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+244 & G & 6291456 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+245 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+246 & G & 6291456 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+247 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+248 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+249 & G & 393216 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+250 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+251 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+252 & G & 2048 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+253 & G & 2048 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+254 & G & 6291456 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+255 & G & 6291456 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+256 & G & 393216 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+257 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+258 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+259 & G & 2048 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+260 & G & 2048 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+261 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+262 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+263 & G & 65536 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+264 & G & 6291456 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+265 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+266 & G & 6291456 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+267 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+268 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+269 & G & 393216 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+270 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+271 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+272 & G & 2048 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+273 & G & 2048 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+274 & G & 6291456 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+275 & G & 6291456 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+276 & G & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/pipeline.py| & 202 & \lstinline|                        return partition(input)| \\
+277 & H & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+278 & H & 6291456 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+279 & H & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+280 & H & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+\end{longtable}
+\end{document}
