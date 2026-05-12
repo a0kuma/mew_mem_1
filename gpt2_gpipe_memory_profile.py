@@ -388,5 +388,5 @@ if __name__ == "__main__":
         artifact.add_file(latex_report_path)
         run.log_artifact(artifact)
 
-        os.remove(OUTPUT_FILE_JSON)
-        os.remove(OUTPUT_FILE_PICKLE)
+        #os.remove(OUTPUT_FILE_JSON)
+        #os.remove(OUTPUT_FILE_PICKLE)
