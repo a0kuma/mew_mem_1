@@ -1,0 +1,326 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable}
+\usepackage{listings}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{array}
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=true,breakatwhitespace=true}
+\begin{document}
+\section*{Peak Allocation Events}
+\small
+\begin{tabular}{ll}
+A & Model Parameters \\
+B & Optimizer States (AdamW) \\
+D & Pipeline Boundary Copies \\
+E & Gradient Boundary Copies \\
+F & Parameter Gradients \\
+G & Recomputed Activations \\
+H & Final Backward Tensors \\
+\end{tabular}
+\vspace{0.5em}
+\section*{Category Summary}
+\begin{tabular}{l r r}
+Category & Count & Total(B) \\
+\hline
+A & 48 & 113405952 \\
+B & 96 & 226811904 \\
+D & 3 & 4718592 \\
+E & 1 & 1572864 \\
+F & 48 & 113405952 \\
+G & 79 & 160333824 \\
+H & 4 & 17304576 \\
+\end{tabular}
+\vspace{0.5em}
+\begin{longtable}{r l r p{6.5cm} r p{7.0cm}}
+\hline
+Idx & Cat & Size(B) & File & Line & Code \\
+\hline
+\endfirsthead
+\hline
+Idx & Cat & Size(B) & File & Line & Code \\
+\hline
+\endhead
+\hline
+\endfoot
+1 & A & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+2 & A & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+3 & A & 7077888 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+4 & A & 9216 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+5 & A & 2359296 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+6 & A & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+7 & A & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+8 & A & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+9 & A & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+10 & A & 12288 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+11 & A & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+12 & A & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+13 & A & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+14 & A & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+15 & A & 7077888 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+16 & A & 9216 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+17 & A & 2359296 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+18 & A & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+19 & A & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+20 & A & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+21 & A & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+22 & A & 12288 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+23 & A & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+24 & A & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+25 & A & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+26 & A & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+27 & A & 7077888 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+28 & A & 9216 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+29 & A & 2359296 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+30 & A & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+31 & A & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+32 & A & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+33 & A & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+34 & A & 12288 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+35 & A & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+36 & A & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+37 & A & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+38 & A & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+39 & A & 7077888 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+40 & A & 9216 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+41 & A & 2359296 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+42 & A & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+43 & A & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+44 & A & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+45 & A & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+46 & A & 12288 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+47 & A & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+48 & A & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 200 & \lstinline|    pipe_model = GPipe(| \\
+49 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+50 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+51 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+52 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+53 & B & 7077888 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+54 & B & 7077888 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+55 & B & 9216 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+56 & B & 9216 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+57 & B & 2359296 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+58 & B & 2359296 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+59 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+60 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+61 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+62 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+63 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+64 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+65 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+66 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+67 & B & 12288 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+68 & B & 12288 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+69 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+70 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+71 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+72 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+73 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+74 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+75 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+76 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+77 & B & 7077888 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+78 & B & 7077888 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+79 & B & 9216 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+80 & B & 9216 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+81 & B & 2359296 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+82 & B & 2359296 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+83 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+84 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+85 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+86 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+87 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+88 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+89 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+90 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+91 & B & 12288 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+92 & B & 12288 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+93 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+94 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+95 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+96 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+97 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+98 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+99 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+100 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+101 & B & 7077888 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+102 & B & 7077888 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+103 & B & 9216 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+104 & B & 9216 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+105 & B & 2359296 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+106 & B & 2359296 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+107 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+108 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+109 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+110 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+111 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+112 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+113 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+114 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+115 & B & 12288 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+116 & B & 12288 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+117 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+118 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+119 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+120 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+121 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+122 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+123 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+124 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+125 & B & 7077888 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+126 & B & 7077888 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+127 & B & 9216 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+128 & B & 9216 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+129 & B & 2359296 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+130 & B & 2359296 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+131 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+132 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+133 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+134 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+135 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+136 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+137 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+138 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+139 & B & 12288 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+140 & B & 12288 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+141 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+142 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+143 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+144 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 258 & \lstinline|        optimizer.step()| \\
+145 & D & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 243 & \lstinline|        logits = pipe_model(input_ids)| \\
+146 & D & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 243 & \lstinline|        logits = pipe_model(input_ids)| \\
+147 & D & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 243 & \lstinline|        logits = pipe_model(input_ids)| \\
+148 & F & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+149 & F & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+150 & E & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/copy.py| & 64 & \lstinline|                y = x.to(get_device(prev_stream))| \\
+151 & F & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+152 & F & 12288 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+153 & F & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+154 & F & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+155 & F & 2359296 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+156 & F & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+157 & F & 7077888 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+158 & F & 9216 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+159 & F & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+160 & F & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+161 & F & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+162 & F & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+163 & F & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+164 & F & 12288 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+165 & F & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+166 & F & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+167 & F & 2359296 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+168 & F & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+169 & F & 7077888 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+170 & F & 9216 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+171 & F & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+172 & F & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+173 & F & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+174 & F & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+175 & F & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+176 & F & 12288 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+177 & F & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+178 & F & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+179 & F & 2359296 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+180 & F & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+181 & F & 7077888 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+182 & F & 9216 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+183 & F & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+184 & F & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+185 & F & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+186 & F & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+187 & F & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+188 & F & 12288 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+189 & F & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+190 & F & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+191 & F & 2359296 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+192 & F & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+193 & F & 7077888 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+194 & F & 9216 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+195 & F & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+196 & F & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+197 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 77 & \lstinline|        x = x + self.attn(self.ln_1(x))| \\
+198 & G & 2048 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 77 & \lstinline|        x = x + self.attn(self.ln_1(x))| \\
+199 & G & 2048 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 77 & \lstinline|        x = x + self.attn(self.ln_1(x))| \\
+200 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 104 & \lstinline|        attn = (q @ k.transpose(-2, -1)) * self.scale| \\
+201 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 104 & \lstinline|        attn = (q @ k.transpose(-2, -1)) * self.scale| \\
+202 & G & 65536 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 105 & \lstinline|        causal_mask = torch.triu(torch.ones(T, T, device=x.device, dtype=torch.bool), diagonal=1)| \\
+203 & G & 6291456 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 107 & \lstinline|        attn = torch.softmax(attn, dim=-1)| \\
+204 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 108 & \lstinline|        attn = self.attn_dropout(attn)| \\
+205 & G & 6291456 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 108 & \lstinline|        attn = self.attn_dropout(attn)| \\
+206 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 110 & \lstinline|        out = (attn @ v).transpose(1, 2).contiguous().view(B, T, C)| \\
+207 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 110 & \lstinline|        out = (attn @ v).transpose(1, 2).contiguous().view(B, T, C)| \\
+208 & G & 393216 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 111 & \lstinline|        out = self.resid_dropout(self.c_proj(out))| \\
+209 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 77 & \lstinline|        x = x + self.attn(self.ln_1(x))| \\
+210 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 78 & \lstinline|        x = x + self.mlp(self.ln_2(x))| \\
+211 & G & 2048 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 78 & \lstinline|        x = x + self.mlp(self.ln_2(x))| \\
+212 & G & 2048 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 78 & \lstinline|        x = x + self.mlp(self.ln_2(x))| \\
+213 & G & 6291456 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 126 & \lstinline|        x = self.c_fc(x)| \\
+214 & G & 6291456 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 127 & \lstinline|        x = self.act(x)| \\
+215 & G & 393216 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 129 & \lstinline|        x = self.dropout(x)| \\
+216 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 78 & \lstinline|        x = x + self.mlp(self.ln_2(x))| \\
+217 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 77 & \lstinline|        x = x + self.attn(self.ln_1(x))| \\
+218 & G & 2048 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 77 & \lstinline|        x = x + self.attn(self.ln_1(x))| \\
+219 & G & 2048 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 77 & \lstinline|        x = x + self.attn(self.ln_1(x))| \\
+220 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 104 & \lstinline|        attn = (q @ k.transpose(-2, -1)) * self.scale| \\
+221 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 104 & \lstinline|        attn = (q @ k.transpose(-2, -1)) * self.scale| \\
+222 & G & 65536 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 105 & \lstinline|        causal_mask = torch.triu(torch.ones(T, T, device=x.device, dtype=torch.bool), diagonal=1)| \\
+223 & G & 6291456 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 107 & \lstinline|        attn = torch.softmax(attn, dim=-1)| \\
+224 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 108 & \lstinline|        attn = self.attn_dropout(attn)| \\
+225 & G & 6291456 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 108 & \lstinline|        attn = self.attn_dropout(attn)| \\
+226 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 110 & \lstinline|        out = (attn @ v).transpose(1, 2).contiguous().view(B, T, C)| \\
+227 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 110 & \lstinline|        out = (attn @ v).transpose(1, 2).contiguous().view(B, T, C)| \\
+228 & G & 393216 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 111 & \lstinline|        out = self.resid_dropout(self.c_proj(out))| \\
+229 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 77 & \lstinline|        x = x + self.attn(self.ln_1(x))| \\
+230 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 78 & \lstinline|        x = x + self.mlp(self.ln_2(x))| \\
+231 & G & 2048 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 78 & \lstinline|        x = x + self.mlp(self.ln_2(x))| \\
+232 & G & 2048 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 78 & \lstinline|        x = x + self.mlp(self.ln_2(x))| \\
+233 & G & 6291456 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 126 & \lstinline|        x = self.c_fc(x)| \\
+234 & G & 6291456 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 127 & \lstinline|        x = self.act(x)| \\
+235 & G & 393216 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 129 & \lstinline|        x = self.dropout(x)| \\
+236 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 78 & \lstinline|        x = x + self.mlp(self.ln_2(x))| \\
+237 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 77 & \lstinline|        x = x + self.attn(self.ln_1(x))| \\
+238 & G & 2048 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 77 & \lstinline|        x = x + self.attn(self.ln_1(x))| \\
+239 & G & 2048 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 77 & \lstinline|        x = x + self.attn(self.ln_1(x))| \\
+240 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 104 & \lstinline|        attn = (q @ k.transpose(-2, -1)) * self.scale| \\
+241 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 104 & \lstinline|        attn = (q @ k.transpose(-2, -1)) * self.scale| \\
+242 & G & 65536 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 105 & \lstinline|        causal_mask = torch.triu(torch.ones(T, T, device=x.device, dtype=torch.bool), diagonal=1)| \\
+243 & G & 6291456 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 107 & \lstinline|        attn = torch.softmax(attn, dim=-1)| \\
+244 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 108 & \lstinline|        attn = self.attn_dropout(attn)| \\
+245 & G & 6291456 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 108 & \lstinline|        attn = self.attn_dropout(attn)| \\
+246 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 110 & \lstinline|        out = (attn @ v).transpose(1, 2).contiguous().view(B, T, C)| \\
+247 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 110 & \lstinline|        out = (attn @ v).transpose(1, 2).contiguous().view(B, T, C)| \\
+248 & G & 393216 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 111 & \lstinline|        out = self.resid_dropout(self.c_proj(out))| \\
+249 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 77 & \lstinline|        x = x + self.attn(self.ln_1(x))| \\
+250 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 78 & \lstinline|        x = x + self.mlp(self.ln_2(x))| \\
+251 & G & 2048 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 78 & \lstinline|        x = x + self.mlp(self.ln_2(x))| \\
+252 & G & 2048 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 78 & \lstinline|        x = x + self.mlp(self.ln_2(x))| \\
+253 & G & 6291456 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 126 & \lstinline|        x = self.c_fc(x)| \\
+254 & G & 6291456 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 127 & \lstinline|        x = self.act(x)| \\
+255 & G & 393216 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 129 & \lstinline|        x = self.dropout(x)| \\
+256 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 78 & \lstinline|        x = x + self.mlp(self.ln_2(x))| \\
+257 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 77 & \lstinline|        x = x + self.attn(self.ln_1(x))| \\
+258 & G & 2048 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 77 & \lstinline|        x = x + self.attn(self.ln_1(x))| \\
+259 & G & 2048 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 77 & \lstinline|        x = x + self.attn(self.ln_1(x))| \\
+260 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 104 & \lstinline|        attn = (q @ k.transpose(-2, -1)) * self.scale| \\
+261 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 104 & \lstinline|        attn = (q @ k.transpose(-2, -1)) * self.scale| \\
+262 & G & 65536 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 105 & \lstinline|        causal_mask = torch.triu(torch.ones(T, T, device=x.device, dtype=torch.bool), diagonal=1)| \\
+263 & G & 6291456 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 107 & \lstinline|        attn = torch.softmax(attn, dim=-1)| \\
+264 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 108 & \lstinline|        attn = self.attn_dropout(attn)| \\
+265 & G & 6291456 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 108 & \lstinline|        attn = self.attn_dropout(attn)| \\
+266 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 110 & \lstinline|        out = (attn @ v).transpose(1, 2).contiguous().view(B, T, C)| \\
+267 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 110 & \lstinline|        out = (attn @ v).transpose(1, 2).contiguous().view(B, T, C)| \\
+268 & G & 393216 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 111 & \lstinline|        out = self.resid_dropout(self.c_proj(out))| \\
+269 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 77 & \lstinline|        x = x + self.attn(self.ln_1(x))| \\
+270 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 78 & \lstinline|        x = x + self.mlp(self.ln_2(x))| \\
+271 & G & 2048 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 78 & \lstinline|        x = x + self.mlp(self.ln_2(x))| \\
+272 & G & 2048 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 78 & \lstinline|        x = x + self.mlp(self.ln_2(x))| \\
+273 & G & 6291456 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 126 & \lstinline|        x = self.c_fc(x)| \\
+274 & G & 6291456 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 127 & \lstinline|        x = self.act(x)| \\
+275 & G & 1572864 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 78 & \lstinline|        x = x + self.mlp(self.ln_2(x))| \\
+276 & H & 1572864 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+277 & H & 6291456 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+278 & H & 9437184 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+279 & H & 3072 & \lstinline|~/anaconda3/envs/gpt2_gpipe_mem/lib/python3.10/site-packages/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+\end{longtable}
+\end{document}

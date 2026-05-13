@@ -253,7 +253,10 @@ def train():
         # ── Backward ──
         optimizer.zero_grad()
         loss.backward()
+
+        #dummy_input = torch.randn(4800, 10000).to(1)
         optimizer.step()
+        #del dummy_input
 
         dt = time.time() - t0
 

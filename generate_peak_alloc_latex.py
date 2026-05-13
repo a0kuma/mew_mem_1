@@ -37,6 +37,7 @@ LATEX_SPECIALS = {
 }
 
 LST_INLINE_DELIMS = ["|", "!", "+", ";", ":", "?", "=", "@", "~"]
+FINAL_BACKWARD_COUNT = 4
 
 
 def ascii_sanitize(text: str) -> str:
@@ -140,6 +141,31 @@ def select_frame(frames: List[dict], workspace_root: str) -> Optional[dict]:
     return None
 
 
+def get_checkpoint_flags(frames: List[dict]) -> tuple[bool, bool]:
+    checkpoint_lines = [
+        int(f.get("line") or 0)
+        for f in frames
+        if "torchgpipe/checkpoint.py" in (f.get("filename") or "")
+    ]
+    has_checkpoint_backward = any(258 <= ln <= 273 for ln in checkpoint_lines)
+    has_checkpoint_recompute = any(295 <= ln <= 308 for ln in checkpoint_lines)
+    return has_checkpoint_backward, has_checkpoint_recompute
+
+
+def is_backward_event(frames: List[dict], has_checkpoint_backward: bool | None = None) -> bool:
+    if has_checkpoint_backward is None:
+        has_checkpoint_backward, _ = get_checkpoint_flags(frames)
+    names = [f.get("name") or "" for f in frames]
+    files = [f.get("filename") or "" for f in frames]
+    return (
+        has_checkpoint_backward
+        or any("/torch/autograd/graph.py" in f for f in files)
+        or any("/torch/autograd/__init__.py" in f for f in files)
+        or any("backward" in n.lower() for n in names)
+        or any("Backward" in n for n in names)
+    )
+
+
 def is_model_param_event(
     frames: List[dict],
     selected: Optional[dict],
@@ -168,8 +194,10 @@ def classify_event(
     selected: Optional[dict],
     code_line: str,
     size: Optional[int],
+    event_index: int,
     workspace_root: str,
     param_sizes: Optional[set],
+    final_backward_indices: set,
 ) -> str:
     files = [f.get("filename") or "" for f in frames]
     names = [f.get("name") or "" for f in frames]
@@ -181,28 +209,20 @@ def classify_event(
     def has_name(substr: str) -> bool:
         return any(substr in n for n in names)
 
-    checkpoint_lines = [
-        int(f.get("line") or 0)
-        for f in frames
-        if "torchgpipe/checkpoint.py" in (f.get("filename") or "")
-    ]
-    has_checkpoint_backward = any(258 <= ln <= 273 for ln in checkpoint_lines)
-    has_checkpoint_recompute = any(295 <= ln <= 308 for ln in checkpoint_lines)
-
-    is_backward = (
-        has_checkpoint_backward
-        or has_file("/torch/autograd/graph.py")
-        or has_file("/torch/autograd/__init__.py")
-        or has_name("backward")
-        or any("backward" in n.lower() for n in names)
-        or any("Backward" in n for n in names)
-    )
+    has_checkpoint_backward, has_checkpoint_recompute = get_checkpoint_flags(frames)
+    is_backward = is_backward_event(frames, has_checkpoint_backward)
 
     if has_file("torchgpipe/copy.py"):
         for f in frames:
             if "torchgpipe/copy.py" in (f.get("filename") or "") and "backward" in (f.get("name") or ""):
                 return "E"
         return "D"
+
+    if event_index in final_backward_indices:
+        return "H"
+
+    if is_backward and param_sizes and size is not None and size in param_sizes:
+        return "F"
 
     if has_checkpoint_recompute:
         return "G"
@@ -216,13 +236,10 @@ def classify_event(
     if is_model_param_event(frames, selected, code_line, workspace_root):
         return "A"
 
-    if is_backward and param_sizes and size is not None and size in param_sizes:
-        return "F"
-
     if is_backward:
-        return "H"
+        return "G"
 
-    return "H"
+    return "G"
 
 
 def render_latex(events: List[dict], workspace_root: str) -> str:
@@ -231,9 +248,14 @@ def render_latex(events: List[dict], workspace_root: str) -> str:
     home_prefix = os.path.expanduser("~")
     param_sizes: set = set()
     summary = {key: {"count": 0, "bytes": 0} for key in ["A", "B", "D", "E", "F", "G", "H"]}
+    backward_events: list[tuple[int, int]] = []
 
-    for event in events:
+    for idx, event in enumerate(events, start=1):
         frames = event.get("frames") or []
+        has_checkpoint_backward, _ = get_checkpoint_flags(frames)
+        if is_backward_event(frames, has_checkpoint_backward):
+            time_us = event.get("time_us")
+            backward_events.append((idx, int(time_us) if isinstance(time_us, int) else 0))
         selected = select_frame(frames, workspace_root)
         filename = (selected or {}).get("filename") or ""
         line_no = int((selected or {}).get("line") or 0)
@@ -243,6 +265,9 @@ def render_latex(events: List[dict], workspace_root: str) -> str:
             if isinstance(size, int):
                 param_sizes.add(size)
 
+    backward_events.sort(key=lambda item: item[1])
+    final_backward_indices = {idx for idx, _ in backward_events[-FINAL_BACKWARD_COUNT:]}
+
     for idx, event in enumerate(events, start=1):
         frames = event.get("frames") or []
         selected = select_frame(frames, workspace_root)
@@ -251,7 +276,16 @@ def render_latex(events: List[dict], workspace_root: str) -> str:
         code_line = get_code_line(filename, line_no, cache)
         size = event.get("size")
         size_value = size if isinstance(size, int) else None
-        category = classify_event(frames, selected, code_line, size_value, workspace_root, param_sizes)
+        category = classify_event(
+            frames,
+            selected,
+            code_line,
+            size_value,
+            idx,
+            workspace_root,
+            param_sizes,
+            final_backward_indices,
+        )
 
         code_out = code_line if code_line else "(source not available)"
         if filename and home_prefix and filename.startswith(home_prefix):
@@ -294,12 +328,12 @@ def render_latex(events: List[dict], workspace_root: str) -> str:
     lines.append("\\vspace{0.5em}")
     lines.append("\\section*{Category Summary}")
     lines.append("\\begin{tabular}{l r r}")
-    lines.append("Category & Count & Total(B) \\")
+    lines.append("Category & Count & Total(B) \\\\")
     lines.append("\\hline")
     for key in ["A", "B", "D", "E", "F", "G", "H"]:
         count = summary[key]["count"]
         total_bytes = summary[key]["bytes"]
-        lines.append(f"{key} & {count} & {total_bytes} \\")
+        lines.append(f"{key} & {count} & {total_bytes} \\\\")
     lines.append("\\end{tabular}")
     lines.append("\\vspace{0.5em}")
     lines.append("\\begin{longtable}{r l r p{6.5cm} r p{7.0cm}}")
