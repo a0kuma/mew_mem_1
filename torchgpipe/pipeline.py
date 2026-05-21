@@ -113,8 +113,8 @@ class Pipeline:
             for schedule in clock_cycles(m, n):
                 #dummy_input = torch.randn(4800, 10000).to(1)
                 self.fence(schedule, skip_trackers)
-                self.compute(schedule, skip_trackers, in_queues, out_queues)
                 #del dummy_input
+                self.compute(schedule, skip_trackers, in_queues, out_queues)
 
     def fence(self,
               schedule: List[Tuple[int, int]],

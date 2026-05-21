@@ -222,7 +222,7 @@ def train():
 
 
     # ── Optimizer ──
-    optimizer = torch.optim.AdamW(pipe_model.parameters(), lr=LEARNING_RATE)
+    optimizer = torch.optim.SGD(pipe_model.parameters(), lr=LEARNING_RATE)
 
     # ── Loss function (on last GPU) ──
     last_device = torch.device(f"cuda:{NUM_GPUS - 1}")
@@ -241,7 +241,10 @@ def train():
         labels = input_ids.clone().to(last_device)
 
         # ── Forward pass through GPipe pipeline ──
+        #dummy_input = torch.randn(4800, 10000).to(1)
         logits = pipe_model(input_ids)
+        #del dummy_input
+
 
         # ── Compute loss on last device ──
         shift_logits = logits[:, :-1, :].contiguous()
@@ -251,8 +254,8 @@ def train():
             shift_labels.view(-1)
         )
 
-        graph = make_dot(loss, params=dict(pipe_model.named_parameters()))
-        graph.render("gpipe_computation_graph", format="png")
+        #graph = make_dot(loss, params=dict(pipe_model.named_parameters()))
+        #graph.render("gpipe_computation_graph", format="png")
 
         # ── Backward ──
         optimizer.zero_grad()
@@ -393,4 +396,4 @@ if __name__ == "__main__":
         run.log_artifact(artifact)
 
         os.remove(OUTPUT_FILE_JSON)
-        os.remove(OUTPUT_FILE_PICKLE)
+        #os.remove(OUTPUT_FILE_PICKLE)
