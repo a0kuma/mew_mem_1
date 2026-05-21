@@ -254,7 +254,7 @@ def train():
             shift_labels.view(-1)
         )
 
-        console.print(dict(pipe_model.named_parameters()))
+        #console.print(dict(pipe_model.named_parameters()))
         #graph = make_dot(loss, params=dict(pipe_model.named_parameters()))
         #graph.render("gpipe_computation_graph", format="png")
 
@@ -396,5 +396,5 @@ if __name__ == "__main__":
         artifact.add_file(latex_report_path)
         run.log_artifact(artifact)
 
-        #os.remove(OUTPUT_FILE_JSON)
+        os.remove(OUTPUT_FILE_JSON)
         #os.remove(OUTPUT_FILE_PICKLE)

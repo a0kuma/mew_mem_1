@@ -38,7 +38,9 @@ class Copy(torch.autograd.Function):
 
         with use_stream(prev_stream), use_stream(next_stream):
             for x in input:
+                #dummy_input = torch.randn(4800, 10000).to(1)
                 y = x.to(get_device(next_stream))
+                #del dummy_input
                 output.append(y)
 
                 # 'prev_stream' is not where 'x' has been allocated.
@@ -61,7 +63,9 @@ class Copy(torch.autograd.Function):
 
         with use_stream(prev_stream), use_stream(next_stream):
             for x in reversed(grad_output):
+                #dummy_input = torch.randn(4800, 10000).to(1)
                 y = x.to(get_device(prev_stream))
+                #del dummy_input
                 grad_input.appendleft(y)
 
                 # 'next_stream' is not where 'x' has been allocated.

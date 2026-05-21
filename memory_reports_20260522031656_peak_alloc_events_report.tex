@@ -1,0 +1,149 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable}
+\usepackage{listings}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{array}
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=true,breakatwhitespace=true}
+\begin{document}
+\section*{Peak Allocation Events}
+\small
+\begin{tabular}{ll}
+A & Model Parameters \\
+B & Optimizer States (AdamW) \\
+D & Pipeline Boundary Copies \\
+E & Gradient Boundary Copies \\
+F & Parameter Gradients \\
+G & Recomputed Activations \\
+H & Final Backward Tensors \\
+\end{tabular}
+\vspace{0.5em}
+\section*{Category Summary}
+\begin{tabular}{l r r}
+Category & Count & Total(B) \\
+\hline
+A & 48 & 113405952 \\
+B & 0 & 0 \\
+D & 5 & 198291456 \\
+E & 0 & 0 \\
+F & 44 & 106312704 \\
+G & 1 & 1572864 \\
+H & 4 & 7093248 \\
+\end{tabular}
+\vspace{0.5em}
+\begin{longtable}{r l r p{6.5cm} r p{7.0cm}}
+\hline
+Idx & Cat & Size(B) & File & Line & Code \\
+\hline
+\endfirsthead
+\hline
+Idx & Cat & Size(B) & File & Line & Code \\
+\hline
+\endhead
+\hline
+\endfoot
+1 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+2 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+3 & A & 7077888 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+4 & A & 9216 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+5 & A & 2359296 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+6 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+7 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+8 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+9 & A & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+10 & A & 12288 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+11 & A & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+12 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+13 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+14 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+15 & A & 7077888 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+16 & A & 9216 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+17 & A & 2359296 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+18 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+19 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+20 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+21 & A & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+22 & A & 12288 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+23 & A & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+24 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+25 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+26 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+27 & A & 7077888 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+28 & A & 9216 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+29 & A & 2359296 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+30 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+31 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+32 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+33 & A & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+34 & A & 12288 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+35 & A & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+36 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+37 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+38 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+39 & A & 7077888 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+40 & A & 9216 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+41 & A & 2359296 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+42 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+43 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+44 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+45 & A & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+46 & A & 12288 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+47 & A & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+48 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+49 & F & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+50 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+51 & F & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+52 & F & 12288 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+53 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+54 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+55 & F & 2359296 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+56 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+57 & F & 7077888 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+58 & F & 9216 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+59 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+60 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+61 & F & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+62 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+63 & F & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+64 & F & 12288 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+65 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+66 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+67 & F & 2359296 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+68 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+69 & F & 7077888 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+70 & F & 9216 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+71 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+72 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+73 & F & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+74 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+75 & F & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+76 & F & 12288 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+77 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+78 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+79 & F & 2359296 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+80 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+81 & F & 7077888 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+82 & F & 9216 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+83 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+84 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+85 & F & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+86 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+87 & F & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+88 & F & 12288 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+89 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+90 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+91 & F & 2359296 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+92 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+93 & H & 7077888 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+94 & H & 9216 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+95 & H & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+96 & H & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+97 & D & 1572864 & \lstinline|~/mew_mem_1/torchgpipe/copy.py| & 42 & \lstinline|                y = x.to(get_device(next_stream))| \\
+98 & D & 1572864 & \lstinline|~/mew_mem_1/torchgpipe/copy.py| & 42 & \lstinline|                y = x.to(get_device(next_stream))| \\
+99 & D & 1572864 & \lstinline|~/mew_mem_1/torchgpipe/copy.py| & 42 & \lstinline|                y = x.to(get_device(next_stream))| \\
+100 & G & 1572864 & \lstinline|~/mew_mem_1/torchgpipe/pipeline.py| & 204 & \lstinline|                        return partition(input)| \\
+101 & D & 192000000 & \lstinline|~/mew_mem_1/torchgpipe/copy.py| & 41 & \lstinline|                dummy_input = torch.randn(4800, 10000).to(1)| \\
+102 & D & 1572864 & \lstinline|~/mew_mem_1/torchgpipe/copy.py| & 42 & \lstinline|                y = x.to(get_device(next_stream))| \\
+\end{longtable}
+\end{document}
