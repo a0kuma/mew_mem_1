@@ -111,8 +111,10 @@ class Pipeline:
 
         with spawn_workers(devices) as (in_queues, out_queues):
             for schedule in clock_cycles(m, n):
+                #dummy_input = torch.randn(4800, 10000).to(1)
                 self.fence(schedule, skip_trackers)
                 self.compute(schedule, skip_trackers, in_queues, out_queues)
+                #del dummy_input
 
     def fence(self,
               schedule: List[Tuple[int, int]],

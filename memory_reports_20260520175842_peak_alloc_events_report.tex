@@ -1,0 +1,253 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable}
+\usepackage{listings}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{array}
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=true,breakatwhitespace=true}
+\begin{document}
+\section*{Peak Allocation Events}
+\small
+\begin{tabular}{ll}
+A & Model Parameters \\
+B & Optimizer States (AdamW) \\
+D & Pipeline Boundary Copies \\
+E & Gradient Boundary Copies \\
+F & Parameter Gradients \\
+G & Recomputed Activations \\
+H & Final Backward Tensors \\
+\end{tabular}
+\vspace{0.5em}
+\section*{Category Summary}
+\begin{tabular}{l r r}
+Category & Count & Total(B) \\
+\hline
+A & 48 & 113405952 \\
+B & 96 & 226811904 \\
+D & 4 & 6291456 \\
+E & 0 & 0 \\
+F & 44 & 106312704 \\
+G & 10 & 231124992 \\
+H & 4 & 7093248 \\
+\end{tabular}
+\vspace{0.5em}
+\begin{longtable}{r l r p{6.5cm} r p{7.0cm}}
+\hline
+Idx & Cat & Size(B) & File & Line & Code \\
+\hline
+\endfirsthead
+\hline
+Idx & Cat & Size(B) & File & Line & Code \\
+\hline
+\endhead
+\hline
+\endfoot
+1 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+2 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+3 & A & 7077888 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+4 & A & 9216 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+5 & A & 2359296 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+6 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+7 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+8 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+9 & A & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+10 & A & 12288 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+11 & A & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+12 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+13 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+14 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+15 & A & 7077888 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+16 & A & 9216 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+17 & A & 2359296 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+18 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+19 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+20 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+21 & A & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+22 & A & 12288 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+23 & A & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+24 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+25 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+26 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+27 & A & 7077888 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+28 & A & 9216 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+29 & A & 2359296 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+30 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+31 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+32 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+33 & A & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+34 & A & 12288 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+35 & A & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+36 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+37 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+38 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+39 & A & 7077888 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+40 & A & 9216 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+41 & A & 2359296 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+42 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+43 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+44 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+45 & A & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+46 & A & 12288 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+47 & A & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+48 & A & 3072 & \lstinline|~/mew_mem_1/torchgpipe/gpipe.py| & 116 & \lstinline|            partition.to(device)| \\
+49 & G & 8519680 & \lstinline|~/mew_mem_1/torchgpipe/pipeline.py| & 204 & \lstinline|                        return partition(input)| \\
+50 & F & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+51 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+52 & F & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+53 & F & 12288 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+54 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+55 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+56 & F & 2359296 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+57 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+58 & F & 7077888 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+59 & F & 9216 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+60 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+61 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+62 & F & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+63 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+64 & F & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+65 & F & 12288 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+66 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+67 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+68 & F & 2359296 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+69 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+70 & F & 7077888 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+71 & F & 9216 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+72 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+73 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+74 & F & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+75 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+76 & F & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+77 & F & 12288 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+78 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+79 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+80 & F & 2359296 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+81 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+82 & F & 7077888 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+83 & F & 9216 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+84 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+85 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+86 & F & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+87 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+88 & F & 9437184 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+89 & F & 12288 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+90 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+91 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+92 & F & 2359296 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+93 & F & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+94 & H & 7077888 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+95 & H & 9216 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+96 & H & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+97 & H & 3072 & \lstinline|~/mew_mem_1/torchgpipe/checkpoint.py| & 269 & \lstinline|            torch.autograd.backward(tensors, grad_output)| \\
+98 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+99 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+100 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+101 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+102 & B & 7077888 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+103 & B & 7077888 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+104 & B & 9216 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+105 & B & 9216 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+106 & B & 2359296 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+107 & B & 2359296 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+108 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+109 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+110 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+111 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+112 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+113 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+114 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+115 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+116 & B & 12288 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+117 & B & 12288 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+118 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+119 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+120 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+121 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+122 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+123 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+124 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+125 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+126 & B & 7077888 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+127 & B & 7077888 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+128 & B & 9216 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+129 & B & 9216 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+130 & B & 2359296 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+131 & B & 2359296 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+132 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+133 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+134 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+135 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+136 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+137 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+138 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+139 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+140 & B & 12288 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+141 & B & 12288 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+142 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+143 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+144 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+145 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+146 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+147 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+148 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+149 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+150 & B & 7077888 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+151 & B & 7077888 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+152 & B & 9216 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+153 & B & 9216 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+154 & B & 2359296 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+155 & B & 2359296 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+156 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+157 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+158 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+159 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+160 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+161 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+162 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+163 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+164 & B & 12288 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+165 & B & 12288 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+166 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+167 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+168 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+169 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+170 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+171 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+172 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+173 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+174 & B & 7077888 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+175 & B & 7077888 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+176 & B & 9216 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+177 & B & 9216 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+178 & B & 2359296 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+179 & B & 2359296 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+180 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+181 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+182 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+183 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+184 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+185 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+186 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+187 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+188 & B & 12288 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+189 & B & 12288 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+190 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+191 & B & 9437184 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+192 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+193 & B & 3072 & \lstinline|~/mew_mem_1/gpt2_gpipe_memory_profile.py| & 256 & \lstinline|        optimizer.step()| \\
+194 & D & 1572864 & \lstinline|~/mew_mem_1/torchgpipe/copy.py| & 41 & \lstinline|                y = x.to(get_device(next_stream))| \\
+195 & G & 8519680 & \lstinline|~/mew_mem_1/torchgpipe/pipeline.py| & 204 & \lstinline|                        return partition(input)| \\
+196 & D & 1572864 & \lstinline|~/mew_mem_1/torchgpipe/copy.py| & 41 & \lstinline|                y = x.to(get_device(next_stream))| \\
+197 & D & 1572864 & \lstinline|~/mew_mem_1/torchgpipe/copy.py| & 41 & \lstinline|                y = x.to(get_device(next_stream))| \\
+198 & G & 192000000 & \lstinline|~/mew_mem_1/torchgpipe/pipeline.py| & 114 & \lstinline|                dummy_input = torch.randn(4800, 10000).to(1)| \\
+199 & D & 1572864 & \lstinline|~/mew_mem_1/torchgpipe/copy.py| & 41 & \lstinline|                y = x.to(get_device(next_stream))| \\
+200 & G & 1572864 & \lstinline|~/mew_mem_1/torchgpipe/pipeline.py| & 204 & \lstinline|                        return partition(input)| \\
+201 & G & 1572864 & \lstinline|~/mew_mem_1/torchgpipe/pipeline.py| & 204 & \lstinline|                        return partition(input)| \\
+202 & G & 4718592 & \lstinline|~/mew_mem_1/torchgpipe/pipeline.py| & 204 & \lstinline|                        return partition(input)| \\
+203 & G & 65536 & \lstinline|~/mew_mem_1/torchgpipe/pipeline.py| & 204 & \lstinline|                        return partition(input)| \\
+204 & G & 6291456 & \lstinline|~/mew_mem_1/torchgpipe/pipeline.py| & 204 & \lstinline|                        return partition(input)| \\
+205 & G & 1572864 & \lstinline|~/mew_mem_1/torchgpipe/pipeline.py| & 204 & \lstinline|                        return partition(input)| \\
+206 & G & 6291456 & \lstinline|~/mew_mem_1/torchgpipe/pipeline.py| & 204 & \lstinline|                        return partition(input)| \\
+\end{longtable}
+\end{document}

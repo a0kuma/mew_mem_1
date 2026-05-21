@@ -30,6 +30,7 @@ from rich.pretty import Pretty
 from rich.text import Text
 from rich.cells import cell_len
 from rich.style import Style
+from torchviz import make_dot
 
 
 console = Console()
@@ -249,6 +250,9 @@ def train():
             shift_logits.view(-1, config.vocab_size),
             shift_labels.view(-1)
         )
+
+        graph = make_dot(loss, params=dict(pipe_model.named_parameters()))
+        graph.render("gpipe_computation_graph", format="png")
 
         # ── Backward ──
         optimizer.zero_grad()
